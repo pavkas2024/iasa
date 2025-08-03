@@ -1,0 +1,42 @@
+{
+    "menu": {
+      "home": "Головна",
+      "institute": "Інститут",
+      "research": "Дослідження",
+      "intActivity": "Міжнародна діяльність",
+      "contacts": "Контакти"
+    },
+    "submenu":{
+      "news": "Новини",
+      "docs": "Документи",
+      "journals": "Видання",
+      "departments": "Підрозділи",
+      "projects": "Проєкти",
+      "scientificCouncil": "Вчена рада",
+      "staff": "Працівники",
+      "publications": "Публікації",
+      "about": "Про інститут",
+      "history": "Історія інституту",
+      "statute": "Статут",
+      "structure": "Структура",
+      "strInstitute": "Структура інституту",
+      "composition": "Склад",
+      "desicions": "Рішення",
+      "intCooperation": "Міжнародна співпраця",
+      "intProjects": "Міжнародні проєкти",
+      "natProjects": "Національні проєкти",
+      "directions": "Напрямки",
+      "conferences": "Конференції та семінари",
+      "procurements": "Публічні закупівлі"
+    },
+    "form": {
+        "title": "Напишіть нам",
+        "name": "Ваше ім'я",
+        "email": "Електронна пошта",
+        "request": "Повідомлення"
+    },
+    "buttons": {
+      "submit": "Надіслати",
+      "more": "Більше"
+    }
+  }

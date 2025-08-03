@@ -1,0 +1,43 @@
+{
+    "menu": {
+      "home": "Home",
+      "institute": "Institute",
+      "research": "Research",
+      "intActivity": "International Activity",
+      "contacts": "Contacts"
+    },
+    "submenu": {
+      "news": "News",
+      "docs": "Documents",
+      "journals": "Publications",
+      "departments": "Departments",
+      "projects": "Projects",
+      "scientificCouncil": "Scientific Council",
+      "staff": "Staff",
+      "publications": "Publications",
+      "about": "About the Institute",
+      "history": "Institute History",
+      "statute": "Statute",
+      "structure": "Structure",
+      "strInstitute": "Institute Structure",
+      "composition": "Composition",
+      "desicions": "Decisions",
+      "intCooperation": "International Cooperation",
+      "intProjects": "International Projects",
+      "natProjects": "National Projects",
+      "directions": "Directions",
+      "conferences": "Conferences and Seminars",
+      "procurements": "Public Procurements"
+    },
+    "form": {
+      "title": "Contact Us",
+      "name": "Your Name",
+      "email": "Email",
+      "request": "Message"
+    },
+    "buttons": {
+      "submit": "Submit",
+      "more": "More"
+    }
+  }
+  
