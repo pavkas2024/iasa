@@ -14,7 +14,8 @@ export function generateStaticParams() {
 }
 
 export default async function Home({ params }: { params: { locale: string } }) {
-  const data = await getHomeData(params.locale);
+  const { locale } = await params;
+  const data = await getHomeData(locale);
 
-  return <HomePage locale={params.locale} data={data} />;
+  return <HomePage locale={locale} data={data} />;
 }
