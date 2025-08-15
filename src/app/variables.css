@@ -1,0 +1,26 @@
+:root {
+    --text: #050b22;
+    --main: #04446d;
+    --hover-blue: #056097;
+    --additional-blue: #076c9c;
+
+    --success: #a8e6a1;
+    --warning: #ff9800;
+    --error: #f44336;
+    
+    --light-blue-1: #d0e6f0;
+    --light-blue-2: #b3d1e0;
+    --light-blue-3: #e6f0f6;
+    
+    --beige: #f9f1e7;
+    --section-beige: #fcf8f3;
+    --background-beige: #fefcf8;
+    
+    --white: #ffffff;
+    --dark-gray: #4a4a4a;
+    --gray: #888888;
+    --light-gray: #dcdcdc;
+
+    font-family: var(--font-inter), sans-serif;
+    }
+    

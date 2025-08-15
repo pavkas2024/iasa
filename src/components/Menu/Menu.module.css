@@ -1,0 +1,94 @@
+.nav {
+    position: relative;
+    background-color: #f0f4fa; /* світлий блакитний фон */
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Приховуємо чекбокс */
+  .menuToggle {
+    display: none;
+  }
+  
+  /* Бургер-іконка */
+  .burger {
+    display: none;
+    cursor: pointer;
+    width: 30px;
+    height: 22px;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .burger span {
+    display: block;
+    height: 4px;
+    border-radius: 2px;
+    background-color: #3366cc; /* темно-синій */
+    transition: 0.3s;
+  }
+  
+  /* Список меню */
+  .menuList {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Активний пункт */
+  .menuList li a {
+    color: #334e7b;
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-block;
+  }
+  
+  .menuList li a:hover,
+  .menuList li.active a {
+    background-color: #3366cc; /* синій */
+    color: white;
+    box-shadow: 0 3px 6px rgba(51, 102, 204, 0.5);
+  }
+  
+  /* ===== Адаптивність ===== */
+  
+  /* Мобільний до 768px */
+  @media (max-width: 768px) {
+    .burger {
+      display: flex;
+    }
+  
+    .menuList {
+      position: absolute;
+      top: 48px;
+      left: 0;
+      right: 0;
+      background-color: #f0f4fa;
+      flex-direction: column;
+      border-radius: 0 0 10px 10px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.3s ease;
+    }
+  
+    /* Коли чекбокс вмикається - меню розгортається */
+    .menuToggle:checked ~ .menuList {
+      max-height: 300px; /* достатньо для кількох пунктів */
+    }
+  
+    .menuList li {
+      padding: 12px 16px;
+    }
+  
+    .menuList li a {
+      padding: 12px 0;
+      font-size: 18px;
+    }
+  }
+  

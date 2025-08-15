@@ -14,6 +14,12 @@ export default function LanguageSwitcher({ currentLocale }: { currentLocale: str
 
   const switchLocale = (locale: string) => {
     if (locale === currentLocale) return;
+
+    if (typeof document !== "undefined") {
+      document.cookie = `preferredLocale=${locale}; path=/; max-age=31536000`; // 1 рік
+    }
+
+
     const pathWithoutLocale = pathname.replace(/^\/(uk|en)/, "");
     router.push(`/${locale}${pathWithoutLocale}`);
   };

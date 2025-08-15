@@ -1,9 +1,11 @@
-import styles from "./page.module.css";
 import { getHomeData } from "@/lib/api";
 import HomePage from "@/components/pages/HomePage";
+import type { HomeData } from "@/types/api";
+
+type Locale = "uk" | "en";
 
 interface PageProps {
-  params: { locale: string };
+  params: { locale: Locale };
 }
 
 export function generateStaticParams() {
@@ -13,9 +15,10 @@ export function generateStaticParams() {
   ];
 }
 
-export default async function Home({ params }: { params: { locale: string } }) {
-  const { locale } = await params;
-  const data = await getHomeData(locale);
+export default async function Home({ params }: PageProps) {
+  const awaitedParams = await params;  // Чекаємо, поки параметри будуть доступні
+  const { locale } = awaitedParams;
+  const data: HomeData = await getHomeData();
 
   return <HomePage locale={locale} data={data} />;
 }

@@ -1,45 +1,48 @@
 .container {
     display: flex;
     gap: 8px;
-    background-color: #f0f0f0;
+    background-color: #e1e8f7; /* світло-сірий із синім відтінком */
     border-radius: 12px;
     padding: 4px;
     width: max-content;
-    min-width: 240px; /* мінімальна ширина контейнера */
+    min-width: 240px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
   
   .button {
     background: transparent;
     border: none;
-    padding: 8px 0;
+    padding: 8px 12px;
     font-size: 16px;
     border-radius: 10px;
-    color: #555;
+    color: #334e7b; /* темно-синій */
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease;
-    flex: 1 1 0; /* рівномірний розподіл ширини */
+    flex: 1 1 0;
     user-select: none;
     text-align: center;
   }
   
   .button:hover {
-    background-color: #d9d9d9;
+    background-color: #acc5f6; /* світло-синій при ховері */
+    color: #1a2e5b; /* темніший синій */
   }
   
   .active {
-    background-color: #666;
+    background-color: #3366cc; /* насичений синій */
     color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 6px rgba(51, 102, 204, 0.4);
   }
   
   /* Адаптивність */
+  
   @media (max-width: 320px) {
     .container {
       min-width: 180px;
     }
     .button {
       font-size: 14px;
-      padding: 6px 0;
+      padding: 6px 8px;
     }
   }
   
@@ -49,7 +52,7 @@
     }
     .button {
       font-size: 15px;
-      padding: 7px 0;
+      padding: 7px 10px;
     }
   }
   
@@ -59,7 +62,7 @@
     }
     .button {
       font-size: 16px;
-      padding: 8px 0;
+      padding: 8px 12px;
     }
   }
   

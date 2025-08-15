@@ -1,11 +1,23 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { ReactNode } from "react";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
+import { Inter } from "next/font/google";
+
 
 import "../globals.css";
+import style from "./Layout.module.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"],
+  variable: "--font-inter",
+});
+
+type Locale = "uk" | "en";
+const supportedLocales: Locale[] = ["uk", "en"];
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,10 +31,10 @@ const geistMono = Geist_Mono({
 
 interface LayoutProps {
   children: ReactNode;
-  params: { locale: string };
+  params: { locale: Locale };
 }
 
-const supportedLocales = ["uk", "en"];
+
 
 export const metadata: Metadata = {
   title: "IASA",
@@ -30,25 +42,33 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return [
-    { locale: 'uk' },
-    { locale: 'en' },
-  ];
+  return supportedLocales.map((locale) => ({ locale }));
 }
 
 export default async function RootLayout({ children, params }: LayoutProps) {
   const awaitedParams = await params;  // Чекаємо, поки параметри будуть доступні
   const { locale } = awaitedParams;
 
+  const cookieStore = await cookies();
+  const preferredLocale = cookieStore.get("preferredLocale")?.value;
+
+ 
+
   if (!supportedLocales.includes(locale)) {
     notFound(); // повернути 404 у Next.js App Router
   }
 
+
+  if (preferredLocale && preferredLocale !== locale && supportedLocales.includes(preferredLocale)) {
+    // Редирект на правильну мову з cookie
+    redirect(`/${preferredLocale}`);
+  }
+
   return (
-    <html lang={locale}>
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang={locale} data-scroll-behavior="smooth">
+      <body className={`${inter.variable}`}>
         <Header locale={locale} />
-        <main>{children}</main>
+        <main className={style.container}>{children}</main>
         <Footer />
       </body>
     </html>
