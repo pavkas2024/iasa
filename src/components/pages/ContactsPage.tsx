@@ -1,4 +1,7 @@
 import React from 'react';
+
+import ContainerWrap from '../Wrap/Wrap';
+
 import { Contact } from '@/types/contacts';
 
 import en from '../../../public/locales/en/common.json';
@@ -18,19 +21,21 @@ const ContactsPage: React.FC<Props> = ({ locale, contacts }) => {
 
   return (
     <main>
-      <h1>{t.menu.contacts}</h1>
+      <ContainerWrap>
+        <h1>{t.menu.contacts}</h1>
 
-      <ul>
-        {contacts.map(contact => (
-          <li key={contact._id}>
-            {contact.translates[locale].city}, {contact.translates[locale].street}, {contact.build} {contact.corp || ''}
-            <br />
-            {contact.phone}
-            <br />
-            Email: {contact.email}
-          </li>
-        ))}
-      </ul>
+        <ul>
+          {contacts.map(contact => (
+            <li key={contact._id}>
+              {contact.translates[locale].city}, {contact.translates[locale].street}, {contact.build} {contact.corp || ''}
+              <br />
+              {contact.phone}
+              <br />
+              Email: {contact.email}
+            </li>
+          ))}
+        </ul>
+      </ContainerWrap>
     </main>
   );
 };

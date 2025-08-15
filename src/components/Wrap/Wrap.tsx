@@ -1,4 +1,4 @@
-import style from "./ContainerWrap.module.css";
+import style from "./Wrap.module.css";
 
 const ContainerWrap = ({children}: { children: React.ReactNode }) => {
     return (

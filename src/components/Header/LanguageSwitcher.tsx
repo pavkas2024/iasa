@@ -4,8 +4,8 @@ import { useRouter, usePathname } from "next/navigation";
 import styles from "./LanguageSwitcher.module.css";
 
 const supportedLocales = [
-  { code: "uk", label: "Українська" },
-  { code: "en", label: "English" },
+  { code: "uk", label: "Uk" },
+  { code: "en", label: "En" },
 ];
 
 export default function LanguageSwitcher({ currentLocale }: { currentLocale: string }) {
@@ -31,7 +31,7 @@ export default function LanguageSwitcher({ currentLocale }: { currentLocale: str
           key={code}
           className={`${styles.button} ${code === currentLocale ? styles.active : ""}`}
           onClick={() => switchLocale(code)}
-          aria-pressed={code === currentLocale}
+          aria-current={code === currentLocale ? "true" : undefined}
           type="button"
         >
           {label}

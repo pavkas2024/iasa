@@ -13,11 +13,13 @@ const Hero: React.FC<Props> = ({ institut, lang }) => {
 
   return (
     <div className={styles.container}>
-         <img
-           src={imgSrc}
-            alt={t.title}
-            className={styles.image}
-        />
+        <div className={styles.photoWrap}>
+            <img
+            src={imgSrc}
+                alt={t.title}
+                className={styles.image}
+            />
+        </div>
 
       <div className={styles.details}>
         <h1 className={styles.title}>{t.title}</h1>

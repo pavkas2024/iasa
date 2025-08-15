@@ -4,6 +4,7 @@ import { InstituteData } from '@/types/api';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
+import ContainerWrap from '../Wrap/Wrap';
 
 
 type Locale = 'uk' | 'en';
@@ -20,6 +21,7 @@ const InstitutePage: React.FC<Props> = ({ locale, data }) => {
 
   return (
     <main>
+    <ContainerWrap>
       <h1>{t.submenu.strInstitute} </h1>
 
       <section>
@@ -65,6 +67,7 @@ const InstitutePage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
+    </ContainerWrap>
     </main>
   );
 };

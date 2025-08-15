@@ -2,34 +2,39 @@
   width: 100%;
   margin: 0 auto;
   padding: 0 12px;
+  height: 800px; 
+  overflow: hidden;
 }
 
 .swiper {
-  padding-bottom: 28px; /* room for pagination bullets */
-  height: auto;
+  padding-bottom: 20px;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .slide {
   height: auto;
-  padding-bottom: 12px; /* для мобільної відступ між слайдами */
+  padding-bottom: 8px;
+  min-height: 140px;
+  flex-shrink: 0;
 }
 
 .card {
   display: flex;
-  flex-direction: row; /* мобільна: горизонтальний лейаут */
+  flex-direction: column;
   align-items: flex-start;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.06);
-  height: auto;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+  height: 100%;
   gap: 12px;
   padding: 10px;
 }
 
 .image {
-  width: 100px;
-  height: 100px;
+  width: 100%;
+
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
@@ -52,13 +57,13 @@
 
 .authors {
   font-size: 12px;
-  color: var(--dark-gray); /* gray-600 */
+  color: var(--dark-gray);
   margin: 0;
 }
 
 .meta {
   font-size: 12px;
-  color: var(--additional-blue); /* gray-500 */
+  color: var(--additional-blue);
   margin: 0;
   font-style: italic;
 }
@@ -72,16 +77,16 @@
 
 .year {
   font-size: 12px;
-  color: #374151; /* gray-700 */
+  color: #374151;
 }
 
 .doiBtn {
   font-size: 12px;
-  color: var(--main); /* синій текст */
+  color: var(--main);
   background-color: transparent;
-  border: 1px solid var(--main); /* синя рамка */
+  border: 1px solid var(--main);
   padding: 4px 10px;
-  border-radius: 9999px; /* pills shape */
+  border-radius: 9999px;
   text-decoration: none;
   transition: all 0.2s ease;
   white-space: nowrap;
@@ -100,11 +105,30 @@
   border-radius: 999px;
 }
 
-/* З 768px — планшет і більше */
+@media (min-width: 380px) {
+  .wrapper{
+    height: 520px;
+  }
+  .card {
+    flex-direction: row;
+  }
+
+  .imageWrap{
+    height: 120px;
+    display: flex;
+    align-items: center; /* по вертикалі */
+    justify-content: center;
+  }
+
+  .image {
+    width: 120px;
+  }
+}
+
+/* ===== Планшети й більше (≥768px) ===== */
 
 @media (min-width: 768px) {
-  .swiper {
-    padding-bottom: 28px;
+  .wrapper{
     height: auto;
   }
 
@@ -113,12 +137,15 @@
     border-radius: 16px;
     padding: 14px;
     gap: 8px;
-    height: 100%;
+    height: 480px;
+  }
+
+  .imageWrap{
+    height: auto;
   }
 
   .image {
     width: 100%;
-    height: 200px;
     border-radius: 16px 16px 0 0;
   }
 
@@ -143,31 +170,14 @@
   }
 }
 
-/* З 1440px — великий десктоп */
+/* ===== Десктоп ≥1440px ===== */
 
 @media (min-width: 1440px) {
   .image {
-    height: 210px;
+
   }
 
   .title {
     font-size: 18px;
-  }
-
-
-}
-
-
-@media (max-width: 767px) {
-  .swiper {
-    height: auto;
-    max-height: 800px; /* або скільки хочеш */
-    overflow-y: hidden;
-  }
-
-  .slide {
-    height: auto !important;
-    min-height: 140px;
-    flex-shrink: 0;
   }
 }

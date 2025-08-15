@@ -48,11 +48,15 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
           breakpoints={{
             768: {
               direction: 'horizontal',
-              slidesPerView: 4,
+              slidesPerView: 3,
               spaceBetween: 12,
             },
+            960: {
+              slidesPerView: 4,
+              spaceBetween: 20,
+            },
             1440: {
-              slidesPerView: 6,
+              slidesPerView: 5,
               spaceBetween: 20,
             },
           }}
@@ -69,7 +73,9 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
                   role="button"
                   tabIndex={0}
                 >
-                  <img src={imgSrc} alt={t.title} className={styles.image} loading="lazy" />
+                  <div className={styles.imageWrap}>
+                    <img src={imgSrc} alt={t.title} className={styles.image} loading="lazy" />
+                  </div>
                   <div className={styles.body}>
                     <h3 className={styles.title}>{t.title}</h3>
                     <p className={styles.authors}>{t.authors}</p>

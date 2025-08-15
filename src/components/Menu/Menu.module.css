@@ -1,94 +1,173 @@
 .nav {
-    position: relative;
-    background-color: #f0f4fa; /* світлий блакитний фон */
-    border-radius: 10px;
-    padding: 8px 16px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
+  position: relative;
+  width: 100%;
+  background-color: var(--light-blue-3);
+  border-radius: 10px;
+  font-family: var(--font-family);
+}
+
+
+/* Базово бургер видно */
+.menuToggle {
+  display: none;
+}
+
+.burger {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 22px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.burger span {
+  display: block;
+  height: 4px;
+  border-radius: 2px;
+  background-color: var(--main);
+  transition: all 0.3s ease;
+  transform-origin: center;
+}
+
+/* Анімація бургер-іконки */
+.menuToggle:checked + .burger span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.menuToggle:checked + .burger span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuToggle:checked + .burger span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.menuList {
+  position: absolute;
+  top: 48px;
+  left: 0;
+  right: 0;
+  width: 180px;
+  background-color: var(--light-blue-3);
+  flex-direction: column;
+  overflow: hidden;
+  border-radius: 0 0 10px 10px;
+  max-height: 0;
+  transition: max-height 0.3s ease;
+  z-index: 1000;
+  display: flex;
+}
+
+.menuToggle:checked ~ .menuList {
+  max-height: 500px;
+}
+
+.menuList  li {
+  display: block;
+  width: 100%;
+
+}
+
+.menuList li a {
+  display: block;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--main);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease;
   
-  /* Приховуємо чекбокс */
-  .menuToggle {
-    display: none;
+}
+
+.menuList li a:hover,
+.menuList li.active a {
+  background-color: var(--main);
+  color: var(--white);
+  box-shadow: 0 3px 6px rgba(4, 68, 109, 0.5);
+}
+
+
+@media (min-width: 320px) {
+
+
+  .menuList {
+    width: 240px;
   }
-  
-  /* Бургер-іконка */
+}
+
+
+@media (min-width: 440px) {
+
+
+  .menuList {
+    width: 320px;
+  }
+
+  .menuList li a {
+    font-size: 1.1rem;
+  }
+}
+
+
+
+/* ===== Desktop версія — лише min-width! ===== */
+@media (min-width: 768px) {
   .burger {
     display: none;
-    cursor: pointer;
-    width: 30px;
-    height: 22px;
-    flex-direction: column;
-    justify-content: space-between;
   }
-  
-  .burger span {
-    display: block;
-    height: 4px;
-    border-radius: 2px;
-    background-color: #3366cc; /* темно-синій */
-    transition: 0.3s;
-  }
-  
-  /* Список меню */
+
   .menuList {
+    position: static;
     display: flex;
-    gap: 20px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    flex-direction: row;
+    max-height: none;
+    background-color: transparent;
+    overflow: visible;
+    text-align: center;
   }
-  
-  /* Активний пункт */
+
+  .menuList li {
+    margin-left: 4px;
+    margin-right: 4px;
+    display: flex;
+    align-items: center; 
+    text-align: center;
+  }
+
   .menuList li a {
-    color: #334e7b;
-    text-decoration: none;
-    font-weight: 600;
     padding: 8px 12px;
-    border-radius: 8px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    display: inline-block;
+    text-align: center;
   }
-  
-  .menuList li a:hover,
-  .menuList li.active a {
-    background-color: #3366cc; /* синій */
-    color: white;
-    box-shadow: 0 3px 6px rgba(51, 102, 204, 0.5);
+}
+
+
+@media (min-width: 880px) {
+
+
+  .menuList li a {
+    font-size: 1.2rem;
   }
-  
-  /* ===== Адаптивність ===== */
-  
-  /* Мобільний до 768px */
-  @media (max-width: 768px) {
-    .burger {
-      display: flex;
-    }
-  
-    .menuList {
-      position: absolute;
-      top: 48px;
-      left: 0;
-      right: 0;
-      background-color: #f0f4fa;
-      flex-direction: column;
-      border-radius: 0 0 10px 10px;
-      overflow: hidden;
-      max-height: 0;
-      transition: max-height 0.3s ease;
-    }
-  
-    /* Коли чекбокс вмикається - меню розгортається */
-    .menuToggle:checked ~ .menuList {
-      max-height: 300px; /* достатньо для кількох пунктів */
-    }
-  
-    .menuList li {
-      padding: 12px 16px;
-    }
-  
-    .menuList li a {
-      padding: 12px 0;
-      font-size: 18px;
-    }
+}
+
+@media (min-width: 1024px) {
+
+
+  .menuList li a {
+    font-size: 1.4rem;
   }
-  
+}
+
+@media (min-width: 1440px) {
+
+
+  .menuList li a {
+    font-size: 2rem;
+  }
+}

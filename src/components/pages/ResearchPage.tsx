@@ -8,6 +8,7 @@ import { Publication } from '@/types/publications';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
+import ContainerWrap from '../Wrap/Wrap';
 
 type Locale = 'uk' | 'en';
 
@@ -23,6 +24,7 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
 
   return (
     <main>
+     <ContainerWrap>
       <h1>{t.menu.research}</h1>
 
       <section>
@@ -60,6 +62,7 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
+     </ContainerWrap>
     </main>
   );
 };

@@ -7,6 +7,7 @@ import  { HomeData } from '@/types/api';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
+import ContainerWrap from '../Wrap/Wrap';
 
 
 type Locale = 'uk' | 'en';
@@ -23,8 +24,9 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
 
   return (
     <main>
-      <Hero institut={data.instituts[0]} lang={locale} />
-
+     
+    <Hero institut={data.instituts[0]} lang={locale} />
+    <ContainerWrap>
       <section>
         <h2>{t.submenu.procurements}</h2>
         <ul>
@@ -38,7 +40,7 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
 
       <section>
         <h2>{t.submenu.journals}</h2>
-       <p>{data.journals[0].translates[locale]?.title}</p>
+      <p>{data.journals[0].translates[locale]?.title}</p>
       </section>
 
       <section>
@@ -67,6 +69,7 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
         <h2 className="sr-only">{t.submenu.publications}</h2>
         <PublicationSlider publications={data.publications} lang={locale} />
       </section>
+     </ContainerWrap>
 
    
     </main>

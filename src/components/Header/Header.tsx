@@ -36,7 +36,7 @@ export default function Header({ locale }: HeaderProps) {
         <div className={styles.menuContainer}>
             <Menu locale={locale} menuItems={menuItems} currentPath={currentPath} />
         </div>   
-            <LanguageSwitcher currentLocale={locale} />
+        <LanguageSwitcher currentLocale={locale} />
       </nav>
     </header>
   );
