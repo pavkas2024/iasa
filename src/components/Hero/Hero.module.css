@@ -1,6 +1,7 @@
 .container{
     position: relative;
     background-color: var(--main);
+
     min-height: 200px;
     overflow: hidden;
  

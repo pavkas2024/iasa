@@ -44,4 +44,7 @@ export type HomeData = {
     publications: Publication[];
   };
   
-  export type ContactsData = Contact[];
+  export type ContactsData = {
+    instituts:  Institut[];
+    contacts: Contact[];
+  }

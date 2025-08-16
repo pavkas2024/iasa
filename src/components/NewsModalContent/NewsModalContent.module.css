@@ -1,0 +1,42 @@
+/* News.module.css */
+
+/* Вміст модалки */
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 80vh; /* обмежує висоту модалки */
+    overflow-y: auto; /* додає скрол для довгого контенту */
+    padding: 1rem;
+  }
+  
+  /* Фото у модалці */
+  .modalImage {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 12px;
+  }
+  
+  /* Заголовок новини */
+  .modalContent h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--text);
+    margin: 0;
+  }
+  
+  /* Текст опису */
+  .modalContent p {
+    font-size: 1rem;
+    color: var(--dark-gray);
+    line-height: 1.6;
+  }
+  
+  /* Дата */
+  .modalContent .date {
+    font-size: 0.85rem;
+    color: var(--gray);
+    margin-top: auto;
+  }
+  

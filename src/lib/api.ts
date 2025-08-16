@@ -90,5 +90,10 @@ export const getResearchData = async (): Promise<ResearchData> => {
 };
 
 export const getContactsData = async (): Promise<ContactsData> => {
-  return fetchJson<Contact[]>('/contacts');
+  const [instituts, contacts] = await Promise.all([
+  fetchJson<Institut[]>('/instituts'),
+  fetchJson<Contact[]>('/contacts')
+  ]);
+
+  return {instituts, contacts};
 };

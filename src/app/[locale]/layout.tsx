@@ -69,7 +69,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
       <body className={`${inter.variable}`}>
         <Header locale={locale} />
         <main className={style.container}>{children}</main>
-        <Footer />
+        <Footer locale={locale}/>
       </body>
     </html>
   );
