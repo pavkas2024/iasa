@@ -1,0 +1,111 @@
+.container {
+  padding: 1.5rem 1.5rem;
+}
+
+.grid {
+    display: grid;
+    gap: 20px;
+    justify-items: center;
+  }
+  
+    
+  .label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--main);
+    text-align: center;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    background: var(--beige);
+    border: 2px solid var(--main);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    transition: transform 0.2s ease, background 0.2s ease;
+    width: 192px;
+    height: 192px;
+    box-sizing: border-box;
+  }
+  
+  .card:hover {
+    background: var(--light-blue-3);
+    transform: translateY(-3px);
+  }
+  
+  .icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 12px;
+    fill: var(--main);
+    stroke: var(--beige);
+    color: var(--main)
+  }
+
+ 
+  
+  /* 678px – 1440px → 2 стовпці */
+
+
+  @media (min-width: 320px) and (max-width: 678px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+      width: 192px;
+      height: 192px;
+    }
+
+    .label {
+      font-size: 14px;
+
+    }
+  }
+
+  @media (min-width: 678px) and (max-width: 1440px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      width: 216px;
+      height: 216px;
+    }
+
+    .label {
+      font-size: 16px;
+
+    }
+  }
+
+   /* >1440px → 3 стовпці */
+   @media (min-width: 1441px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      width: 260px;
+      height: 260px;
+    }
+
+    .label {
+      font-size: 20px;
+
+    }
+  }
+  
+  /* <678px → 1 колонка */
+  @media (max-width: 320px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+ 

@@ -1,3 +1,12 @@
+.container {
+  padding: 1.5rem 1.5rem;
+}
+
+.sectionTitle{
+  padding-bottom: 1.5rem;
+  text-align: center;
+}
+
 .wrapper {
   width: 100%;
   margin: 0 auto;

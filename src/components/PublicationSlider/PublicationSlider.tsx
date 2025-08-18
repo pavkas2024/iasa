@@ -6,10 +6,14 @@ import { Pagination, A11y } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
+import en from '../../../public/locales/en/common.json';
+import uk from '../../../public/locales/uk/common.json';
+
 import { Publication } from '@/types/publications';
 import styles from './PublicationSlider.module.css';
 
 import Modal from '../Modal/Modal';
+import ContainerWrap from '../Wrap/Wrap';
 import PublicationModalContent from '../PublicationModalContent/PublicationModalContent';
 
 type Lang = 'uk' | 'en';
@@ -17,7 +21,10 @@ type Lang = 'uk' | 'en';
 interface Props {
   publications: Publication[];
   lang?: Lang;
+
 }
+
+const translations = { en, uk };
 
 export default function PublicationSlider({ publications, lang = 'uk' }: Props) {
   const [selectedPublication, setSelectedPublication] = useState<Publication | null>(null);
@@ -34,8 +41,12 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
     .slice()
     .sort((a, b) => Number(b.year) - Number(a.year));
 
+    const t = translations[lang];
+
   return (
-    <>
+    <section  className={styles.container}>
+        <ContainerWrap>
+         <h2 className={styles.sectionTitle}>{t.submenu.publications}</h2>
       <div className={styles.wrapper}>
         <Swiper
           key={isMobile ? 'vertical' : 'horizontal'}
@@ -106,6 +117,7 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
           <PublicationModalContent publication={selectedPublication} lang={lang} />
         </Modal>
       )}
-    </>
+      </ContainerWrap>
+    </section>
   );
 }

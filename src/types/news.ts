@@ -14,6 +14,7 @@ interface Translation {
     translates: Translates;
     photo?: string;
     date?: string;
+    link?: string;
     createdAt?: string;
     updatedAt?: string;
   }

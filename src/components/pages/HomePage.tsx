@@ -3,6 +3,7 @@ import React from 'react';
 import PublicationSlider from '../PublicationSlider/PublicationSlider';
 import Hero from '../Hero/Hero';
 import News from '../News/News';
+import MenuGrid from '../MenuGrid/MenuGrid';
 
 import  { HomeData } from '@/types/api';
 
@@ -28,41 +29,18 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
      
     <Hero institut={data.instituts[0]} lang={locale} />
 
-      <section>
-        <h2>{t.submenu.procurements}</h2>
-        <ul>
-          {data.procurements.map(inst => (
-            <li key={inst._id}>
-              {inst.translates[locale]?.title ?? '—'}
-            </li>
-          ))}
-        </ul>
-      </section>
+      <MenuGrid
+        documents={data.documents}
+        procurements={data.procurements}
+        journals={data.journals}
+        locale={locale}
+        t={t}
+      />
 
-      <section>
-        <h2>{t.submenu.journals}</h2>
-      <p>{data.journals[0].translates[locale]?.title}</p>
-      </section>
 
- 
-         <News news={data.news} lang={locale}/>
-  
-
-      <section>
-        <h2>{t.submenu.docs}</h2>
-        <ul>
-          {data.documents.map(doc => (
-            <li key={doc._id}>
-              {doc.translates[locale]?.title ?? '—'}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <h2 className="sr-only">{t.submenu.publications}</h2>
-        <PublicationSlider publications={data.publications} lang={locale} />
-      </section>
+    <News news={data.news} lang={locale}/>
+    <PublicationSlider publications={data.publications} lang={locale} />
+    
  
 
    

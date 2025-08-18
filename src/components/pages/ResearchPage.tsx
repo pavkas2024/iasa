@@ -1,5 +1,5 @@
 import React from 'react';
-
+import TwoColumnLayout from '../TwoColumnLayout/TwoColumnLayout';
 import { ResearchData } from '@/types/api';
 import { Intproject } from '@/types/intprojects';
 import { Natproject } from '@/types/natprojects';
@@ -8,7 +8,6 @@ import { Publication } from '@/types/publications';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
-import ContainerWrap from '../Wrap/Wrap';
 
 type Locale = 'uk' | 'en';
 
@@ -17,16 +16,18 @@ type Props = {
   data: ResearchData;
 };
 
-const translations = { uk, en };
+export default function ResearchPageWrapper({ locale, data }: Props) {
+  const t = locale === 'uk' ? uk : en;
 
-const ResearchPage: React.FC<Props> = ({ locale, data }) => {
-  const t = translations[locale];
+  const menuItems = [
+    { key: 'intProjects', label: t.submenu.intProjects },
+    { key: 'natProjects', label: t.submenu.natProjects },
+    { key: 'conferences', label: t.submenu.conferences },
+    { key: 'publications', label: t.submenu.publications },
+  ];
 
-  return (
-    <main>
-     <ContainerWrap>
-      <h1>{t.menu.research}</h1>
-
+  const childrenMap = {
+    intProjects: (
       <section>
         <h2>{t.submenu.intProjects}</h2>
         <ul>
@@ -35,7 +36,8 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
-
+    ),
+    natProjects: (
       <section>
         <h2>{t.submenu.natProjects}</h2>
         <ul>
@@ -44,7 +46,8 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
-
+    ),
+    conferences: (
       <section>
         <h2>{t.submenu.conferences}</h2>
         <ul>
@@ -53,7 +56,8 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
-
+    ),
+    publications: (
       <section>
         <h2>{t.submenu.publications}</h2>
         <ul>
@@ -62,9 +66,8 @@ const ResearchPage: React.FC<Props> = ({ locale, data }) => {
           ))}
         </ul>
       </section>
-     </ContainerWrap>
-    </main>
-  );
-};
+    ),
+  };
 
-export default ResearchPage;
+  return <TwoColumnLayout menuItems={menuItems} childrenMap={childrenMap} />;
+}

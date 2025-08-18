@@ -23,6 +23,9 @@ const NewsModalContent: React.FC<Props> = ({ newsItem, lang }) => {
       )}
       <h2 className={styles.title}>{t.title}</h2>
       {t.description && <p>{t.description}</p>}
+      {newsItem.link &&  <a href={newsItem.link} target="_blank" rel="noopener noreferrer">
+              {newsItem.link}
+            </a>}
       {newsItem.date && (
         <span className={styles.date}>
           {new Date(newsItem.date).toLocaleDateString(

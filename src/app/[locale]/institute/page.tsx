@@ -1,6 +1,4 @@
-import { getInstituteData } from "@/lib/api";
-import InstitutePage from "@/components/pages/InstitutePage";
-import type { InstituteData } from "@/types/api";
+import { redirect } from "next/navigation";
 
 type Locale = "uk" | "en";
 
@@ -8,10 +6,9 @@ interface PageProps {
   params: { locale: Locale };
 }
 
-export default async function Institute({ params }: PageProps) {
-    const awaitedParams = await params;  // Чекаємо, поки параметри будуть доступні
-  const { locale } = awaitedParams;
-  const data: InstituteData = await getInstituteData();
+export default async function InstituteIndex({ params }: PageProps) {
+  const { locale } = await params;
 
-  return <InstitutePage locale={locale} data={data} />;
+  // Редирект на /about
+  redirect(`/${locale}/institute/about`);
 }

@@ -1,75 +1,71 @@
 import React from 'react';
-
+import TwoColumnLayout from '../TwoColumnLayout/TwoColumnLayout';
 import { InstituteData } from '@/types/api';
-
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
-import ContainerWrap from '../Wrap/Wrap';
-
 
 type Locale = 'uk' | 'en';
 
-type Props = {
-  locale: Locale;
+interface PageProps {
+  params?: { locale?: Locale };
   data: InstituteData;
-};
+}
 
-const translations = { uk, en };
+export default function InstitutePage({ params, data }: PageProps) {
+  const locale: Locale = params?.locale ?? 'uk';
+  const t = locale === 'uk' ? uk : en;
 
-const InstitutePage: React.FC<Props> = ({ locale, data }) => {
-  const t = translations[locale];
+  const menuItems = [
+    { key: 'about', label: t.submenu.strInstitute, href: `/${locale}/institute/about` },
+    { key: 'structure', label: t.submenu.departments, href: `/${locale}/institute/structure` },
+    { key: 'staff', label: t.submenu.staff, href: `/${locale}/institute/staff` },
+    { key: 'council', label: t.submenu.scientificCouncil, href: `/${locale}/institute/council` },
+  ];
 
-  return (
-    <main>
-    <ContainerWrap>
-      <h1>{t.submenu.strInstitute} </h1>
-
+  const childrenMap = {
+    about: (
       <section>
         <h2>{t.submenu.strInstitute}</h2>
         <ul>
-          {data.instituts.map(inst => (
-            <li key={inst._id}>
-              {inst.translates[locale]?.title ?? '—'}
-            </li>
+          {data.instituts.map(i => (
+            <li key={i._id}>{i.translates[locale]?.title ?? '—'}</li>
           ))}
         </ul>
       </section>
-
+    ),
+    structure: (
       <section>
         <h2>{t.submenu.departments}</h2>
         <ul>
-          {data.departments.map(dep => (
-            <li key={dep._id}>
-              {dep.translates[locale]?.title ?? '—'}
-            </li>
+          {data.departments.map(d => (
+            <li key={d._id}>{d.translates[locale]?.title ?? '—'}</li>
           ))}
         </ul>
       </section>
-
+    ),
+    staff: (
       <section>
         <h2>{t.submenu.staff}</h2>
         <ul>
-          {data.staffs.map(staff => (
-            <li key={staff._id}>
-              {`${staff.translates[locale]?.surname ?? '—'} ${staff.translates[locale]?.name ?? ''}`.trim()}
+          {data.staffs.map(s => (
+            <li key={s._id}>
+              {`${s.translates[locale]?.surname ?? '—'} ${s.translates[locale]?.name ?? ''}`.trim()}
             </li>
           ))}
         </ul>
       </section>
-
+    ),
+    council: (
       <section>
-        <h2>{t.submenu.decisions}</h2>
+        <h2>{t.submenu.scientificCouncil}</h2>
         <ul>
-          {data.decisions.map(decision => (
-            <li key={decision._id}>
-              {decision.translates[locale]?.title ?? '—'}
-            </li>
+          {data.decisions.map(d => (
+            <li key={d._id}>{d.translates[locale]?.title ?? '—'}</li>
           ))}
         </ul>
       </section>
-    </ContainerWrap>
-    </main>
-  );
-};
+    ),
+  };
 
-export default InstitutePage;
+  return <TwoColumnLayout menuItems={menuItems} childrenMap={childrenMap} />;
+}
