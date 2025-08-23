@@ -1,4 +1,3 @@
-// app/[locale]/institute/layout.tsx
 import React, { ReactNode } from "react";
 import TwoColumnLayout from "@/components/TwoColumnLayout/TwoColumnLayout";
 import en from '../../../../public/locales/en/common.json';
@@ -11,15 +10,13 @@ interface LayoutProps {
   params: { locale: Locale };
 }
 
-export default async function InstituteLayout({ children, params }: LayoutProps) {
+export default async function IntactivityLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
   const t = locale === "uk" ? uk : en;
 
   const menuItems = [
-    { key: "about", label: t.submenu.about, href: `/${locale}/institute/about` },
-    { key: "structure", label: t.submenu.strInstitute, href: `/${locale}/institute/structure` },
-    { key: "staff", label: t.submenu.staff, href: `/${locale}/institute/staff` },
-    { key: "council", label: t.submenu.scientificCouncil, href: `/${locale}/institute/council` },
+    { key: "intprojects", label: t.submenu.intProjects, href: `/${locale}/intactivity/intprojects` },
+    { key: "cooperation", label: t.submenu.intCooperation, href: `/${locale}/intactivity/cooperation` },
   ];
 
   return <TwoColumnLayout menuItems={menuItems}>{children}</TwoColumnLayout>;

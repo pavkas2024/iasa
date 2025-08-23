@@ -16,7 +16,7 @@ export function generateStaticParams() {
 }
 
 export default async function Home({ params }: PageProps) {
-  const awaitedParams = await params;  // Чекаємо, поки параметри будуть доступні
+  const awaitedParams = await params;  
   const { locale } = awaitedParams;
   const data: HomeData = await getHomeData();
 

@@ -1,5 +1,6 @@
-import { getInstituteData } from "@/lib/api";
-import { InstituteData } from "@/types/api";
+
+import { getResearchData } from "@/lib/api";
+import { ResearchData } from "@/types/api";
 import en from '../../../../../public/locales/en/common.json';
 import uk from '../../../../../public/locales/uk/common.json';
 
@@ -9,17 +10,17 @@ interface PageProps {
   params: { locale: Locale };
 }
 
-export default async function StructurePage({ params }: PageProps) {
+export default async function SeminarsPage({ params }: PageProps) {
   const { locale } = await params;
-  const data: InstituteData = await getInstituteData();
+  const data: ResearchData = await getResearchData();
   const t = locale === 'uk' ? uk : en;
 
   return (
     <section>
-      <h2>{t.submenu.departments}</h2>
+      <h2>{t.submenu.conferences}</h2>
       <ul>
-        {data.departments.map(d => (
-          <li key={d._id}>{d.translates[locale]?.title ?? "—"}</li>
+        {data.seminars.map(i => (
+          <li key={i._id}>{i.translates[locale]?.title ?? "—"}</li>
         ))}
       </ul>
     </section>

@@ -1,17 +1,23 @@
+/* ===== Контейнер ===== */
 .twoColumnContainer {
   display: flex;
+  flex-direction: column; /* мобільні: меню зверху, контент під ним */
 }
 
+/* ===== Сайдбар / меню ===== */
 .twoColumnSidebar {
-  width: 25%;
-  background: #f5f5f5;
-  padding: 20px;
+  width: 100%; /* на мобільному повна ширина */
+  background: var(--light-blue-3);
+  padding: 10px;
+  font-size: 0.8rem;
 }
 
 .twoColumnMenu {
   list-style: none;
   padding: 0;
   margin: 0;
+  display: block; /* завжди вертикально */
+  font-weight: 600;
 }
 
 .twoColumnMenu li {
@@ -21,6 +27,7 @@
 .twoColumnMenu li a {
   text-decoration: none;
   color: #000;
+  display: block;
 }
 
 .twoColumnMenu li.active,
@@ -31,7 +38,54 @@
   border-radius: 5px;
 }
 
+/* ===== Основний контент ===== */
 .twoColumnContent {
   flex: 1;
-  padding: 20px;
+  padding: 10px;
+  font-size: 0.7rem;
+}
+
+
+@media (min-width: 320px) {
+  .twoColumnSidebar {
+    font-size: 0.9rem;
+
+  }
+
+  .twoColumnContent {
+    font-size: 0.8rem;
+  }
+}
+
+/* ===== Планшет / невеликі десктопи ===== */
+@media (min-width: 678px) {
+  .twoColumnContainer {
+    flex-direction: row; /* меню зліва */
+  }
+
+  .twoColumnSidebar {
+    width: 30%;
+    padding: 15px;
+    font-size: 1.1rem;
+  }
+
+  .twoColumnContent {
+    padding: 15px;
+    font-size: 1rem;
+  }
+}
+
+/* ===== Десктопи ===== */
+@media (min-width: 1440px) {
+  .twoColumnSidebar {
+    width: 25%;
+    padding: 20px;
+    font-size: 1.4rem;
+    
+  }
+
+  .twoColumnContent {
+    padding: 20px;
+    font-size: 1.2rem;
+  }
 }

@@ -9,6 +9,5 @@ interface PageProps {
 export default async function InstituteIndex({ params }: PageProps) {
   const { locale } = await params;
 
-  // Редирект на /about
   redirect(`/${locale}/institute/about`);
 }

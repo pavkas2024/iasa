@@ -9,9 +9,10 @@ interface PageProps {
 }
 
 export default async function Contacts({ params }: PageProps) {
-    const awaitedParams = await params;  // Чекаємо, поки параметри будуть доступні
+    const awaitedParams = await params; 
   const { locale } = awaitedParams;
-  const contacts: Contact[] = await getContactsData();
+  const data = await getContactsData();
+  const contacts: Contact[] = data.contacts;
 
   return <ContactsPage locale={locale} contacts={contacts} />;
 }

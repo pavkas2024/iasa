@@ -1,4 +1,3 @@
-// app/[locale]/institute/layout.tsx
 import React, { ReactNode } from "react";
 import TwoColumnLayout from "@/components/TwoColumnLayout/TwoColumnLayout";
 import en from '../../../../public/locales/en/common.json';
@@ -11,15 +10,15 @@ interface LayoutProps {
   params: { locale: Locale };
 }
 
-export default async function InstituteLayout({ children, params }: LayoutProps) {
+export default async function ResearchLayout({ children, params }: LayoutProps) {
   const { locale } = await params;
   const t = locale === "uk" ? uk : en;
 
   const menuItems = [
-    { key: "about", label: t.submenu.about, href: `/${locale}/institute/about` },
-    { key: "structure", label: t.submenu.strInstitute, href: `/${locale}/institute/structure` },
-    { key: "staff", label: t.submenu.staff, href: `/${locale}/institute/staff` },
-    { key: "council", label: t.submenu.scientificCouncil, href: `/${locale}/institute/council` },
+    { key: "publications", label: t.submenu.publications, href: `/${locale}/research/publications` },
+    { key: "natprojects", label: t.submenu.natProjects, href: `/${locale}/research/natprojects` },
+    { key: "intprojects", label: t.submenu.intProjects, href: `/${locale}/research/intprojects` },
+    { key: "seminars", label: t.submenu.conferences, href: `/${locale}/research/seminars` },
   ];
 
   return <TwoColumnLayout menuItems={menuItems}>{children}</TwoColumnLayout>;

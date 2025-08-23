@@ -72,12 +72,12 @@ const MenuGrid: React.FC<Props> = ({ documents, procurements, journals, locale, 
       <span className={styles.label}>{t.submenu[item.labelKey]}</span>
     </button>
   ) : (
-    <Link key={item.key} href={item.href!} className={styles.card}>
-      <svg className={styles.icon}>
-        <use href={`/spriteNew.svg#${item.id}`} />
-      </svg>
-      <span className={styles.label}>{t.submenu[item.labelKey]}</span>
-    </Link>
+    <Link key={item.key} href={`/${locale}${item.href!}`} className={styles.card}>
+    <svg className={styles.icon}>
+      <use href={`/spriteNew.svg#${item.id}`} />
+    </svg>
+    <span className={styles.label}>{t.submenu[item.labelKey]}</span>
+  </Link>
   )
 )}
       </div>
