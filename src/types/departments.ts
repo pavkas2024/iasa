@@ -20,4 +20,5 @@ export interface Department {
     };
     createdAt?: string;
     updatedAt?: string;
+    order: string;
   }

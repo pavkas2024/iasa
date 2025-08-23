@@ -1,0 +1,82 @@
+.section {
+    padding: 2rem 1rem;
+    background: var(--section-beige);
+  }
+  
+  .heading {
+    font-size: 1.8rem;
+    margin: 2rem 0 1.5rem;
+    text-align: center;
+    color: #050b22;
+    font-weight: 600;
+    border-bottom: 2px solid #04518a;
+    display: inline-block;
+    padding-bottom: 0.25rem;
+  }
+  
+  /* Списки */
+  .list,
+  .specialRoleList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+  
+  .item,
+  .specialItem {
+    background: var(--background-beige);
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 220px; /* картки без фото */
+  }
+  
+  /* Менший екран */
+  @media (max-width: 678px) {
+    .specialRoleList,
+    .list {
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+  
+    .specialItem,
+    .item {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  
+  /* Грід для науковців і фінансів на ширших екранах */
+  @media (min-width: 678px) {
+    .list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+  
+    .specialRoleList {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+  
+    .specialItem {
+      max-width: 300px;
+    }
+  }
+  
+  @media (min-width: 1440px) {
+    .item,
+    .specialItem {
+      padding: 1.5rem 2rem;
+    }
+  }
+  

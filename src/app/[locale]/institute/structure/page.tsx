@@ -1,5 +1,6 @@
 import { getInstituteData } from "@/lib/api";
 import { InstituteData } from "@/types/api";
+import DepartmentPageContent from "@/components/DepartmentPageContent/DepartmentPageContent";
 import en from '../../../../../public/locales/en/common.json';
 import uk from '../../../../../public/locales/uk/common.json';
 
@@ -10,18 +11,15 @@ interface PageProps {
 }
 
 export default async function StructurePage({ params }: PageProps) {
-  const { locale } = await params;
+  const { locale } = params;
   const data: InstituteData = await getInstituteData();
   const t = locale === 'uk' ? uk : en;
 
   return (
-    <section>
-      <h2>{t.submenu.departments}</h2>
-      <ul>
-        {data.departments.map(d => (
-          <li key={d._id}>{d.translates[locale]?.title ?? "—"}</li>
-        ))}
-      </ul>
-    </section>
+    <DepartmentPageContent
+      locale={locale}
+      departments={data.departments}
+      heading={t.submenu.departments}
+    />
   );
 }

@@ -1,3 +1,6 @@
+export type Role = "advisor" | "director" | "dep" | "secr" | "scientific" | "fin";
+
+
 export interface Staff {
     _id: string;
     photo?: string;
@@ -11,7 +14,7 @@ export interface Staff {
       wos?: string;
       academy?: string;
       facebook?: string;
-      _id?: string; // ← ID, який MongoDB додає в profiles
+      _id?: string; 
     };
     translates: {
       uk: {
@@ -36,8 +39,9 @@ export interface Staff {
         position: string;
         department: string;
       };
-      _id?: string; // ← ID, який MongoDB додає в translates
+      _id?: string; 
     };
+    role: Role;
     createdAt?: string;
     updatedAt?: string;
   }

@@ -1,0 +1,40 @@
+.section {
+    padding: 2rem 0;
+    background: var(--section-beige); /* ніжний бежевий фон секції */
+  }
+
+.heading {
+  padding: 1rem 1rem 2rem 1rem; /* верх 1rem, ліво/право 1rem, низ 2rem */
+  text-align: center; /* вирівнювання по центру */
+  font-weight: 600;
+  color: var(--text);
+  max-width: 800px; /* обмежуємо ширину для великих екранів */
+  margin: 0 auto; /* прибираємо будь-які зовнішні відступи */
+}
+  
+  .item {
+    padding: 1.5rem;
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    background: var(--background-beige);
+  }
+  
+  .title {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+    color: var(--main); /* основний синій */
+  }
+  
+  .shortTitle {
+    margin: 0 0 0.75rem;
+    font-style: italic;
+    color: var(--gray);
+  }
+  
+  .description {
+    margin: 0;
+    line-height: 1.6;
+    color: var(--dark-gray);
+    white-space: pre-line; /* зберігає абзаци */
+  }
+  

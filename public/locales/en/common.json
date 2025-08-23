@@ -35,6 +35,14 @@
       "email": "Email",
       "request": "Message"
     },
+    "staff": {
+      "advisor": "Scientific Advisor",
+      "director": "Director",
+      "dep": "Deputy Directors",
+      "secr": "Scientific Secretary",
+      "scientific": "Scientific Staff",
+      "fin": "Financial and Administrative Staff"
+    },
     "buttons": {
       "submit": "Submit",
       "more": "More"
