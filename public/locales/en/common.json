@@ -43,6 +43,12 @@
       "scientific": "Scientific Staff",
       "fin": "Financial and Administrative Staff"
     },
+    "council":{
+       "head": "Chair",
+       "dep": "Deputy Chair",
+       "secr": "Secretary",
+       "member": "Member"
+    },
     "buttons": {
       "submit": "Submit",
       "more": "More"

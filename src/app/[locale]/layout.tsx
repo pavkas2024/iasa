@@ -67,9 +67,11 @@ export default async function RootLayout({ children, params }: LayoutProps) {
   return (
     <html lang={locale} data-scroll-behavior="smooth">
       <body className={`${inter.variable}`}>
-        <Header locale={locale} />
+       <div className={style.pagecontainer}>
+       <Header locale={locale} />
         <main className={style.container}>{children}</main>
         <Footer locale={locale}/>
+       </div>
       </body>
     </html>
   );

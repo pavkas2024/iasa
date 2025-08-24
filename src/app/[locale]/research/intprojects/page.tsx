@@ -1,6 +1,7 @@
 
 import { getResearchData } from "@/lib/api";
 import { ResearchData } from "@/types/api";
+import  IntProjectsPageContent from "@/components/IntProjectsPageContent/IntProjectsPageContent";
 import en from '../../../../../public/locales/en/common.json';
 import uk from '../../../../../public/locales/uk/common.json';
 
@@ -16,13 +17,10 @@ export default async function IntProjectsPage({ params }: PageProps) {
   const t = locale === 'uk' ? uk : en;
 
   return (
-    <section>
-      <h2>{t.submenu.intProjects}</h2>
-      <ul>
-        {data.intprojects.map(i => (
-          <li key={i._id}>{i.translates[locale]?.title ?? "—"}</li>
-        ))}
-      </ul>
-    </section>
+    <IntProjectsPageContent
+    locale={locale}
+    intprojects={data.intprojects}
+    heading={t.submenu.intProjects}
+  />
   );
 }

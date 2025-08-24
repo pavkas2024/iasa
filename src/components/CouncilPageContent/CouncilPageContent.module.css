@@ -1,0 +1,75 @@
+.section {
+    padding: 2rem 1rem;
+    background: var(--section-beige);
+  }
+  
+  .heading {
+    font-size: 1.8rem;
+    margin: 2rem 0 1.5rem;
+    text-align: center;
+    color: #050b22;
+    font-weight: 600;
+    border-bottom: 2px solid #04518a;
+    display: inline-block;
+    padding-bottom: 0.25rem;
+  }
+  
+  /* --- списки --- */
+  .list,
+  .specialRoleList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 1.5rem;
+  }
+  
+  .list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    justify-items: center;
+  }
+  
+  .specialRoleList {
+    display: flex;
+    justify-content: center;
+  }
+  
+  /* --- елементи --- */
+  .item,
+  .specialItem {
+    background: var(--background-beige);
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 220px; /* картки без фото */
+  }
+  
+  /* --- мобілка --- */
+  @media (max-width: 678px) {
+    .list,
+    .specialRoleList {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+  
+    .item,
+    .specialItem {
+      width: 100%;
+      max-width: 300px;
+    }
+  }
+  
+  /* --- ширші екрани --- */
+  @media (min-width: 1440px) {
+    .item,
+    .specialItem {
+      padding: 1.5rem 2rem;
+    }
+  }
+  

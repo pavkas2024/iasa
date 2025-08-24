@@ -60,18 +60,21 @@
 /* ===== Планшет / невеликі десктопи ===== */
 @media (min-width: 678px) {
   .twoColumnContainer {
-    flex-direction: row; /* меню зліва */
+    flex-direction: row;
+    min-height: 75vh; /* меню зліва */
   }
 
   .twoColumnSidebar {
     width: 30%;
     padding: 15px;
     font-size: 1.1rem;
+    
   }
 
   .twoColumnContent {
     padding: 15px;
     font-size: 1rem;
+   
   }
 }
 

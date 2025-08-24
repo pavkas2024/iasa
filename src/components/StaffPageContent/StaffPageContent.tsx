@@ -52,7 +52,7 @@ export default function StaffPageContent({
           </ul>
         </>
       )}
-      
+
       {directorStaff && (
         <>
           <h2 className={styles.heading}>{director}</h2>
@@ -96,11 +96,14 @@ export default function StaffPageContent({
         <>
           <h2 className={styles.heading}>{scientific}</h2>
           <ul className={styles.list}>
-            {scientificStaff.map((s) => (
-              <li key={s._id} className={styles.item}>
-                <StaffCard staff={s} locale={locale} />
-              </li>
-            ))}
+            {scientificStaff
+              .slice()
+              .sort((a, b) => Number(a.order) - Number(b.order))
+              .map((s) => (
+                <li key={s._id} className={styles.item}>
+                  <StaffCard staff={s} locale={locale} />
+                </li>
+              ))}
           </ul>
         </>
       )}
@@ -109,11 +112,14 @@ export default function StaffPageContent({
         <>
           <h2 className={styles.heading}>{fin}</h2>
           <ul className={styles.list}>
-            {finStaff.map((s) => (
-              <li key={s._id} className={styles.item}>
-                <StaffCard staff={s} locale={locale} />
-              </li>
-            ))}
+            {finStaff
+              .slice()
+              .sort((a, b) => Number(a.order) - Number(b.order))
+              .map((s) => (
+                <li key={s._id} className={styles.item}>
+                  <StaffCard staff={s} locale={locale} />
+                </li>
+              ))}
           </ul>
         </>
       )}

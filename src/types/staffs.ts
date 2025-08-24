@@ -41,6 +41,7 @@ export interface Staff {
       };
       _id?: string; 
     };
+    order: string;
     role: Role;
     createdAt?: string;
     updatedAt?: string;
