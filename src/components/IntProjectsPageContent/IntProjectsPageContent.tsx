@@ -45,16 +45,20 @@ export default function IntProjectsPageContent({ intprojects, locale, heading }:
               {t.context && <div className={styles.context}>{t.context}</div>}
               {t.head && <div className={styles.head}>{t.head}</div>}
               {t.partners && t.partners.length > 0 && (
-                <ul className={styles.partnersList}>
-                    {t.partners.map((p, index) => (
-                    <li key={index}>
-                        <a href={p.link} target="_blank" rel="noopener noreferrer">
-                        {p.title}
-                        </a>
-                    </li>
-                    ))}
-                </ul>
-                )}
+            <ul className={styles.partnersList}>
+              {t.partners.map((p, index) => (
+                <li key={index}>
+                  {p.link ? (
+                    <a href={p.link} target="_blank" rel="noopener noreferrer">
+                      {p.title}
+                    </a>
+                  ) : (
+                    <p>{p.title}</p>
+                  )}
+                </li>
+              ))}
+            </ul>
+          )}
               {t.results && <div className={styles.results}>{t.results}</div>}
               {(dept.yearStart || dept.yearFinish) && (
                     <div className={styles.year}>

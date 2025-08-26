@@ -14,7 +14,7 @@ export interface Partner {
         head: string;
         title: string;
         results?: string;
-        partners: Partner[];
+        partners?: Partner[];
         _id?: string; // додано для вкладеного _id в translates.uk
       };
       en: {
@@ -22,7 +22,7 @@ export interface Partner {
         head: string;
         title: string;
         results?: string;
-        partners: Partner[];
+        partners?: Partner[];
         _id?: string; // додано для вкладеного _id в translates.en
       };
       _id?: string;  // додано для _id в кореневому translates
