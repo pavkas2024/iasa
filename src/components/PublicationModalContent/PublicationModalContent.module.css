@@ -2,6 +2,18 @@
     display: flex;
     flex-direction: column;
     gap: 16px;
+
+    max-height: 80vh; /* обмежує висоту модалки */
+    overflow-y: auto; /* додає скрол для довгого контенту */
+    padding: 1rem;
+  
+    /* Приховати скролбар, але дозволити прокрутку */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
   
   .image {

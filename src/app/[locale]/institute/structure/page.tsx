@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 export default async function StructurePage({ params }: PageProps) {
-  const { locale } = params;
+  const { locale } = await params;
   const data: InstituteData = await getInstituteData();
   const t = locale === 'uk' ? uk : en;
 

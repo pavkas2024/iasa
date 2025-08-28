@@ -29,11 +29,19 @@
       "conferences": "Conferences and Seminars",
       "procurements": "Public Procurements"
     },
+    "adress":{
+      "build": "build."
+    },
     "form": {
       "title": "Contact Us",
       "name": "Your Name",
       "email": "Email",
-      "request": "Message"
+      "message": "Message",
+      "send": "Send",
+      "sending": "Sending...",
+      "success": "Message sent!",
+      "error": "Submission error.",
+      "generalError": "Something went wrong."
     },
     "staff": {
       "advisor": "Scientific Advisor",

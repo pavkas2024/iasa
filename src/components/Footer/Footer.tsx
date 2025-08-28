@@ -6,6 +6,9 @@ import styles from './Footer.module.css';
 import { Contact } from "@/types/contacts";
 import { Institut } from "@/types/instituts";
 
+import en from '../../../public/locales/en/common.json';
+import uk from '../../../public/locales/uk/common.json';
+
 type Locale = "uk" | "en";
 
 type FooterProps = {
@@ -14,7 +17,8 @@ type FooterProps = {
 
 export default async function Footer({ locale }: FooterProps) {
   const {instituts, contacts} = await getContactsData();
-
+ 
+  const d = locale === "uk" ? uk : en;
 
   if (!contacts || contacts.length === 0) return null;
 
@@ -23,7 +27,7 @@ export default async function Footer({ locale }: FooterProps) {
   const t = contact.translates[locale];
   const tt = institut.translates[locale];
 
-  const fullAddress = `${t.street}, ${contact.build}, ${t.city}, ${contact.indexPost}`;
+  const fullAddress = `${t.street}, ${contact.build}, ${d.adress.build} ${contact.corp}, ${t.city}, ${contact.indexPost}`;
   const email = contact.email;
   const phone = contact.phone;
   const facebook = contact.linkFacebook;

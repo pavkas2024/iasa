@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from "react";
 import { usePathname } from "next/navigation";
@@ -30,14 +30,23 @@ export default function Header({ locale }: HeaderProps) {
     { path: "contacts", label: t.menu.contacts },
   ];
 
+ 
+
   return (
-    <header>
-      <nav className={styles.nav}>
-        <div className={styles.menuContainer}>
-            <Menu locale={locale} menuItems={menuItems} currentPath={currentPath} />
-        </div>   
-        <LanguageSwitcher currentLocale={locale} />
-      </nav>
-    </header>
+    <header className={styles.header}>
+  <nav className={styles.nav}>
+    <div className={styles.logoContainer}>
+      <a href={`/${locale}`}>
+        <img src={locale === "uk" ? "/iasaUkr.png" : "/iasaEng.png"} alt="Logo" className={styles.logo} />
+      </a>
+    </div>
+
+    <div className={styles.menuContainer}>
+      <Menu locale={locale} menuItems={menuItems} currentPath={currentPath} />
+    </div>
+
+    <LanguageSwitcher currentLocale={locale} />
+  </nav>
+</header>
   );
 }

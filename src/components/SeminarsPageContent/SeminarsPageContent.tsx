@@ -27,24 +27,14 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
   const totalPages = Math.ceil(sortedSeminars.length / itemsPerPage);
 
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentProjects = sortedSeminars.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
+  const currentProjects = sortedSeminars.slice(startIndex, startIndex + itemsPerPage);
   // -------------------
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalPhoto, setModalPhoto] = useState<string | null>(null);
+  const isModalOpen = modalPhoto !== null;
 
-  const openModal = (photo: string) => {
-    setModalPhoto(photo);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalPhoto(null);
-  };
+  const openModal = (photo: string) => setModalPhoto(photo);
+  const closeModal = () => setModalPhoto(null);
 
   return (
     <section className={styles.section}>
@@ -70,7 +60,6 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
                   ))}
                 </div>
               )}
-
               {dept.date && <p className={styles.date}>{dept.date}</p>}
               {dept.link && (
                 <div className={styles.doi}>
@@ -90,11 +79,15 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
         onPageChange={setCurrentPage}
       />
 
-     {isModalOpen && modalPhoto && (
-        <Modal onClose={closeModal}>
-          <img src={modalPhoto} alt="Велике фото" style={{ width: '100%', height: 'auto', borderRadius: '5px' }} />
-        </Modal>
-      )}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        {modalPhoto && (
+          <img
+            src={modalPhoto}
+            alt="Велике фото"
+            style={{ width: '100%', height: 'auto', borderRadius: '5px' }}
+          />
+        )}
+      </Modal>
     </section>
   );
 }

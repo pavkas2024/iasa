@@ -1,8 +1,12 @@
 import React from 'react';
 
 import ContainerWrap from '../Wrap/Wrap';
+import ContactForm from '../ContactForm/ContactForm';
+import ContactInfo from '../ContactInfo/ContactInfo';
 
 import { Contact } from '@/types/contacts';
+
+import styles from './ContactsPage.module.css';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
@@ -22,19 +26,16 @@ const ContactsPage: React.FC<Props> = ({ locale, contacts }) => {
   return (
     <main>
       <ContainerWrap>
-        <h1>{t.menu.contacts}</h1>
+        <h1 className={styles.heading}>{t.menu.contacts}</h1>
 
-        <ul>
-          {contacts.map(contact => (
-            <li key={contact._id}>
-              {contact.translates[locale].city}, {contact.translates[locale].street}, {contact.build} {contact.corp || ''}
-              <br />
-              {contact.phone}
-              <br />
-              Email: {contact.email}
-            </li>
-          ))}
-        </ul>
+        <div className={styles.contactsWrapper}>
+          <ContactInfo contacts={contacts} locale={locale} />
+
+         <div className={styles.formWrap}>
+         <h2 className={styles.heading}>{t.form.title}</h2>
+          <ContactForm locale={locale} />
+         </div>
+        </div>
       </ContainerWrap>
     </main>
   );

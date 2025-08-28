@@ -1,0 +1,101 @@
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+  
+  /* Лейбли */
+  .label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+    color: var(--text);
+  }
+  
+  /* Інпут та текстове поле */
+  .input,
+  .textarea {
+    margin-top: 0.5rem;
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  /* Текстове поле */
+  .textarea {
+    min-height: 120px; /* мобілка/планшет */
+    resize: vertical;
+  }
+  
+  /* Кнопка */
+  .button {
+    background-color: var(--main);
+    color: #fff;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    width: 100%; /* мобілка: на всю ширину */
+  }
+  
+  .button:hover {
+    background-color: var(--hover-blue);
+  }
+  
+  /* Сховане поле (honeypot) */
+  .hiddenField {
+    display: none;
+  }
+  
+  .srOnly {
+    position: absolute;
+    left: -9999px;
+  }
+  
+  /* 📱 Планшет: 2 колонки */
+  @media (min-width: 768px) {
+    .contactForm {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      max-width: 600px;
+    }
+  
+    .fullWidth {
+      grid-column: span 2;
+    }
+  
+    .textarea {
+      min-height: 150px; /* трохи вище на планшеті */
+    }
+  
+    .button {
+      grid-column: span 2;
+      width: auto; /* кнопка не на всю ширину */
+      justify-self: end;
+      font-size: 1.1rem;
+      padding: 0.9rem 2rem;
+    }
+  }
+  
+  /* 🖥 Десктоп: textarea вдвічі вище, ширша форма */
+  @media (min-width: 1440px) {
+    .contactForm {
+      max-width: 900px;
+      gap: 1.5rem;
+    }
+  
+    .textarea {
+      min-height: 300px; /* вдвічі більше за мобільну */
+    }
+  
+    .button {
+      font-size: 1.2rem;
+      padding: 1rem 2.5rem;
+    }
+  }
+  

@@ -72,6 +72,14 @@
     text-decoration: none;
     font-size: 0.9rem;
   }
+
+  .link a {
+    display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+  }
   
   .link a:hover,
   .profilesRow a:hover {
