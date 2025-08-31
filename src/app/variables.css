@@ -21,6 +21,6 @@
     --gray: #888888;
     --light-gray: #dcdcdc;
 
-    font-family: var(--font-inter), sans-serif;
+    --font-inter: 'Inter', system-ui, sans-serif;
     }
     

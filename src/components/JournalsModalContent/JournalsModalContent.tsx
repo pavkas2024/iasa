@@ -4,26 +4,37 @@ import { Journal } from "@/types/journals";
 import styles from './JournalsModalContent.module.css';
 
 type Props = {
-  journals: Journal[];
+  journal: Journal;
   locale: "uk" | "en";
 };
 
-const JournalsModalContent: React.FC<Props> = ({ journals, locale }) => {
+const JournalsModalContent: React.FC<Props> = ({ journal, locale }) => {
+  if (!journal) return null;
+
+  const title = journal.translates[locale]?.title ?? "—";
+  const description = journal.translates[locale]?.description ?? "";
+
   return (
-    <div>
-      <h2>Журнал</h2>
-    
-      <ul>
-        {journals.map((journal) => (
-          <li key={journal._id}>
-              <img src={journal.photo} alt={journal.translates[locale]?.title}    className={styles.image} />
-            <a href={journal.link} target="_blank" rel="noopener noreferrer">
-              {journal.translates[locale]?.title ?? "—"}
-            </a>
-            <p>{journal.translates[locale]?.description} </p>
-          </li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <h2 className={styles.heading}>{title}</h2>
+
+      {journal.photo && (
+        <img
+          src={journal.photo}
+          alt={title}
+          className={styles.image}
+        />
+      )}
+
+      {journal.link && (
+        <p className={styles.link}>
+          <a href={journal.link} target="_blank" rel="noopener noreferrer">
+          {journal.link}
+          </a>
+        </p>
+      )}
+
+      {description && <p className={styles.description}>{description}</p>}
     </div>
   );
 };

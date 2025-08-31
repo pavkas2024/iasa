@@ -43,10 +43,14 @@ export default function DepartmentPageContent({ publications, locale, heading }:
             <li key={dept._id} className={styles.item} style={{ whiteSpace: "pre-line" }}>
               <p className={styles.title}>{t.title}</p>
               {t.authors && <div className={styles.authors}>{t.authors}</div>}
-              {t.journal && <div className={styles.journal}>{t.journal}</div>}
+              <div className={styles.journalLine}>
+                {t.journal && <span className={styles.journalName}>{t.journal}</span>}
+                {t.pages && <div className={styles.pages}>{t.pages}</div>}
+              </div>
+
               {t.publisher && <div className={styles.publisher}>{t.publisher}</div>}
               {t.city && <div className={styles.city}>{t.city}</div>}
-              {t.pages && <div className={styles.pages}>{t.pages}</div>}
+             
               {t.description && <div className={styles.description}>{t.description}</div>}
               {t.other && <div className={styles.other}>{t.other}</div>}
               {dept.issn && <div className={styles.issn}>ISSN: {dept.issn}</div>}

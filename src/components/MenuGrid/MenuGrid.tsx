@@ -19,7 +19,7 @@ type ModalType = "documents" | "procurement" | "journals" | null;
 type Props = {
   documents: InstituteDocument[];
   procurements: Procurement[];
-  journals: Journal[];
+  journal: Journal;
   locale: Locale;
   t: any;
 };
@@ -39,7 +39,7 @@ const items: {
   { id: "icon-proc", key: "procurement", labelKey: "procurements", action: "modal" },
 ];
 
-const MenuGrid: React.FC<Props> = ({ documents, procurements, journals, locale, t }) => {
+const MenuGrid: React.FC<Props> = ({ documents, procurements, journal, locale, t }) => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
   const isModalOpen = activeModal !== null;
 
@@ -50,7 +50,7 @@ const MenuGrid: React.FC<Props> = ({ documents, procurements, journals, locale, 
       case "procurement":
         return <ProcurementsModalContent procurements={procurements} locale={locale} />;
       case "journals":
-        return <JournalsModalContent journals={journals} locale={locale} />;
+        return <JournalsModalContent journal={journal} locale={locale} />;
       default:
         return null;
     }

@@ -23,6 +23,7 @@ const translations = { en, uk };
 
 const HomePage: React.FC<Props> = ({ locale, data }) => {
   const t = translations[locale];
+  const journal = data.journals[0];
 
   return (
     <main>
@@ -32,7 +33,7 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
       <MenuGrid
         documents={data.documents}
         procurements={data.procurements}
-        journals={data.journals}
+        journal={journal}
         locale={locale}
         t={t}
       />
