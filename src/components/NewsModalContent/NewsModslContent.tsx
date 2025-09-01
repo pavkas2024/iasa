@@ -28,9 +28,7 @@ const NewsModalContent: React.FC<Props> = ({ newsItem, lang }) => {
             </a>}
       {newsItem.date && (
         <span className={styles.date}>
-          {new Date(newsItem.date).toLocaleDateString(
-            lang === 'uk' ? 'uk-UA' : 'en-US'
-          )}
+          {newsItem.date}
         </span>
       )}
     </div>

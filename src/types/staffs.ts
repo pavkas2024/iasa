@@ -26,7 +26,7 @@ export interface Staff {
         acadTitle2?: string;
         info?: string;
         position: string;
-        department: string;
+        department?: string;
       };
       en: {
         name: string;
@@ -37,7 +37,7 @@ export interface Staff {
         acadTitle2?: string;
         info?: string;
         position: string;
-        department: string;
+        department?: string;
       };
       _id?: string; 
     };

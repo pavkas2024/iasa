@@ -57,7 +57,7 @@ const News: React.FC<Props> = ({ news, lang }) => {
                   <div className={styles.detailsBottom}>
                     {pub.date && (
                       <span className={styles.date}>
-                        {new Date(pub.date).toLocaleDateString(lang === 'uk' ? 'uk-UA' : 'en-US')}
+                        {pub.date}
                       </span>
                     )}
                     <button

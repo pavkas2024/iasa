@@ -59,7 +59,8 @@
     },
     "buttons": {
       "submit": "Submit",
-      "more": "More"
+      "more": "More",
+      "open": "Open link"
     }
   }
   

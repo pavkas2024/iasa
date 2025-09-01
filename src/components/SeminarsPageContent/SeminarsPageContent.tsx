@@ -7,6 +7,9 @@ import Modal from "../Modal/Modal";
 import parseDate from "@/utils/parseDate";
 import styles from './SeminarsPageContent.module.css';
 
+import en from '../../../public/locales/en/common.json';
+import uk from '../../../public/locales/uk/common.json';
+
 type Locale = "uk" | "en";
 
 interface Props {
@@ -36,6 +39,8 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
   const openModal = (photo: string) => setModalPhoto(photo);
   const closeModal = () => setModalPhoto(null);
 
+  const d = locale === "uk" ? uk : en; 
+
   return (
     <section className={styles.section}>
       <h2 className={styles.heading}>{heading}</h2>
@@ -64,7 +69,7 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
               {dept.link && (
                 <div className={styles.doi}>
                   <a href={dept.link} target="_blank" rel="noopener noreferrer">
-                    {dept.link}
+                    {d.buttons.open}
                   </a>
                 </div>
               )}

@@ -24,17 +24,24 @@ export default function CouncilPageContent({
 }: Props) {
   if (!staffs || staffs.length === 0) return null;
 
-  // Вибираємо конкретних людей за order
+  // Головний
   const headStaff = staffs.find((s) => s.order === "1000");
-  const depStaff = staffs.find((s) => s.order === "1110");
+
+  // Заступники (1100 та 1110) з сортуванням
+  const depStaffs = staffs
+    .filter((s) => s.order === "1100" || s.order === "1110")
+    .sort((a, b) => Number(a.order) - Number(b.order));
+
+  // Секретар
   const secrStaff = staffs.find((s) => s.order === "1220");
 
-  // Формуємо список членів ради
+  // Члени ради
   const memberStaffs = staffs
     .filter(
       (s) =>
         s.council === "так" &&
         s.order !== "1000" &&
+        s.order !== "1100" &&
         s.order !== "1110" &&
         s.order !== "1220"
     )
@@ -54,13 +61,15 @@ export default function CouncilPageContent({
         </>
       )}
 
-      {depStaff && (
+      {depStaffs.length > 0 && (
         <>
           <h2 className={styles.heading}>{dep}</h2>
           <ul className={styles.specialRoleList}>
-            <li className={styles.specialItem}>
-              <StaffCard staff={depStaff} locale={locale} />
-            </li>
+            {depStaffs.map((s) => (
+              <li key={s._id} className={styles.specialItem}>
+                <StaffCard staff={s} locale={locale} />
+              </li>
+            ))}
           </ul>
         </>
       )}
