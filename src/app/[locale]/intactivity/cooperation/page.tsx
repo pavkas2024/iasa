@@ -11,6 +11,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Міжнародна співпраця ІПСА | International Cooperation of the IASA",
+  description: "Інформація про міжнародну співпрацю Інституту прикладного системного аналізу. Information about international cooperation of the Institute of Applied System Analysis.",
+};
+
 export default async function CooperationPage({ params }: PageProps) {
   const { locale } = await params;
   const data: IntActivityData = await getIntActivityData();

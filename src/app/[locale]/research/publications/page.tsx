@@ -11,6 +11,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Публікації ІПСА | Publications of the IASA",
+  description: "Інформація про наукові публікації Інституту прикладного системного аналізу. Information about scientific publications of the Institute of Applied System Analysis.",
+};
+
 export default async function PublicationsPage({ params }: PageProps) {
   const { locale } = await params;
   const data: ResearchData = await getResearchData();

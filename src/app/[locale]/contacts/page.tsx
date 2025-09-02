@@ -8,6 +8,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Контакти ІПСА | Contacts of the IASA",
+  description: "Контактна інформація Інституту прикладного системного аналізу. Contact information of the Institute of Applied System Analysis.",
+};
+
 export default async function Contacts({ params }: PageProps) {
     const awaitedParams = await params; 
   const { locale } = awaitedParams;

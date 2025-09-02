@@ -11,6 +11,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Національні проєкти ІПСА | National Projects of the IASA",
+  description: "Інформація про національні проєкти Інституту прикладного системного аналізу. Information about national projects of the Institute of Applied System Analysis.",
+};
+
 export default async function NatProjectsPage({ params }: PageProps) {
   const { locale } = await params;
   const data: ResearchData = await getResearchData();

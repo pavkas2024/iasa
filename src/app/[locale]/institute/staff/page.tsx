@@ -11,6 +11,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Співробітники ІПСА | Staff of the IASA",
+  description: "Інформація про співробітників Інституту прикладного системного аналізу та їх посади. Information about the staff of the Institute of Applied System Analysis and their positions.",
+};
+
 export default async function StaffPage({ params }: PageProps) {
   const { locale } = await params;
   const data: InstituteData = await getInstituteData();

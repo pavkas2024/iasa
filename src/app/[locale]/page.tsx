@@ -15,6 +15,11 @@ export function generateStaticParams() {
   ];
 }
 
+export const metadata = {
+  title: "ІПСА – Інститут прикладного системного аналізу | IASA – Institute of Applied System Analysis",
+  description: "Офіційний сайт Інституту прикладного системного аналізу. Official website of the Institute of Applied System Analysis.",
+};
+
 export default async function Home({ params }: PageProps) {
   const awaitedParams = await params;  
   const { locale } = awaitedParams;

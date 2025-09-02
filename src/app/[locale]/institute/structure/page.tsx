@@ -10,6 +10,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Структура Інституту ІПСА | Structure of the IASA",
+  description: "Інформація про структурні підрозділи Інституту прикладного системного аналізу. Information about the structural departments of the Institute of Applied System Analysis.",
+};
+
 export default async function StructurePage({ params }: PageProps) {
   const { locale } = await params;
   const data: InstituteData = await getInstituteData();

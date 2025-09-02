@@ -11,6 +11,11 @@ interface PageProps {
   params: { locale: Locale };
 }
 
+export const metadata = {
+  title: "Семінари працівників ІПСА | Staff's Seminars of the IASA",
+  description: "Інформація про наукові семінари та конференції працівників Інституту прикладного системного аналізу. Information about scientific seminars and conferences of the staff of the Institute of Applied System Analysis.",
+};
+
 export default async function SeminarsPage({ params }: PageProps) {
   const { locale } = await params;
   const data: ResearchData = await getResearchData();

@@ -1,8 +1,8 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 
-import PublicationSlider from '../PublicationSlider/PublicationSlider';
+
 import Hero from '../Hero/Hero';
-import News from '../News/News';
 import MenuGrid from '../MenuGrid/MenuGrid';
 
 import  { HomeData } from '@/types/api';
@@ -11,6 +11,8 @@ import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
 
 
+const News = dynamic(() => import('../News/News'));
+const PublicationSlider = dynamic(() => import('../PublicationSlider/PublicationSlider'));
 
 type Locale = 'uk' | 'en';
 
