@@ -21,12 +21,19 @@ export default function StaffCard({ staff, locale }: StaffCardProps) {
         )}
         <div className={styles.mainInfo}>
           <p className={styles.fullName}>
-            {[d.surname, d.name, d.patronymic].filter(Boolean).join(" ")}
+            {[d.name, d.patronymic, d.surname].filter(Boolean).join(" ")}
           </p>
-          <div className={styles.degreeLine}>
-            {d.degree && <span>{d.degree}</span>}
-            {d.acadTitle && <span>{d.acadTitle}</span>}
-            {d.acadTitle2 && <span>{d.acadTitle2}</span>}
+
+          <div className={styles.degreeBlock}>
+            <div className={styles.degreeLine}>
+              {d.degree && <span>{d.degree}</span>}
+              {d.acadTitle && <span>{d.acadTitle}</span>}
+            </div>
+            {d.acadTitle2 && (
+              <div className={styles.degreeLine}>
+                <span>{d.acadTitle2}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>

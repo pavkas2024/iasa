@@ -1,126 +1,132 @@
 .topBlock {
-    display: flex;
-    gap: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.photo {
+  width: 100px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex-shrink: 0;
+}
+
+/* Для карток без фото */
+.noPhoto .topBlock {
+  justify-content: center;
+}
+
+.mainInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.fullName {
+  font-weight: bold;
+  font-size: 1.1rem;
+  color: #04518a;
+  margin: 0;
+}
+
+.degreeBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.degreeLine {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.3rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.bottomBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+  text-align: center;
+}
+
+.position {
+  font-weight: 500;
+  color: #222;
+}
+
+.department {
+  font-weight: bold;
+  color: #050b22;
+}
+
+.info {
+  font-size: 0.9rem;
+  color: #444;
+}
+
+.link a,
+.profilesRow a {
+  color: #04518a;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.link a {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.link a:hover,
+.profilesRow a:hover {
+  text-decoration: underline;
+}
+
+.profilesRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 678px) {
+  .topBlock {
+    flex-direction: column;
     align-items: center;
-    width: 100%;
-    margin-bottom: 1rem;
   }
-  
+
+  .photo {
+    width: 120px;
+    height: 160px;
+  }
+}
+
+@media (max-width: 320px) {
+  .fullName {
+    font-size: 1rem;
+  }
+
   .photo {
     width: 100px;
     height: 140px;
-    object-fit: cover;
-    border-radius: 8px;
-    flex-shrink: 0;
   }
-  
-  /* Для карток без фото */
-  .noPhoto .topBlock {
-    justify-content: center;
-  }
-  
-  .mainInfo {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-  
-  .fullName {
-    font-weight: bold;
-    font-size: 1.1rem;
-    color: #04518a;
-    margin: 0;
-  }
-  
-  .degreeLine {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-    font-size: 0.9rem;
-    color: #555;
-    margin-top: 0.25rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .bottomBlock {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .position {
-    font-weight: 500;
-    color: #222;
-  }
-  
-  .department {
-    font-weight: bold;
-    color: #050b22;
-  }
-  
-  .info {
-    font-size: 0.9rem;
-    color: #444;
-  }
-  
-  .link a,
-  .profilesRow a {
-    color: #04518a;
-    text-decoration: none;
-    font-size: 0.9rem;
-  }
+}
 
-  .link a {
-    display: inline-block;
-      max-width: 100%;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+@media (min-width: 1440px) {
+  .photo {
+    width: 140px;
+    height: 180px;
   }
-  
-  .link a:hover,
-  .profilesRow a:hover {
-    text-decoration: underline;
-  }
-  
-  .profilesRow {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-  }
-  
-  /* RESPONSIVE */
-  @media (max-width: 678px) {
-    .topBlock {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .photo {
-      width: 120px;
-      height: 160px;
-    }
-  }
-  
-  @media (max-width: 320px) {
-    .fullName {
-      font-size: 1rem;
-    }
-  
-    .photo {
-      width: 100px;
-      height: 140px;
-    }
-  }
-  
-  @media (min-width: 1440px) {
-    .photo {
-      width: 140px;
-      height: 180px;
-    }
-  }
-  
+}
