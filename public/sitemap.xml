@@ -2,7 +2,7 @@
 <urlset
     xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
     xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
+
   <!-- Головна сторінка -->
   <url>
     <loc>https://iasa-two.vercel.app/</loc>
@@ -21,6 +21,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
   </url>
 
+  <url>
+    <loc>https://iasa-two.vercel.app/en/institute</loc>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/institute"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
+  </url>
+
   <!-- Research -->
   <url>
     <loc>https://iasa-two.vercel.app/uk/research</loc>
@@ -29,6 +37,7 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/research"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/research"/>
   </url>
+
   <url>
     <loc>https://iasa-two.vercel.app/en/research</loc>
     <changefreq>daily</changefreq>
@@ -45,6 +54,7 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/intactivity"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/intactivity"/>
   </url>
+
   <url>
     <loc>https://iasa-two.vercel.app/en/intactivity</loc>
     <changefreq>daily</changefreq>
@@ -61,6 +71,7 @@
     <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/contacts"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/contacts"/>
   </url>
+
   <url>
     <loc>https://iasa-two.vercel.app/en/contacts</loc>
     <changefreq>daily</changefreq>
