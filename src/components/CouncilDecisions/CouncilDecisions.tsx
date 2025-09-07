@@ -1,7 +1,7 @@
 'use client';
 
 import React from "react";
-import { Decision } from "@/types/api";
+import { Decision } from "@/types/decisions";
 import styles from './CouncilDecisions.module.css';
 
 type Locale = "uk" | "en";

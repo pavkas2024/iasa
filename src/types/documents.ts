@@ -13,4 +13,5 @@ export interface InstituteDocument {
     };
     createdAt?: string;
     updatedAt?: string;
+    year: string;
   }

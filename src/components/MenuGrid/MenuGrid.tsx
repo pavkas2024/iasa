@@ -17,6 +17,14 @@ import { Translation } from "@/types/common";
 type Locale = "uk" | "en";
 type ModalType = "documents" | "procurement" | "journals" | null;
 
+type SubmenuKeys =
+  | "docs"
+  | "intProjects"
+  | "journals"
+  | "scientificCouncil"
+  | "departments"
+  | "procurements";
+
 type Props = {
   documents: InstituteDocument[];
   procurements: Procurement[];
@@ -28,7 +36,7 @@ type Props = {
 const items: {
   id: string;
   key: string;
-  labelKey: string; // ключ з submenu
+  labelKey: SubmenuKeys;
   action: "modal" | "link";
   href?: string;
 }[] = [

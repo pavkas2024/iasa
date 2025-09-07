@@ -13,4 +13,5 @@ export interface Decision {
     };
     createdAt?: string;
     updatedAt?: string;
+    year: string;
   }

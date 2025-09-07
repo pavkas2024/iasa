@@ -1,4 +1,5 @@
-import { ReactNode } from "react"; // додати цей імпорт
+// src/app/[locale]/layout.tsx
+import { ReactNode } from "react";
 import { notFound, redirect } from "next/navigation";
 import { cookies } from "next/headers";
 
@@ -16,20 +17,27 @@ const supportedLocales: Locale[] = ["uk", "en"];
 
 interface LayoutProps {
   children: ReactNode;
-  params: Promise<{ locale: Locale }>;
+  params: { locale: Locale } | Promise<{ locale: Locale }>;
 }
 
 export default async function LocaleLayout({ children, params }: LayoutProps) {
-  const { locale } = await params;
+  // Дочекатися params, якщо це Promise
+  const resolvedParams = params instanceof Promise ? await params : params;
+  const { locale } = resolvedParams;
 
   if (!supportedLocales.includes(locale)) {
     notFound();
   }
 
+  // Дочекатися cookies
   const cookieStore = await cookies();
   const preferredLocale = cookieStore.get("preferredLocale")?.value;
 
-  if (preferredLocale && preferredLocale !== locale && supportedLocales.includes(preferredLocale)) {
+  if (
+    preferredLocale &&
+    preferredLocale !== locale &&
+    (preferredLocale === "uk" || preferredLocale === "en")
+  ) {
     redirect(`/${preferredLocale}`);
   }
 
