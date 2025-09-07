@@ -9,7 +9,7 @@ type Props = {
 
 const PublicationModalContent: React.FC<Props> = ({ publication, lang }) => {
   const t = publication.translates[lang];
-  const imgSrc = publication.photo || '/placeholderPublication.png';
+  const imgSrc = publication.photo || '/placeholderPublication.webp';
 
   return (
     <div className={styles.container}>
