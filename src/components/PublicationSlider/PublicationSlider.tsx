@@ -84,7 +84,7 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
           >
             {sortedPublications.map((pub) => {
               const t = pub.translates[lang];
-              const imgSrc = pub.photo || '/placeholderPublication.png';
+              const imgSrc = pub.photo || '/placeholderPublication.webp';
 
               return (
                 <SwiperSlide key={pub._id} className={styles.slide}>
