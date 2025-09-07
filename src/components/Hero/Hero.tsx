@@ -18,7 +18,7 @@ const Hero: React.FC<Props> = ({ institut, lang }) => {
           src="/building.png"
           alt={t.title}
           fill
-          style={{ objectFit: 'contain' }} // зберігає пропорції і покриває контейнер
+          style={{ objectFit: 'cover' }} // зберігає пропорції і покриває контейнер
           priority // для швидкого preloading головного зображення
         />
       </div>
