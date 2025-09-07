@@ -15,8 +15,7 @@ export const metadata = {
 };
 
 export default async function Contacts({ params }: PageProps) {
-    const awaitedParams = params; 
-  const { locale } = awaitedParams;
+  const { locale } = params;
   const data = await getContactsData();
   const contacts: Contact[] = data.contacts;
 
