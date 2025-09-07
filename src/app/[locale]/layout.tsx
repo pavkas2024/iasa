@@ -1,3 +1,16 @@
+import { ReactNode } from "react"; // додати цей імпорт
+import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
+
+import style from "./Layout.module.css";
+import Header from "@/components/Header/Header";
+import Footer from "@/components/Footer/Footer";
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin", "cyrillic"]
+});
+
 type Locale = "uk" | "en";
 const supportedLocales: Locale[] = ["uk", "en"];
 
