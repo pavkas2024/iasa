@@ -1,137 +1,119 @@
-.container{
+.container {
     position: relative;
     background-color: var(--main);
-
-    min-height: 200px;
     overflow: hidden;
- 
     padding: 2rem;
-}
-
-.photoWrap {
-    position: relative;
-    max-width: 100%;
-    max-height: 300px; /* для мобільних */
-    margin-bottom: 1rem;
+  
+    display: flex;
+    flex-direction: column; /* Мобільна версія: картинка зверху, текст знизу */
+    align-items: center;
+    gap: 1.5rem;
+  
+    min-height: 300px;
   }
-
-  .image {
-    position: relative; 
-    background-color: var(--main); 
-    max-width: 100%;
-    z-index: 1;
-  }
-
-.details{
+  
+  .photoWrap {
     position: relative;
-    z-index: 1;
+    width: 100%;
+    max-width: 500px;
+  
+    /* Зберігаємо пропорції картинки 3:2 */
+    aspect-ratio: 3 / 2;
+  
+    /* Це обов'язково для next/image з fill */
+    overflow: hidden;
+  }
+  
+  .details {
     color: white;
     text-align: center;
-}
-
-.title{
+    max-width: 500px;
+  }
+  
+  .title {
     color: var(--background-beige);
-    font-size: 1rem;
-    padding: 12px;
-}
-
-.shortTitle{
+    font-size: 1.2rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .shortTitle {
     color: var(--white);
-    font-size: 0.8rem;
-    padding: 12px;
-}
-
-
-
-
-@media (min-width: 320px) {
-    .container{
-        min-height: 300px;
-    }
-
-    .title{
-        font-size: 1.2rem;
-        padding: 12px;
-    }
-    
-    .shortTitle{
-        font-size: 1rem;
-        padding: 12px;
-    }
-}
-
-@media (min-width: 768px) {
-    .container{
-        min-height: 400px;
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        text-align: center;
-        gap: 5%;
-    }
-
-    .photoWrap {
-        height: 400px;
-      }
-
-    .details{
-        text-align: start;
-        width: 40%;
-    }
-    
-    .title{
-        font-size: 1.4rem;
-        padding: 12px;
-    }
-    
-    .shortTitle{
-        font-size: 1.1rem;
-        padding: 12px;
-    }
-}
-
-@media (min-width: 768px) {
+    font-size: 1rem;
+  }
+  
+  /* Від 768px — текст і фото поруч */
+  @media (min-width: 768px) {
     .container {
-      display: flex;
+      flex-direction: row;
+      justify-content: center;
       align-items: center;
-      justify-content: space-between;
-      text-align: left;
       gap: 2rem;
+      min-height: 400px;
     }
   
     .photoWrap {
-      width: 350px;       /* половина ширини */  /* висота контейнера */
-      margin-bottom: 0;
+      max-width: 350px;
     }
   
     .details {
-      width: 350px;       /* половина ширини */
-    }}
-
-
-    @media (min-width: 1024px) {
-        .photoWrap {
-          width: 500px;/* обов'язково */
-        }
-      }
-
-@media (min-width: 1440px) {
-    .container{
-        min-height: 720px;
+      text-align: left;
+      width: 350px;
     }
-
-    .title{
-        font-size: 2rem;
-        padding: 12px;
-        padding-bottom: 24px;
+  
+    .title {
+      font-size: 1.4rem;
     }
+  
+    .shortTitle {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Від 1024px */
+  @media (min-width: 1024px) {
+    .container {
+      min-height: 500px;
+      gap: 3rem;
+    }
+  
     .photoWrap {
-       
-        width: 700px;
-      }
-    .shortTitle{
-        font-size: 1.6rem;
-        padding: 12px;
+      max-width: 500px;
     }
-}
+  
+    .details {
+      width: 500px;
+    }
+  
+    .title {
+      font-size: 1.6rem;
+    }
+  
+    .shortTitle {
+      font-size: 1.3rem;
+    }
+  }
+  
+  /* Від 1440px */
+  @media (min-width: 1440px) {
+    .container {
+      min-height: 720px;
+    }
+  
+    .photoWrap {
+      max-width: 700px;
+    }
+  
+    .details {
+      width: 700px;
+    }
+  
+    .title {
+      font-size: 2rem;
+      padding-bottom: 1rem;
+    }
+  
+    .shortTitle {
+      font-size: 1.6rem;
+    }
+  }
+  
