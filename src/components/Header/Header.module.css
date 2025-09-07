@@ -28,7 +28,18 @@
   justify-content: center;
   text-align: center;
 }
+.logoWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
+.logoWrapper img {
+  display: block;
+  height: auto;
+  width: auto;
+  max-height: 76px; /* або 60px для середніх екранів через медіа-запити */
+}
 
 
 .logo {

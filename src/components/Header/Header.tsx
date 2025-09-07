@@ -34,13 +34,13 @@ export default function Header({ locale }: HeaderProps) {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.logoContainer}>
-          <a href={`/${locale}`}>
+        <a href={`/${locale}`} className={styles.logoWrapper} title={locale === "uk" ? "Головна сторінка" : "Home"}>
             <Image
               src={logoSrc}
               alt="Logo"
-              width={76} // максимальна висота для великих екранів
-              height={76}
-              className={styles.logo}
+              width={106} // оригінальна ширина
+              height={145} // оригінальна висота
+              style={{ height: 'auto', width: 'auto', maxHeight: '76px' }} // обмежує висоту, зберігає пропорції
               priority
             />
           </a>
