@@ -7,7 +7,7 @@ type Locale = "uk" | "en";
 
 interface LayoutProps {
   children: ReactNode;
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>;
 }
 
 export default async function IntactivityLayout({ children, params }: LayoutProps) {
