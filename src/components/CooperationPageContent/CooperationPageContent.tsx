@@ -14,23 +14,18 @@ interface Props {
 }
 
 export default function CooperationPageContent({ collaborations, locale, heading }: Props) {
-  if (!collaborations || collaborations.length === 0) return null;
 
-
-  // ---- пагінація ----
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const totalPages = Math.ceil(collaborations.length / itemsPerPage);
+  if (!collaborations || collaborations.length === 0) return null;
 
+  const totalPages = Math.ceil(collaborations.length / itemsPerPage);
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentCollaboration = collaborations.slice(
     startIndex,
     startIndex + itemsPerPage
   );
-  // -------------------
-
-
 
   return (
     <section className={styles.section}>
@@ -44,15 +39,9 @@ export default function CooperationPageContent({ collaborations, locale, heading
               {t.description && <p className={styles.description}>{t.description}</p>}
               {dept.photo && dept.photo.length > 0 && (
                 <div className={styles.photo}>
-                    <img
-                      src={dept.photo}
-                      alt={t.org}
-                      className={styles.photo}
-                    />
+                  <img src={dept.photo} alt={t.org} className={styles.photo} />
                 </div>
               )}
-
-              
               {dept.link && (
                 <div className={styles.doi}>
                   <a href={dept.link} target="_blank" rel="noopener noreferrer">
@@ -60,18 +49,15 @@ export default function CooperationPageContent({ collaborations, locale, heading
                   </a>
                 </div>
               )}
-
-           {dept.publications && dept.publications.length > 0 && (
+              {dept.publications && dept.publications.length > 0 && (
                 <ul className={styles.publicationsList}>
-                    {dept.publications.map((p, index) => (
+                  {dept.publications.map((p, index) => (
                     <li key={index}>
-                        <p>
-                        {p}
-                        </p>
+                      <p>{p}</p>
                     </li>
-                    ))}
+                  ))}
                 </ul>
-                )}
+              )}
             </li>
           );
         })}
@@ -82,7 +68,6 @@ export default function CooperationPageContent({ collaborations, locale, heading
         totalPages={totalPages}
         onPageChange={setCurrentPage}
       />
-
     </section>
   );
 }

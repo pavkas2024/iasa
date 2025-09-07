@@ -59,7 +59,7 @@ export default function ContactForm({ locale }: ContactFormProps) {
       } else {
         toast.error(formTexts.error);
       }
-    } catch (err) {
+    } catch {
       toast.error(formTexts.generalError);
     } finally {
       setSubmitting(false);

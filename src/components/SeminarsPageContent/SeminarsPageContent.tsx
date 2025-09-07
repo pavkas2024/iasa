@@ -19,13 +19,13 @@ interface Props {
 }
 
 export default function SeminarsPageContent({ seminars, locale, heading }: Props) {
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  
   if (!seminars || seminars.length === 0) return null;
 
   const sortedSeminars = seminars.slice().sort((a, b) => parseDate(b.date) - parseDate(a.date));
 
-  // ---- пагінація ----
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(sortedSeminars.length / itemsPerPage);
 

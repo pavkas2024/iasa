@@ -14,15 +14,16 @@ interface Props {
 }
 
 export default function IntProjectsPageContent({ intprojects, locale, heading }: Props) {
+  
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+
   if (!intprojects || intprojects.length === 0) return null;
 
   const sortedIntProjects = intprojects
     .slice()
     .sort((a, b) => Number(b.yearStart) - Number(a.yearStart));
 
-  // ---- пагінація ----
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(sortedIntProjects.length / itemsPerPage);
 
