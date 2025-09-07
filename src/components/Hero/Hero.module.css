@@ -10,21 +10,21 @@
 
 .photoWrap {
     position: relative;
-    width: 100%;
-    height: 300px; /* для мобільних */
+    max-width: 100%;
+    max-height: 300px; /* для мобільних */
     margin-bottom: 1rem;
   }
 
   .image {
     position: relative; 
     background-color: var(--main); 
-    overflow: hidden;
+    max-width: 100%;
     z-index: 1;
   }
 
 .details{
     position: relative;
-    z-index: 2;
+    z-index: 1;
     color: white;
     text-align: center;
 }
@@ -101,13 +101,12 @@
     }
   
     .photoWrap {
-      width: 50%;       /* половина ширини */
-      height: 400px;    /* висота контейнера */
+      width: 350px;       /* половина ширини */  /* висота контейнера */
       margin-bottom: 0;
     }
   
     .details {
-      width: 50%;       /* половина ширини */
+      width: 350px;       /* половина ширини */
     }}
 
 
