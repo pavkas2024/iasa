@@ -70,29 +70,6 @@
   }
   
   /* Від 1024px */
-  @media (min-width: 1024px) {
-    .container {
-      min-height: 500px;
-      gap: 3rem;
-    }
-  
-    .photoWrap {
-      max-width: 500px;
-      max-height: 320px;
-    }
-  
-    .details {
-      width: 500px;
-    }
-  
-    .title {
-      font-size: 1.6rem;
-    }
-  
-    .shortTitle {
-      font-size: 1.3rem;
-    }
-  }
   
   /* Від 1440px */
   @media (min-width: 1440px) {
