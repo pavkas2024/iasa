@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { Institut } from '@/types/instituts';
 import styles from './Hero.module.css';
 
@@ -8,18 +9,19 @@ type Props = {
 };
 
 const Hero: React.FC<Props> = ({ institut, lang }) => {
-    const imgSrc = '/building.png';
   const t = institut.translates[lang];
 
   return (
     <div className={styles.container}>
-        <div className={styles.photoWrap}>
-            <img
-            src={imgSrc}
-                alt={t.title}
-                className={styles.image}
-            />
-        </div>
+      <div className={styles.photoWrap}>
+        <Image
+          src="/building.png"
+          alt={t.title}
+          fill
+          style={{ objectFit: 'contain' }} // зберігає пропорції і покриває контейнер
+          priority // для швидкого preloading головного зображення
+        />
+      </div>
 
       <div className={styles.details}>
         <h1 className={styles.title}>{t.title}</h1>
