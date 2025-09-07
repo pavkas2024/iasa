@@ -12,7 +12,6 @@ import styles from "./MenuGrid.module.css";
 import { InstituteDocument } from "@/types/documents";
 import { Procurement } from "@/types/procurements";
 import { Journal } from "@/types/journals";
-import { StyledString } from "next/dist/build/swc/types";
 import { Translation } from "@/types/common";
 
 type Locale = "uk" | "en";

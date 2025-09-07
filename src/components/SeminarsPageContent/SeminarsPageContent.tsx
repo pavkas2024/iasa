@@ -21,6 +21,9 @@ interface Props {
 export default function SeminarsPageContent({ seminars, locale, heading }: Props) {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
+
+  const [modalPhoto, setModalPhoto] = useState<string | null>(null);
+  const isModalOpen = modalPhoto !== null;
   
   if (!seminars || seminars.length === 0) return null;
 
@@ -33,8 +36,7 @@ export default function SeminarsPageContent({ seminars, locale, heading }: Props
   const currentProjects = sortedSeminars.slice(startIndex, startIndex + itemsPerPage);
   // -------------------
 
-  const [modalPhoto, setModalPhoto] = useState<string | null>(null);
-  const isModalOpen = modalPhoto !== null;
+ 
 
   const openModal = (photo: string) => setModalPhoto(photo);
   const closeModal = () => setModalPhoto(null);

@@ -14,15 +14,14 @@ interface Props {
 }
 
 export default function DepartmentPageContent({ publications, locale, heading }: Props) {
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  
   if (!publications || publications.length === 0) return null;
 
   const sortedPublications = publications
     .slice()
     .sort((a, b) => Number(b.year) - Number(a.year));
-
-  // ---- пагінація ----
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(sortedPublications.length / itemsPerPage);
 

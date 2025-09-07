@@ -14,15 +14,15 @@ interface Props {
 }
 
 export default function NatProjectsPageContent({ natprojects, locale, heading }: Props) {
+  
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
   if (!natprojects || natprojects.length === 0) return null;
 
   const sortedNatProjects = natprojects
     .slice()
     .sort((a, b) => Number(b.yearStart) - Number(a.yearStart));
 
-  // ---- пагінація ----
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
 
   const totalPages = Math.ceil(sortedNatProjects.length / itemsPerPage);
 
