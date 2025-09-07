@@ -2,6 +2,7 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 import { getTranslation } from "@/lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -17,11 +18,8 @@ type HeaderProps = {
 export default function Header({ locale }: HeaderProps) {
   const t = getTranslation(locale);
   const pathname = usePathname();
-
-  // Визначаємо активний шлях без локалі, напр. /uk/institute => institute
   const currentPath = pathname.split("/")[2] || "home";
 
-  // Створюємо масив меню з шляхами і лейблами з перекладу
   const menuItems = [
     { path: "home", label: t.menu.home },
     { path: "institute", label: t.menu.institute },
@@ -30,23 +28,30 @@ export default function Header({ locale }: HeaderProps) {
     { path: "contacts", label: t.menu.contacts },
   ];
 
- 
+  const logoSrc = locale === "uk" ? "/iasaUkr.png" : "/iasaEng.png";
 
   return (
     <header className={styles.header}>
-  <nav className={styles.nav}>
-    <div className={styles.logoContainer}>
-      <a href={`/${locale}`}>
-        <img src={locale === "uk" ? "/iasaUkr.png" : "/iasaEng.png"} alt="Logo" className={styles.logo} />
-      </a>
-    </div>
+      <nav className={styles.nav}>
+        <div className={styles.logoContainer}>
+          <a href={`/${locale}`}>
+            <Image
+              src={logoSrc}
+              alt="Logo"
+              width={76} // максимальна висота для великих екранів
+              height={76}
+              className={styles.logo}
+              priority
+            />
+          </a>
+        </div>
 
-    <div className={styles.menuContainer}>
-      <Menu locale={locale} menuItems={menuItems} currentPath={currentPath} />
-    </div>
+        <div className={styles.menuContainer}>
+          <Menu locale={locale} menuItems={menuItems} currentPath={currentPath} />
+        </div>
 
-    <LanguageSwitcher currentLocale={locale} />
-  </nav>
-</header>
+        <LanguageSwitcher currentLocale={locale} />
+      </nav>
+    </header>
   );
 }
