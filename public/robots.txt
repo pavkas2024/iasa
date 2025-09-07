@@ -1,8 +1,8 @@
 User-agent: *
 Allow: /
-Sitemap: https://example.com/uk/sitemap.xml
+Sitemap: https://iasa-two.vercel.app/uk/sitemap.xml
 
 # Англійська версія
 User-agent: *
 Allow: /
-Sitemap: https://example.com/en/sitemap.xml
+Sitemap: https://iasa-two.vercel.app/en/sitemap.xml

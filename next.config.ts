@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  // experimental: { appDir: true }, // Цю секцію видали
+  reactStrictMode: false,
+  images: {
+    formats: ['image/avif', 'image/webp'], // Автоматично генерує сучасні формати
+  },
 };
 
 export default nextConfig;
