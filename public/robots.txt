@@ -1,8 +1,9 @@
+# *
 User-agent: *
 Allow: /
-Sitemap: https://iasa-two.vercel.app/uk/sitemap.xml
 
-# Англійська версія
-User-agent: *
-Allow: /
-Sitemap: https://iasa-two.vercel.app/en/sitemap.xml
+# Host
+Host: https://iasa-two.vercel.app
+
+# Sitemaps
+Sitemap: https://iasa-two.vercel.app/sitemap.xml
