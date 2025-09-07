@@ -1,60 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <!-- Головна -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://iasa-two.vercel.app</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en"/>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
   </url>
-
-  <!-- Institute -->
   <url>
     <loc>https://iasa-two.vercel.app/uk/institute</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/institute"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iasa-two.vercel.app/en/institute</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/institute"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Research -->
   <url>
     <loc>https://iasa-two.vercel.app/uk/research</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/research"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/research"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iasa-two.vercel.app/en/research</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/research"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/research"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <!-- IntActivity -->
   <url>
     <loc>https://iasa-two.vercel.app/uk/intactivity</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/intactivity"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/intactivity"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iasa-two.vercel.app/en/intactivity</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/intactivity"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/intactivity"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
-
-  <!-- Contacts -->
   <url>
     <loc>https://iasa-two.vercel.app/uk/contacts</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/contacts"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/contacts"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://iasa-two.vercel.app/en/contacts</loc>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/contacts"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/contacts"/>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
   </url>
-
 </urlset>
