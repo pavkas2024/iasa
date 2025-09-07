@@ -1,91 +1,92 @@
+/* ContactsPage.module.css */
+
+/* Основна обгортка контактів */
 .contactsWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    margin-top: 2rem;
-  }
-  
-  /* Заголовки */
-  .heading {
-    font-size: 1.8rem;
-    margin: 2rem 0 1.5rem;
-    text-align: center;
-    color: var(--text);
-    font-weight: 600;
-    border-bottom: 2px solid var(--main);
-    display: inline-block;
-    padding-bottom: 0.25rem;
-  }
-  
-  /* ContactInfo */
-  .contactInfoBlock {
-    padding: 1rem 0; /* трохи простору між контактами і формою */
-  }
-  
-  /* Контактні поля */
+  display: flex;
+  flex-direction: column; /* колона */
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Заголовки */
+.heading {
+  font-size: 1.8rem;
+  margin: 2rem 0 1.5rem;
+  text-align: center;
+  color: var(--text);
+  font-weight: 600;
+  border-bottom: 2px solid var(--main);
+  display: inline-block;
+  padding-bottom: 0.25rem;
+}
+
+/* Блок контактів (ContactInfo і додаткові люди) */
+.contactInfoBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* відстань між контактами */
+}
+
+/* Поля контактів */
+.contactField {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.contactField span {
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+/* Ссилки на пошту */
+.contactField a {
+  color: var(--main);
+  text-decoration: underline;
+}
+
+/* Контейнер для форми */
+.formWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* центрування форми */
+  width: 100%;
+  background-color: var(--light-blue-3); /* фон тільки під формою */
+  border: 1px solid var(--light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.formWrap h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.formWrap > * {
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Мобільні шрифти */
+@media (max-width: 768px) {
   .contactField {
-    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+}
+
+/* Планшет і десктоп */
+@media (min-width: 768px) {
+  .contactField {
+    font-size: 1rem;
     line-height: 1.8;
-    font-size: 1.05rem;
-    color: var(--text);
   }
-  
-  .contactField span {
-    font-weight: 500;
+}
+
+@media (min-width: 1440px) {
+  .contactField {
+    font-size: 1.1rem;
+    line-height: 2;
   }
-  
-  /* Контейнер для форми */
-  .formWrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* центрування форми */
-    width: 100%;
-    background-color: var(--light-blue-3); /* фон тільки під формою */
-    border: 1px solid var(--light-gray);
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  }
-  
-  .formWrap h2 {
-    text-align: center;
-    margin-bottom: 1rem;
-  }
-  
-  .formWrap > * {
-    width: 100%;
-    max-width: 600px;
-  }
-  
-  /* Мобільні шрифти */
-  @media (min-width: 320px) {
-    .contactField {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-  }
-  
-  /* Планшет і вище */
-  @media (min-width: 768px) {
-    .contactsWrapper {
-      gap: 3rem;
-    }
-  
-    .contactField {
-      font-size: 1.1rem;
-      line-height: 1.8;
-    }
-  }
-  
-  /* Десктоп 1440px+ */
-  @media (min-width: 1440px) {
-    .contactsWrapper {
-      gap: 4rem;
-    }
-  
-    .contactField {
-      font-size: 1.2rem;
-      line-height: 2;
-    }
-  }
-  
+}

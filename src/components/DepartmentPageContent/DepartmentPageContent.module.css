@@ -1,69 +1,80 @@
-/* DepartmentsPageContent.module.css */
+
+
 
 .section {
-    padding: 2rem 0;
-    background: var(--section-beige); /* ніжний бежевий фон секції */
-  }
-  
-  .heading {
-    padding: 1rem 1rem 2rem 1rem; /* верх 1rem, ліво/право 1rem, низ 2rem */
-    text-align: center;
-    font-weight: 600;
-    color: var(--text);
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem; /* відстань між відділами */
-  }
-  
-  .item {
-    padding: 1.5rem;
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    background: var(--background-beige);
-  }
-  
-  .title {
-    margin: 0 0 0.25rem;
-    font-weight: 600;
-    color: var(--main); /* основний синій */
-  }
-  
-  .shortTitle {
-    margin: 0 0 0.75rem;
-    font-style: italic;
-    color: var(--gray);
-  }
-  
-  .head {
-    margin: 0 0 0.75rem;
-    font-weight: 500;
-    color: var(--main);
-  }
-  
-  .description {
-    margin: 0 0 0.75rem;
-    line-height: 1.6;
-    color: var(--dark-gray);
-    white-space: pre-line; /* зберігає перенос рядків і маркери */
-  }
-  
-  .projects {
-    list-style: disc inside;
-    margin: 0;
-    padding-left: 1.5rem;
-  }
-  
-  .projects li {
-    margin-bottom: 0.5rem;
-    color: var(--dark-gray);
-    line-height: 1.5;
-  }
-  
+  padding: 2rem 0;
+  background: var(--section-beige);
+}
+
+.heading {  padding: 1rem 1rem 2rem 1rem; /* верх 1rem, ліво/право 1rem, низ 2rem */
+  text-align: center; /* вирівнювання по центру */
+  font-weight: 600;
+  color: var(--text);
+  max-width: 800px; /* обмежуємо ширину для великих екранів */
+  margin: 0 auto; /* прибираємо будь-які зовнішні відступи */
+ }
+
+/* Додатковий клас для h3 відділів */
+.roleHeading {
+  font-size: 1.2rem;          /* як у h2 */
+  text-align: center;
+  color: #050b22;
+  font-weight: 600;
+  border-bottom: 2px solid #04518a;
+  display: inline-block;
+  padding-bottom: 0.25rem;
+  margin: 2rem 0 1.5rem;      /* відступи як у h2 */
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 2rem 0; /* відступ після списку */
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem; /* відстань між відділами */
+}
+
+.item {
+  padding: 1.5rem;
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  background: var(--background-beige);
+}
+
+.title {
+  margin: 0 0 0.25rem;
+  font-weight: 600;
+  color: var(--main); /* основний синій */
+}
+
+.shortTitle {
+  margin: 0 0 0.75rem;
+  font-style: italic;
+  color: var(--gray);
+}
+
+.head {
+  margin: 0 0 0.75rem;
+  font-weight: 500;
+  color: var(--main);
+}
+
+.description {
+  margin: 0 0 0.75rem;
+  line-height: 1.6;
+  color: var(--dark-gray);
+  white-space: pre-line; /* зберігає перенос рядків і маркери */
+}
+
+.projects {
+  list-style: disc inside;
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.projects li {
+  margin-bottom: 0.5rem;
+  color: var(--dark-gray);
+  line-height: 1.5;
+}

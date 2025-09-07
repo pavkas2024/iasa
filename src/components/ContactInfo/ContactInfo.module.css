@@ -14,6 +14,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     line-height: 1.6;
     color: var(--text);
+    font-size: 0.9rem;
   }
   
   /* Адаптивність: планшет і вище — дві колонки */
@@ -23,6 +24,9 @@
       grid-template-columns: 1fr 1fr; /* перша колонка — контакти, друга — форма */
       gap: 2rem;
       align-items: start;
+    }
+    .contactItem {
+      font-size: 1rem;
     }
   }
   

@@ -29,8 +29,8 @@ export default function CouncilPageContent({
 
   // Заступники (1100 та 1110) з сортуванням
   const depStaffs = staffs
-    .filter((s) => s.order === "1100" || s.order === "1110")
-    .sort((a, b) => Number(a.order) - Number(b.order));
+    .filter((s) => s.order === "1110" || s.order === "1100")
+    .sort((a, b) => Number(b.order) - Number(a.order));
 
   // Секретар
   const secrStaff = staffs.find((s) => s.order === "1220");

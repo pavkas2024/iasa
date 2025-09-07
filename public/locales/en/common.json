@@ -53,10 +53,24 @@
     },
     "council":{
        "head": "Chair",
-       "dep": "Deputy Chair",
+       "dep": "Deputy Chairs",
        "secr": "Secretary",
        "member": "Member"
     },
+    "contacts":{
+      "adv": "Scientific advisor M. Zgurovsky",
+      "dir": "Director P. Kasyanov",
+      "dep": "Deputy director N. Pankratova",
+      "secr": "Scientific secretary O. Kirik",
+      "org": "Head of Research Management Department L. Paliichuk"
+   },
+    "department":{
+      "sci": "Scientific",
+      "edu": "Educational",
+      "org": "Organizational & Scientific",
+      "fin": "Administration & Finance",
+      "pub": "Editorial"
+   },
     "buttons": {
       "submit": "Submit",
       "more": "More",

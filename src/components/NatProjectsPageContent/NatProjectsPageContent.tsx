@@ -54,7 +54,7 @@ export default function NatProjectsPageContent({ natprojects, locale, heading }:
                     )}
 
               {dept.rk && <div className={styles.rk}>{dept.rk}</div>}
-              {dept.funding && <div className={styles.funding}>{dept.funding}</div>}
+            
               {dept.link && (
                 <div className={styles.doi}>
                   <a href={dept.link} target="_blank" rel="noopener noreferrer">
