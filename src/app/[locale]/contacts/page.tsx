@@ -11,12 +11,15 @@ export const metadata = {
     "Контактна інформація Інституту прикладного системного аналізу. Contact information of the Institute of Applied System Analysis.",
 };
 
+// Для App Router у Next.js 15+ params треба await
 export default async function Contacts({
   params,
 }: {
-  params: { locale: Locale };
+  params: Promise<{ locale: Locale }>; 
 }) {
-  const { locale } = params;
+  const awaitedParams = await params;
+  const { locale } = awaitedParams;
+
   const data = await getContactsData();
   const contacts: Contact[] = data.contacts;
 

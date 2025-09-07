@@ -2,11 +2,11 @@ import { redirect } from "next/navigation";
 
 type Locale = "uk" | "en";
 
-interface PageProps {
-  params: { locale: Locale };
-}
-
-export default async function InstituteIndex({ params }: PageProps) {
+export default async function InstituteIndex({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
   const { locale } = await params;
 
   redirect(`/${locale}/institute/about`);

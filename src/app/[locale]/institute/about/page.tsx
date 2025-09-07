@@ -7,16 +7,16 @@ import AboutPageContent from "@/components/AboutPage/AboutPageContent";
 
 type Locale = "uk" | "en";
 
-interface PageProps {
-  params: { locale: Locale };
-}
-
 export const metadata = {
   title: "Про Інститут ІПСА | About the IASA",
   description: "Інформація про історію та діяльність Інституту прикладного системного аналізу. Information about the history and activities of the Institute of Applied System Analysis.",
 };
 
-export default async function AboutPage({ params }: PageProps) {
+export default async function AboutPage({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
   const { locale } = await params;
   const data: InstituteData = await getInstituteData();
   const t = locale === 'uk' ? uk : en;

@@ -4,10 +4,6 @@ import type { HomeData } from "@/types/api";
 
 type Locale = "uk" | "en";
 
-interface PageProps {
-  params: { locale: Locale };
-}
-
 export function generateStaticParams() {
   return [
     { locale: "uk" },
@@ -20,9 +16,12 @@ export const metadata = {
   description: "Офіційний сайт Інституту прикладного системного аналізу. Official website of the Institute of Applied System Analysis.",
 };
 
-export default async function Home({ params }: PageProps) {
-  const awaitedParams = await params;  
-  const { locale } = awaitedParams;
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}) {
+  const { locale } = await params;
   const data: HomeData = await getHomeData();
 
   return <HomePage locale={locale} data={data} />;
