@@ -113,10 +113,10 @@
 
     @media (min-width: 1024px) {
         .photoWrap {
-          width: 50%;
-          height: 500px; /* обов'язково */
+          width: 500px;/* обов'язково */
         }
       }
+
 @media (min-width: 1440px) {
     .container{
         min-height: 720px;
@@ -128,8 +128,8 @@
         padding-bottom: 24px;
     }
     .photoWrap {
-        height: 720px;
-        width: 50%;
+       
+        width: 700px;
       }
     .shortTitle{
         font-size: 1.6rem;
