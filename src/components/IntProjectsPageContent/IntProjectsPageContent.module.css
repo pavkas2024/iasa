@@ -109,6 +109,18 @@
   text-decoration: underline;
 }
 
+
+.doi a,
+.partnersList a {
+  display: inline-block;      /* щоб працював перенос */
+  max-width: 100%;            /* не більше ширини картки */
+  overflow-wrap: break-word;   /* переносити довгі слова */
+  word-break: break-word;      /* ще один варіант для довгих URL */
+  text-decoration: underline;
+  color: var(--main);
+}
+
+.doi a:hover,
 .partnersList a:hover {
   color: var(--hover-blue);
 }

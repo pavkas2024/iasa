@@ -3,10 +3,10 @@
 }
 
 .grid {
-    display: grid;
-    gap: 20px;
-    justify-items: center;
-  }
+  display: grid;
+  gap: 20px;
+  justify-items: center;
+}
   
     
   .label {
@@ -52,60 +52,47 @@
   /* 678px – 1440px → 2 стовпці */
 
 
-  @media (min-width: 320px) and (max-width: 678px) {
+  @media (max-width: 520px) {
     .grid {
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: 1fr;
     }
-
     .card {
-      width: 192px;
+      width: 100%;
+      max-width: 192px;
       height: 192px;
     }
-
     .label {
       font-size: 14px;
-
     }
   }
 
-  @media (min-width: 678px) and (max-width: 1440px) {
+  @media (min-width: 521px)  {
     .grid {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
     }
-
     .card {
       width: 216px;
       height: 216px;
     }
-
     .label {
       font-size: 16px;
-
     }
   }
 
    /* >1440px → 3 стовпці */
-   @media (min-width: 1441px) {
+   @media (min-width: 912px) {
     .grid {
       grid-template-columns: repeat(3, 1fr);
     }
-
     .card {
       width: 260px;
       height: 260px;
     }
-
     .label {
       font-size: 20px;
-
     }
   }
   
-  /* <678px → 1 колонка */
-  @media (max-width: 320px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
-  }
+
   
  

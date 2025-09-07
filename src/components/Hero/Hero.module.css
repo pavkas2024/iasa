@@ -110,6 +110,13 @@
       width: 50%;       /* половина ширини */
     }}
 
+
+    @media (min-width: 1024px) {
+        .photoWrap {
+          width: 50%;
+          height: 500px; /* обов'язково */
+        }
+      }
 @media (min-width: 1440px) {
     .container{
         min-height: 720px;
@@ -122,6 +129,7 @@
     }
     .photoWrap {
         height: 720px;
+        width: 50%;
       }
     .shortTitle{
         font-size: 1.6rem;

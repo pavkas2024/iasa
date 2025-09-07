@@ -63,10 +63,19 @@
     font-style: italic;
   }
   
-  .doi a {
-    color: var(--hover-blue);
-    text-decoration: underline;
-  }
+
+  .doi a{
+  display: inline-block;      /* щоб працював перенос */
+  max-width: 100%;            /* не більше ширини картки */
+  overflow-wrap: break-word;   /* переносити довгі слова */
+  word-break: break-word;      /* ще один варіант для довгих URL */
+  text-decoration: underline;
+  color: var(--hover-blue);
+}
+
+.doi a:hover{
+  color: var(--main);
+}
   
   @media (min-width: 678px) {
     .section {

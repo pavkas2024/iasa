@@ -1,16 +1,22 @@
 import React from "react";
 import { Procurement } from "@/types/procurements";
 import styles from './ProcurementModalContent.module.css';
+import en from '../../../public/locales/en/common.json';
+import uk from '../../../public/locales/uk/common.json';
 
 type Props = {
   procurements: Procurement[];
   locale: "uk" | "en";
 };
+const translations = { en, uk };
 
 const ProcurementsModalContent: React.FC<Props> = ({ procurements, locale }) => {
+  const t = translations[locale];
+  
+  
   return (
     <div className={styles.container}>
-      <h2 className={styles.heading}>Закупівлі</h2>
+      <h2 className={styles.heading}>{t.submenu.procurements}</h2>
       <ul className={styles.list}>
         {procurements.map((procurement) => (
           <li key={procurement._id} className={styles.item}>

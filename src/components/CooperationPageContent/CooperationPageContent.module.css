@@ -85,6 +85,9 @@
   
   .publicationsList li {
     margin-bottom: 0.25rem;
+    max-width: 100%;            /* не більше ширини картки */
+    overflow-wrap: break-word;   /* переносити довгі слова */
+    word-break: break-word; 
   }
   
   .publicationsList p {
