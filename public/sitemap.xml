@@ -1,83 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset
-    xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-    xmlns:xhtml="http://www.w3.org/1999/xhtml">
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- Головна сторінка -->
-  <url>
-    <loc>https://iasa-two.vercel.app/</loc>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/"/>
-  </url>
 
-  <!-- Інститут -->
-  <url>
-    <loc>https://iasa-two.vercel.app/uk/institute</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/institute"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
-  </url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/institute/about</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/research/publications</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/intactivity/intprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/contacts</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/institute/council</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/institute/structure</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/institute/staff</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/research/natprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/research/intprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/research/seminars</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/uk/intactivity/cooperation</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/institute/about</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/research/publications</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/intactivity/intprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/contacts</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/institute/council</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/institute/structure</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/institute/staff</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/research/natprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/research/intprojects</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/research/seminars</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://iasa-two.vercel.app/en/intactivity/cooperation</loc>
+  <lastmod>2025-09-07T21:31:33+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
 
-  <url>
-    <loc>https://iasa-two.vercel.app/en/institute</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/institute"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/institute"/>
-  </url>
-
-  <!-- Research -->
-  <url>
-    <loc>https://iasa-two.vercel.app/uk/research</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/research"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/research"/>
-  </url>
-
-  <url>
-    <loc>https://iasa-two.vercel.app/en/research</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/research"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/research"/>
-  </url>
-
-  <!-- International Activity -->
-  <url>
-    <loc>https://iasa-two.vercel.app/uk/intactivity</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/intactivity"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/intactivity"/>
-  </url>
-
-  <url>
-    <loc>https://iasa-two.vercel.app/en/intactivity</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/intactivity"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/intactivity"/>
-  </url>
-
-  <!-- Contacts -->
-  <url>
-    <loc>https://iasa-two.vercel.app/uk/contacts</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/contacts"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/contacts"/>
-  </url>
-
-  <url>
-    <loc>https://iasa-two.vercel.app/en/contacts</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.8</priority>
-    <xhtml:link rel="alternate" hreflang="uk" href="https://iasa-two.vercel.app/uk/contacts"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://iasa-two.vercel.app/en/contacts"/>
-  </url>
 
 </urlset>
