@@ -15,7 +15,7 @@
   .photoWrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 2;
+   
    
   }
 
@@ -75,6 +75,7 @@
   .photo{
     width: 330px;
     height: 220px;
+    text-align: center;
 
   }
   
