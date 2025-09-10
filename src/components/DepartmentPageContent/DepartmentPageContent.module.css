@@ -46,18 +46,21 @@
   margin: 0 0 0.25rem;
   font-weight: 600;
   color: var(--main); /* основний синій */
+  font-size: 1.1rem;
 }
 
 .shortTitle {
   margin: 0 0 0.75rem;
   font-style: italic;
   color: var(--gray);
+  font-size: 1.1rem;
 }
 
 .head {
   margin: 0 0 0.75rem;
   font-weight: 500;
   color: var(--main);
+  font-size: 1rem;
 }
 
 .description {
