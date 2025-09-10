@@ -19,8 +19,9 @@ const Hero: React.FC<Props> = ({ institut, lang }) => {
         <Image
           src="/building.png"
           alt={t.title}
-          width={1536}
-          height={1024}
+          fill
+         // width={1536}
+         // height={1024}
           priority // для швидкого preloading головного зображення
           className={styles.photo}
         />

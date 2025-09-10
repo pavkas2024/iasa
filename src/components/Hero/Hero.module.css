@@ -15,6 +15,7 @@
   .photoWrap {
     position: relative;
     width: 100%;
+    aspect-ratio: 3 / 2;
    
     
   
@@ -22,7 +23,7 @@
 
   .photo{
     width: 100%;
-    height: auto;
+    height: 100%;
   }
   
   .details {
