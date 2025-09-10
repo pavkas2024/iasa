@@ -32,6 +32,13 @@
     "adress":{
       "build": "build."
     },
+    "precourse":{
+      "name": "Pre-University Training",
+      "city": "Kyiv",
+      "street": "Beresteiskyi prosp.",
+      "build": "build.",
+      "room": "room"
+    },
     "form": {
       "title": "Contact Us",
       "name": "Your Name",

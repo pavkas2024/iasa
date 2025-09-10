@@ -1,5 +1,6 @@
 import React from 'react';
 import { Contact } from '@/types/contacts';
+import styles from './ContactInfo.module.css';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
@@ -19,7 +20,7 @@ const ContactInfo: React.FC<Props> = ({ contacts, locale }) => {
     const contact = contacts[0]; // беремо лише перший елемент
   
     return (
-      <div className="contactItem">
+      <div className={styles.contactItem}>
         <p>
           {contact.translates[locale].city}, {contact.translates[locale].street}, {contact.build}, {t.adress.build} {contact.corp || ''}
         </p>

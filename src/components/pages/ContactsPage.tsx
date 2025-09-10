@@ -10,6 +10,7 @@ import styles from './ContactsPage.module.css';
 
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
+import PreCourseInfo from '../PreCourseInfo/PreCourseInfo';
 
 type Locale = "uk" | "en";
 
@@ -40,6 +41,8 @@ const ContactsPage: React.FC<Props> = ({ locale, contacts }) => {
         <div className={styles.contactsWrapper}>
           {/* Оригінальні контакти */}
           <ContactInfo contacts={contacts} locale={locale} />
+
+          <PreCourseInfo locale={locale}/>
 
           {/* Додаткові люди з поштою */}
           <div className={styles.contactInfoBlock}>

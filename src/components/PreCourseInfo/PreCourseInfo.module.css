@@ -1,0 +1,66 @@
+/* Контейнер для двох колонок: контакт + форма */
+.contactsWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .name{
+    color: var(--main);
+  }
+  
+  /* Блок одного контакту */
+  .contactItem {
+    background-color: var(--background-beige);
+    border: 1px solid var(--light-gray);
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    line-height: 1.6;
+    color: var(--text);
+    font-size: 0.9rem;
+  }
+
+  .facebook{
+    color: #04518a;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+
+  .facebook:hover{
+    text-decoration: underline;
+  }
+  
+  /* Адаптивність: планшет і вище — дві колонки */
+  @media (min-width: 768px) {
+    .contactsWrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* перша колонка — контакти, друга — форма */
+      gap: 2rem;
+      align-items: start;
+    }
+    .contactItem {
+      font-size: 1rem;
+    }
+    .facebook{
+        font-size: 1rem;
+      }
+  }
+  
+  /* Десктоп 1440px+ */
+  @media (min-width: 1440px) {
+    .contactsWrapper {
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+  
+    .contactItem {
+      padding: 1.5rem;
+      font-size: 1.1rem;
+    }
+
+    .facebook{
+        font-size: 1rem;
+      }
+  }
+  
