@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react';
-import Image from 'next/image';
+
 import { Institut } from '@/types/instituts';
 import styles from './Hero.module.css';
 
@@ -16,13 +16,13 @@ const Hero: React.FC<Props> = ({ institut, lang }) => {
   return (
     <div className={styles.container}>
       <div className={styles.photoWrap}>
-        <Image
+        <img
           src="/building.png"
           alt={t.title}
       
          width={1536}
          height={1024}
-          priority // для швидкого preloading головного зображення
+         // priority 
           className={styles.photo}
         />
       </div>
