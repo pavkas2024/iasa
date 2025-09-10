@@ -15,6 +15,7 @@
   .photoWrap {
     position: relative;
     width: 100%;
+    height: 140px;
    
    
   }
@@ -42,6 +43,9 @@
   }
 
   @media  (min-width: 320px){
+    .photoWrap {
+        height: 180px;
+    }
     .photo{
         width: 240px;
         height: 160px;
@@ -72,6 +76,9 @@
     max-width: calc(50% - 5px); /* 10px gap / 2 */
   
   }
+  .photoWrap {
+    height: 240px;
+}
   .photo{
     width: 330px;
     height: 220px;
@@ -93,6 +100,10 @@
   @media (min-width: 1024px) {
     .container {
       min-height: 620px;
+    }
+
+    .photoWrap {
+        height: 340px;
     }
   
  
@@ -118,6 +129,9 @@
       min-height: 720px;
     }
   
+    .photoWrap {
+        height: 480px;
+    }
    
     .photo{
         width: 690px;
@@ -137,6 +151,9 @@
 
 
   @media (min-width: 1800px) {
+    .photoWrap {
+        height: 600px;
+    }
     .photo{
         width: 870px;
         height: 580px;
@@ -146,6 +163,9 @@
   }
   
   @media (min-width: 2100px) {
+    .photoWrap {
+        height: 720px;
+    }
     .photo{
         width: 1050px;
         height: 700px;
@@ -155,6 +175,9 @@
   }
 
   @media (min-width: 2400px) {
+    .photoWrap {
+        height: 800px;
+    }
     .photo{
         width: 1170px;
         height: 780px;
@@ -164,6 +187,9 @@
   }
 
   @media (min-width: 2600px) {
+    .photoWrap {
+        height: 868px;
+    }
     .photo{
         width: 1272px;
         height: 848px;
