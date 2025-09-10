@@ -9,13 +9,13 @@
     align-items: center;
     gap: 1.5rem;
   
-    min-height: 300px;
+    height: 300px;
   }
   
   .photoWrap {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 2;
+    height: 100%;
    
   }
 
@@ -48,7 +48,7 @@
       justify-content: space-between;
       align-items: center;
       gap: 2rem;
-      min-height: 400px;
+      height: 400px;
     }
   
     .details {
@@ -77,12 +77,10 @@
 
   @media (min-width: 1024px) {
     .container {
-      min-height: 620px;
+      height: 620px;
     }
   
-  .photoWrap{
-    height: 380px;
-  }
+
  
   
     .title {
@@ -102,10 +100,7 @@
     }
   
     
-    .photoWrap{
-        height: 680px;
-      }
-     
+   
   
     .title {
       font-size: 2rem;
