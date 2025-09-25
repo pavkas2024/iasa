@@ -22,7 +22,7 @@ const NewsModalContent: React.FC<Props> = ({ newsItem, lang }) => {
         />
       )}
       <h2 className={styles.title}>{t.title}</h2>
-      {t.description && <p>{t.description}</p>}
+      {t.description && <p className={styles.description}>{t.description}</p>}
       {newsItem.link &&  <a href={newsItem.link} target="_blank" rel="noopener noreferrer">
               {newsItem.link}
             </a>}

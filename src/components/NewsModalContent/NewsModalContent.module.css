@@ -25,6 +25,10 @@
     object-fit: contain;
     border-radius: 12px;
   }
+
+  .description{
+    white-space: pre-line; 
+  }
   
   /* Заголовок новини */
   .modalContent h2 {
