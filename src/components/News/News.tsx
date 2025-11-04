@@ -22,7 +22,7 @@ const News: React.FC<Props> = ({ news, lang }) => {
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 8;
 
   const t = translations[lang];
   const sortedNews = news.slice().sort((a, b) => parseDate(b.date) - parseDate(a.date));
