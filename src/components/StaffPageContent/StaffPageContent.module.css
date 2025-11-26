@@ -51,7 +51,7 @@
   @media (min-width: 678px) {
     .list {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      grid-template-columns: repeat(auto-fit,  400px);
       gap: 1.5rem;
       justify-content: center;
     }
