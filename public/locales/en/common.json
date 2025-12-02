@@ -56,7 +56,10 @@
       "dep": "Deputy Directors",
       "secr": "Scientific Secretary",
       "scientific": "Scientific Staff",
-      "fin": "Financial and Administrative Staff"
+      "fin": "Financial and Administrative Staff",
+      "cv": "CV",
+      "pub": "Publications",
+      "shortPub": "Selected publications"
     },
     "council":{
        "head": "Chair",

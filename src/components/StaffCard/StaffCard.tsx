@@ -1,6 +1,8 @@
 import React from "react";
 import { Staff } from "@/types/staffs";
 import styles from "./Staffcard.module.css";
+import en from '../../../public/locales/en/common.json';
+import uk from '../../../public/locales/uk/common.json';
 
 type Locale = "uk" | "en";
 
@@ -12,6 +14,7 @@ interface StaffCardProps {
 export default function StaffCard({ staff, locale }: StaffCardProps) {
   const d = staff.translates[locale];
   const pr = staff.profiles || {};
+  const t = locale === "uk" ? uk : en;
 
   return (
     <>
@@ -50,6 +53,32 @@ export default function StaffCard({ staff, locale }: StaffCardProps) {
             </a>
           </p>
         )}
+
+        <div className={styles.profilesRow}>
+          {staff.cv && (
+            <p className={styles.link}>
+              <a href={staff.cv} target="_blank" rel="noopener noreferrer">
+                {t.staff.cv}
+              </a>
+            </p>
+          )}
+
+          {staff.pub && (
+            <p className={styles.link}>
+              <a href={staff.pub} target="_blank" rel="noopener noreferrer">
+                {t.staff.pub}
+              </a>
+            </p>
+          )}
+
+          {staff.shortPub && (
+            <p className={styles.link}>
+              <a href={staff.shortPub} target="_blank" rel="noopener noreferrer">
+                {t.staff.shortPub}
+              </a>
+            </p>
+          )}
+        </div>
 
         <div className={styles.profilesRow}>
           {pr.orcid && (

@@ -5,6 +5,9 @@ export interface Staff {
     _id: string;
     photo?: string;
     link?: string;
+    cv?: string;
+    pub?: string;
+    shortPub?: string;
     council: 'так' | 'ні';
     profiles?: {
       orcid?: string;

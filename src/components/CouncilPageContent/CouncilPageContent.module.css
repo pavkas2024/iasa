@@ -34,33 +34,23 @@
   padding: 1rem 1.25rem;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 220px; /* картки без фото */
-}
-
-/* Менший екран */
-@media (max-width: 678px) {
-  .specialRoleList,
-  .list {
+  width: 100%;
+    max-width: 456px;
     flex-direction: column;
-    gap: 1.5rem;
     align-items: center;
-  }
-
-  .specialItem,
-  .item {
-    width: 100%;
-    max-width: 300px;
-  }
+    min-height: 220px; /* картки без фото */
+    gap: 1.5rem;
 }
+
+
 
 /* Грід для науковців і фінансів на ширших екранах */
 @media (min-width: 678px) {
   .list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit,  400px);
     gap: 1.5rem;
+    justify-content: center;
   }
 
   .specialRoleList {
@@ -70,7 +60,7 @@
   }
 
   .specialItem {
-    max-width: 300px;
+    width: 400px;
   }
 }
 
