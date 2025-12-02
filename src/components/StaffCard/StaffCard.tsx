@@ -54,7 +54,7 @@ export default function StaffCard({ staff, locale }: StaffCardProps) {
           </p>
         )}
 
-        <div className={styles.profilesRow}>
+        <div className={styles.cvRow}>
           {staff.cv && (
             <p className={styles.link}>
               <a href={staff.cv} target="_blank" rel="noopener noreferrer">
