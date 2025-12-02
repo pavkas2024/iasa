@@ -29,7 +29,7 @@ const ContactsPage: React.FC<Props> = ({ locale, contacts }) => {
     { label: t.contacts.adv, email: "zgurovsm@hotmail.com" },
     { label: t.contacts.dir, email: "p.o.kasyanov@gmail.com" },
     { label: t.contacts.dep, email: "natalidmp@gmail.com" },
-    { label: t.contacts.org, email: "lili262808@gmail.com" },
+    { label: t.contacts.org, email: "liliia.paliichuk.iasa@gmail.com" },
   ];
 
   return (

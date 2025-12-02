@@ -11,12 +11,14 @@ import styles from './News.module.css';
 import en from '../../../public/locales/en/common.json';
 import uk from '../../../public/locales/uk/common.json';
 
+type Locale = "uk" | "en";
+
 type Props = {
   news: NewsItem[];
-  lang: 'uk' | 'en';
+  lang: Locale;
 };
 
-const translations = { en, uk };
+
 
 const News: React.FC<Props> = ({ news, lang }) => {
   const [selectedNews, setSelectedNews] = useState<NewsItem | null>(null);
@@ -24,7 +26,8 @@ const News: React.FC<Props> = ({ news, lang }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 8;
 
-  const t = translations[lang];
+  const t = lang === "uk" ? uk : en;
+
   const sortedNews = news.slice().sort((a, b) => parseDate(b.date) - parseDate(a.date));
   const totalPages = Math.ceil(sortedNews.length / itemsPerPage);
   const paginatedNews = sortedNews.slice(
@@ -44,16 +47,16 @@ const News: React.FC<Props> = ({ news, lang }) => {
         <h2 className={styles.sectionTitle}>{t.submenu.news}</h2>
         <div className={styles.list}>
           {paginatedNews.map((pub) => {
-            const t = pub.translates[lang];
+            const tn = pub.translates[lang];
             return (
               <div key={pub._id} className={styles.newsCard}>
                 {pub.photo && (
                   <div className={styles.photoWrap}>
-                    <img src={pub.photo} alt={t.title} className={styles.image} />
+                    <img src={pub.photo} alt={tn.title} className={styles.image} />
                   </div>
                 )}
                 <div className={styles.details}>
-                  <h2 className={styles.title}>{t.title}</h2>
+                  <h2 className={styles.title}>{tn.title}</h2>
                   <div className={styles.detailsBottom}>
                     {pub.date && (
                       <span className={styles.date}>
@@ -61,10 +64,11 @@ const News: React.FC<Props> = ({ news, lang }) => {
                       </span>
                     )}
                     <button
+                      type="button"
                       className={styles.moreButton}
                       onClick={() => openModal(pub)}
                     >
-                      Більше
+                      {t.buttons.more}
                     </button>
                   </div>
                 </div>
