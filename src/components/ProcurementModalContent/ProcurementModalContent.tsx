@@ -12,7 +12,7 @@ const translations = { en, uk };
 
 const ProcurementsModalContent: React.FC<Props> = ({ procurements, locale }) => {
   const t = translations[locale];
-  
+
   
   return (
     <div className={styles.container}>
