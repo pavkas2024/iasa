@@ -35,6 +35,7 @@
 .description {
   font-size: 0.9rem;
   margin-top: 8px;
+  white-space: pre-line;
 }
 
 /* Планшетна стилізація */
