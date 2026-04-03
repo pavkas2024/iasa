@@ -3,6 +3,7 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link"; // <-- імпортуємо Link
 
 import { getTranslation } from "@/lib/i18n";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -34,7 +35,7 @@ export default function Header({ locale }: HeaderProps) {
     <header className={styles.header}>
       <nav className={styles.nav}>
         <div className={styles.logoContainer}>
-        <a href={`/${locale}`} className={styles.logoWrapper} title={locale === "uk" ? "Головна сторінка" : "Home"}>
+        <Link href={`/${locale}`} className={styles.logoWrapper} title={locale === "uk" ? "Головна сторінка" : "Home"}>
             <Image
               src={logoSrc}
               alt="Logo"
@@ -43,7 +44,7 @@ export default function Header({ locale }: HeaderProps) {
               style={{ height: 'auto', width: 'auto', maxHeight: '76px' }} // обмежує висоту, зберігає пропорції
               priority
             />
-          </a>
+          </Link>
         </div>
 
         <div className={styles.menuContainer}>
