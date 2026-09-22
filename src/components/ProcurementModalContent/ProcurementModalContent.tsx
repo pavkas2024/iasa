@@ -21,7 +21,7 @@ const ProcurementsModalContent: React.FC<Props> = ({ procurements, locale }) => 
         {procurements.map((procurement) => (
           <li key={procurement._id} className={styles.item}>
             <a
-              href={procurement.file}
+              href={procurement.link}
               target="_blank"
               rel="noopener noreferrer"
               className={styles.link}

@@ -1,6 +1,6 @@
 export interface Procurement {
     _id: string;
-    file: string;
+    link: string;
     year: string;
     translates: {
       uk: {
