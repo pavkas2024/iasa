@@ -19,6 +19,7 @@ export default async function ResearchLayout({ children, params }: LayoutProps) 
     { key: "natprojects", label: t.submenu.natProjects, href: `/${locale}/research/natprojects` },
     { key: "intprojects", label: t.submenu.intProjects, href: `/${locale}/research/intprojects` },
     { key: "seminars", label: t.submenu.conferences, href: `/${locale}/research/seminars` },
+    { key: "ssai", label: t.submenu.ssai, href: `/${locale}/research/ssai` },
   ];
 
   return <TwoColumnLayout menuItems={menuItems}>{children}</TwoColumnLayout>;

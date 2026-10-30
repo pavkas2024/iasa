@@ -1,0 +1,356 @@
+
+/* ===== Загальна сторінка SSAI ===== */
+
+.section {
+    background: var(--section-beige);
+    display: flex;
+    flex-direction: column;
+    min-height: 70vh;
+    color: var(--text);
+  }
+  
+  /* ===== Частина 1. Інформація про семінар ===== */
+  
+  .aboutBlock {
+    padding: 28px 18px 42px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .eyebrow {
+    color: var(--main);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+  
+  .aboutBlock > .eyebrow {
+    text-align: center;
+  }
+  
+  .heading {
+    font-size: clamp(1.35rem, 2vw, 1.85rem);
+    line-height: 1.4;
+    font-weight: 650;
+    text-align: center;
+    color: var(--text);
+    margin: 0;
+  }
+  
+  .description {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    text-align: justify;
+    color: var(--text);
+    white-space: pre-line;
+    margin: 6px 0 12px;
+  }
+  
+  .subheading {
+    font-size: 1.15rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: var(--main);
+    margin: 0;
+  }
+  
+  /* Керівник семінару — без рамки */
+  
+  .leadership {
+    padding: 10px 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-bottom: 1px solid var(--light-gray);
+  }
+  
+  .person {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .personName {
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 600;
+    color: var(--text);
+  }
+  
+  .personDetails {
+    font-size: 0.86rem;
+    line-height: 1.6;
+    color: var(--dark-gray);
+  }
+  
+  /* Наукові секції */
+  
+  .sections {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+  
+  .sectionCard {
+    padding: 18px 20px;
+    background: var(--light-blue-3);
+    border-left: 3px solid var(--main);
+    border-radius: 0 8px 8px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  
+  .sectionCard h3 {
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.45;
+    color: var(--main);
+    margin: 0 0 3px;
+  }
+  
+  .sectionCard .person {
+    gap: 3px;
+  }
+  
+  .fieldLabel {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+  }
+  
+  /* ===== Частина 2. Програма семінару ===== */
+  
+  .programBlock {
+    padding: 32px 18px 42px;
+    background: var(--beige);
+    border-top: 1px solid #d9e1e5;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .programBlock > .eyebrow {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+  }
+  
+  .programBlock > .subheading {
+    margin-top: 6px;
+    padding-bottom: 9px;
+    border-bottom: 1px solid var(--light-blue-2);
+  }
+  
+  /* Картки засідань */
+  
+  .sessionList {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .sessionCard {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    background: var(--background-beige);
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  }
+  
+  .sessionDate {
+    color: var(--dark-gray);
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  
+  .sessionTitle {
+    color: var(--text);
+    font-size: 1rem;
+    line-height: 1.55;
+    font-weight: 600;
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+  
+  .speakers {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text);
+  }
+  
+  .speakers li {
+    overflow-wrap: anywhere;
+  }
+  
+  .summary {
+    font-size: 0.9rem;
+    line-height: 1.75;
+    white-space: pre-line;
+  }
+  
+  .sessionLink {
+    align-self: flex-start;
+    font-size: 0.9rem;
+    color: var(--main);
+    text-decoration: underline;
+    overflow-wrap: anywhere;
+  }
+  
+  .sessionLink:hover {
+    color: var(--hover-blue);
+  }
+  
+  /* Фотографії */
+  
+  .photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .photoButton {
+    border: 1px solid var(--light-gray);
+    border-radius: 6px;
+    background: var(--white);
+    padding: 4px;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .photoButton img {
+    display: block;
+    width: 110px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: transform 0.2s ease;
+  }
+  
+  .photoButton:hover img {
+    transform: scale(1.05);
+  }
+  
+  .modalPhoto {
+    width: 100%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 6px;
+  }
+  
+  /* ===== Планшети ===== */
+  
+  @media (min-width: 678px) {
+    .aboutBlock {
+      padding: 36px 30px 52px;
+      gap: 24px;
+    }
+  
+    .programBlock {
+      padding: 40px 30px 52px;
+    }
+  
+    .sections {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+    }
+  
+    .sectionCard {
+      padding: 20px;
+    }
+  
+    .sessionCard {
+      padding: 22px 24px;
+    }
+  
+    .photoButton img {
+      width: 130px;
+      height: 95px;
+    }
+  }
+  
+  /* ===== Великі екрани ===== */
+  
+  @media (min-width: 1440px) {
+    .aboutBlock {
+      padding: 44px 42px 60px;
+    }
+  
+    .programBlock {
+      padding: 46px 42px 60px;
+    }
+  
+    .description {
+      font-size: 1rem;
+    }
+  
+    .subheading {
+      font-size: 1.25rem;
+    }
+  
+    .personName {
+      font-size: 1.05rem;
+    }
+  
+    .personDetails {
+      font-size: 0.92rem;
+    }
+  
+    .sessionTitle {
+      font-size: 1.08rem;
+    }
+  
+    .speakers {
+      font-size: 0.94rem;
+    }
+  
+    .photoButton img {
+      width: 150px;
+      height: 105px;
+    }
+  }
+  
+  /* ===== Мобільні екрани ===== */
+  
+  @media (max-width: 480px) {
+    .aboutBlock {
+      padding: 24px 14px 36px;
+    }
+  
+    .programBlock {
+      padding: 28px 14px 38px;
+    }
+  
+    .description {
+      text-align: left;
+      font-size: 0.9rem;
+    }
+  
+    .heading {
+      font-size: 1.35rem;
+    }
+  
+    .sectionCard {
+      padding: 16px;
+    }
+  
+    .sessionCard {
+      padding: 16px;
+    }
+  }
+  

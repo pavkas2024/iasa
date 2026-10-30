@@ -13,6 +13,7 @@ import { Collaboration } from '@/types/collaborations';
 import { Intproject } from '@/types/intprojects';
 import { Natproject } from '@/types/natprojects';
 import { Seminar } from '@/types/seminars';
+import { SsaiInfo, SsaiSessionsResponse } from '@/types/ssai';
 
 import {HomeData, InstituteData, IntActivityData,  ResearchData, ContactsData} from '@/types/api';
 
@@ -96,4 +97,20 @@ export const getContactsData = async (): Promise<ContactsData> => {
   ]);
 
   return {instituts, contacts};
+};
+
+
+
+export const getSsaiInfo = async (): Promise<SsaiInfo | null> => {
+  return fetchJson<SsaiInfo | null>('/ssai/info');
+};
+
+export const getSsaiSessions = async (
+  completed: boolean = false,
+  page: number = 1,
+  limit: number = 10
+): Promise<SsaiSessionsResponse> => {
+  return fetchJson<SsaiSessionsResponse>(
+    `/ssai/sessions?completed=${completed}&page=${page}&limit=${limit}`
+  );
 };
