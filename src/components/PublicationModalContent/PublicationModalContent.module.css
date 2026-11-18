@@ -59,6 +59,10 @@
     padding: 4px 0;
     border-bottom: 1px solid #f0f0f0;
   }
+
+  .description {
+    white-space: pre-line;
+  }
   
   .doi a {
     color: #0070f3;
