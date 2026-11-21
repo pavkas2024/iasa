@@ -185,16 +185,25 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
                       {t.journal && <p className={styles.meta}>{t.journal}</p>}
                       <div className={styles.footer}>
                         {pub.year && <span className={styles.year}>{pub.year}</span>}
+                        
                         {pub.doi && (
                           <a
-                            href={pub.doi}
+                            href={
+                              /^https?:\/\//i.test(pub.doi)
+                                ? pub.doi
+                                : `https://doi.org/${pub.doi}`
+                            }
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.doiBtn}
+                            onClick={(e) => e.stopPropagation()}
                           >
-                            DOI
+                            {/^https?:\/\//i.test(pub.doi)
+                              ? (lang === 'uk' ? 'Посилання' : 'Link')
+                              : 'DOI'}
                           </a>
                         )}
+
                       </div>
                     </div>
                   </article>

@@ -204,17 +204,25 @@ export default async function PublicationDetailPage({
           </section>
         )}
 
+        
         {publication.doi && (
-          <p style={{ marginTop: "32px" }}>
-            DOI:{" "}
+        <p style={{ marginTop: "32px" }}>
+            {/^https?:\/\//i.test(publication.doi)
+            ? (locale === "uk" ? "Посилання: " : "Link: ")
+            : "DOI: "}
+
             <a
-              href={`https://doi.org/${publication.doi}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            href={
+                /^https?:\/\//i.test(publication.doi)
+                ? publication.doi
+                : `https://doi.org/${publication.doi}`
+            }
+            target="_blank"
+            rel="noopener noreferrer"
             >
-              {publication.doi}
+            {publication.doi}
             </a>
-          </p>
+        </p>
         )}
       </article>
     </main>

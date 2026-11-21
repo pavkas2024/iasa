@@ -67,9 +67,19 @@ export default function DepartmentPageContent({ publications, locale, heading }:
               {dept.year && <div className={styles.year}>{dept.year}</div>}
               {dept.doi && (
                 <div className={styles.doi}>
-                  <a href={`https://doi.org/${dept.doi}`} target="_blank" rel="noopener noreferrer">
+                  
+                  <a
+                    href={
+                      /^https?:\/\//i.test(dept.doi)
+                        ? dept.doi
+                        : `https://doi.org/${dept.doi}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {dept.doi}
                   </a>
+
                 </div>
               )}
             </li>
