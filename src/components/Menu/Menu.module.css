@@ -206,3 +206,16 @@
     justify-content: flex-start;
   }
 }
+
+@media (max-width: 460px) {
+  .menuList {
+    position: fixed;
+    top: 75px;
+    left: 12px;
+    right: 12px;
+
+    width: auto;
+    max-width: none;
+    box-sizing: border-box;
+  }
+}
