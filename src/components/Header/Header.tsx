@@ -26,6 +26,7 @@ export default function Header({ locale }: HeaderProps) {
     { path: "institute", label: t.menu.institute },
     { path: "research", label: t.menu.research },
     { path: "intactivity", label: t.menu.intActivity },
+    { path: "ckkno", label: t.menu.ckkno },
     { path: "contacts", label: t.menu.contacts },
   ];
 
