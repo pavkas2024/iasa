@@ -1,98 +1,147 @@
+
 .container {
-  padding: 1.5rem 1.5rem;
+  width: 100%;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
+/* Сітка швидкого доступу */
 .grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
   justify-items: center;
+  width: 100%;
 }
-  
-    
-  .label {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--main);
-    text-align: center;
+
+/* Плитки */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  max-width: 260px;
+  min-width: 0;
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+
+  background: var(--beige);
+  border: 2px solid var(--main);
+  border-radius: 10px;
+
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  box-sizing: border-box;
+
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.card:hover {
+  background: var(--light-blue-3);
+  transform: translateY(-3px);
+}
+
+.card:focus-visible {
+  outline: 3px solid var(--main);
+  outline-offset: 3px;
+}
+
+/* Іконки */
+.icon {
+  width: clamp(48px, 6vw, 80px);
+  height: clamp(48px, 6vw, 80px);
+  margin-bottom: 12px;
+  flex-shrink: 0;
+
+  fill: var(--main);
+  stroke: var(--beige);
+  color: var(--main);
+}
+
+/* Назви плиток */
+.label {
+  font-size: clamp(14px, 1.4vw, 20px);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--main);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+/* Планшети: 2 плитки в ряд */
+@media (min-width: 521px) and (max-width: 767px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
   .card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 12px;
-    background: var(--beige);
-    border: 2px solid var(--main);
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    transition: transform 0.2s ease, background 0.2s ease;
-    width: 192px;
-    height: 192px;
-    box-sizing: border-box;
+    max-width: 216px;
   }
-  
-  .card:hover {
-    background: var(--light-blue-3);
-    transform: translateY(-3px);
+
+  .label {
+    font-size: 16px;
   }
-  
+}
+
+/* Телефони: 1 плитка в ряд */
+@media (max-width: 520px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 192px;
+    aspect-ratio: 1 / 1;
+  }
+
   .icon {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 12px;
-    fill: var(--main);
-    stroke: var(--beige);
-    color: var(--main)
+    width: 64px;
+    height: 64px;
   }
 
- 
-  
-  /* 678px – 1440px → 2 стовпці */
+  .label {
+    font-size: 14px;
+  }
+}
 
-
-  @media (max-width: 520px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
-    .card {
-      width: 100%;
-      max-width: 192px;
-      height: 192px;
-    }
-    .label {
-      font-size: 14px;
-    }
+/* Дуже вузькі екрани */
+@media (max-width: 360px) {
+  .container {
+    padding: 12px;
   }
 
-  @media (min-width: 521px)  {
-    .grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .card {
-      width: 216px;
-      height: 216px;
-    }
-    .label {
-      font-size: 16px;
-    }
+  .card {
+    max-width: 180px;
   }
 
-   /* >1440px → 3 стовпці */
-   @media (min-width: 912px) {
-    .grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .card {
-      width: 260px;
-      height: 260px;
-    }
-    .label {
-      font-size: 20px;
-    }
+  .icon {
+    width: 56px;
+    height: 56px;
   }
-  
+}
 
-  
- 
+/* Пристрої без наведення */
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+  }
+}
+
+/* Зменшення анімації */
+@media (prefers-reduced-motion: reduce) {
+  .card {
+    transition: none;
+  }
+}

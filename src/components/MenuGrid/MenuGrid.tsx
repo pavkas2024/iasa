@@ -1,12 +1,15 @@
-'use client';
+
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
+
 import Modal from "../Modal/Modal";
 import ContainerWrap from "../Wrap/Wrap";
 import DocumentsModalContent from "../DocumentsModalContent/DocumentsModalContent";
 import ProcurementsModalContent from "../ProcurementModalContent/ProcurementModalContent";
 import JournalsModalContent from "../JournalsModalContent/JournalsModalContent";
+
 import styles from "./MenuGrid.module.css";
 
 import { InstituteDocument } from "@/types/documents";
@@ -15,6 +18,7 @@ import { Journal } from "@/types/journals";
 import { Translation } from "@/types/common";
 
 type Locale = "uk" | "en";
+
 type ModalType = "documents" | "procurement" | "journals" | null;
 
 type SubmenuKeys =
@@ -23,7 +27,9 @@ type SubmenuKeys =
   | "journals"
   | "scientificCouncil"
   | "departments"
-  | "procurements";
+  | "procurements"
+  | "ssai"
+  | "ckkno";
 
 type Props = {
   documents: InstituteDocument[];
@@ -33,68 +39,172 @@ type Props = {
   t: Translation;
 };
 
-const items: {
+type MenuGridItem = {
   id: string;
   key: string;
   labelKey: SubmenuKeys;
   action: "modal" | "link";
   href?: string;
-}[] = [
-  { id: "docs", key: "documents", labelKey: "docs", action: "modal" },
-  { id: "icon-international", key: "intprojects", labelKey: "intProjects", action: "link", href: "/intactivity/intprojects" },
-  { id: "icon-publications", key: "journals", labelKey: "journals", action: "modal" },
-  { id: "icon-council", key: "council", labelKey: "scientificCouncil", action: "link", href: "/institute/council" },
-  { id: "icon-departments", key: "structure", labelKey: "departments", action: "link", href: "/institute/structure" },
-  { id: "icon-proc", key: "procurement", labelKey: "procurements", action: "modal" },
+};
+
+const items: MenuGridItem[] = [
+  {
+    id: "docs",
+    key: "documents",
+    labelKey: "docs",
+    action: "modal",
+  },
+  {
+    id: "icon-international",
+    key: "intprojects",
+    labelKey: "intProjects",
+    action: "link",
+    href: "/intactivity/intprojects",
+  },
+  {
+    id: "icon-publications",
+    key: "journals",
+    labelKey: "journals",
+    action: "modal",
+  },
+  {
+    id: "icon-council",
+    key: "council",
+    labelKey: "scientificCouncil",
+    action: "link",
+    href: "/institute/council",
+  },
+  {
+    id: "icon-departments",
+    key: "structure",
+    labelKey: "departments",
+    action: "link",
+    href: "/institute/structure",
+  },
+  {
+    id: "icon-proc",
+    key: "procurement",
+    labelKey: "procurements",
+    action: "modal",
+  },
+  {
+    id: "icon-ckkno",
+    key: "ckkno",
+    labelKey: "ckkno",
+    action: "link",
+    href: "/ckkno",
+  },
+  {
+    id: "icon-ssai",
+    key: "ssai",
+    labelKey: "ssai",
+    action: "link",
+    href: "/research/ssai",
+  },
 ];
 
-const MenuGrid: React.FC<Props> = ({ documents, procurements, journal, locale, t }) => {
+const MenuGrid: React.FC<Props> = ({
+  documents,
+  procurements,
+  journal,
+  locale,
+  t,
+}) => {
   const [activeModal, setActiveModal] = useState<ModalType>(null);
+
   const isModalOpen = activeModal !== null;
+
+  const closeModal = () => setActiveModal(null);
+
+  const getItemLabel = (labelKey: SubmenuKeys): string => {
+    if (labelKey === "ckkno") {
+      return t.menu.ckkno;
+    }
+  
+    if (labelKey === "ssai") {
+      return t.submenu.ssai;
+    }
+  
+    return t.submenu[labelKey];
+  };
 
   const renderModalContent = () => {
     switch (activeModal) {
       case "documents":
-        return <DocumentsModalContent docs={documents} locale={locale} />;
+        return (
+          <DocumentsModalContent
+            docs={documents}
+            locale={locale}
+          />
+        );
+
       case "procurement":
-        return <ProcurementsModalContent procurements={procurements} locale={locale} />;
+        return (
+          <ProcurementsModalContent
+            procurements={procurements}
+            locale={locale}
+          />
+        );
+
       case "journals":
-        return <JournalsModalContent journal={journal} locale={locale} />;
+        return (
+          <JournalsModalContent
+            journal={journal}
+            locale={locale}
+          />
+        );
+
       default:
         return null;
     }
   };
 
-  const closeModal = () => setActiveModal(null);
-
   return (
     <section className={styles.container}>
       <ContainerWrap>
         <div className={styles.grid}>
-          {items.map((item) =>
-            item.action === "modal" ? (
-              <button
+          {items.map((item) => {
+            const icon = (
+              <svg className={styles.icon} aria-hidden="true">
+                <use href={`/spriteNew.svg#${item.id}`} />
+              </svg>
+            );
+
+            const label = getItemLabel(item.labelKey);
+
+            if (item.action === "modal") {
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  className={styles.card}
+                  onClick={() =>
+                    setActiveModal(item.key as ModalType)
+                  }
+                >
+                  {icon}
+                  <span className={styles.label}>{label}</span>
+                </button>
+              );
+            }
+
+            return (
+              <Link
                 key={item.key}
+                href={`/${locale}${item.href}`}
                 className={styles.card}
-                onClick={() => setActiveModal(item.key as ModalType)}
               >
-                <svg className={styles.icon}>
-                  <use href={`/spriteNew.svg#${item.id}`} />
-                </svg>
-                <span className={styles.label}>{t.submenu[item.labelKey]}</span>
-              </button>
-            ) : (
-              <Link key={item.key} href={`/${locale}${item.href!}`} className={styles.card}>
-                <svg className={styles.icon}>
-                  <use href={`/spriteNew.svg#${item.id}`} />
-                </svg>
-                <span className={styles.label}>{t.submenu[item.labelKey]}</span>
+                {icon}
+                <span className={styles.label}>{label}</span>
               </Link>
-            )
-          )}
+            );
+          })}
         </div>
 
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <Modal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+        >
           {renderModalContent()}
         </Modal>
       </ContainerWrap>

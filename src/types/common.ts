@@ -19,7 +19,9 @@ type SubmenuKeys =
   | "natProjects"
   | "directions"
   | "conferences"
-  | "procurements";
+  | "procurements"
+  | "ssai";
+  
 
   export interface Translation {
   menu: Record<string, string>;

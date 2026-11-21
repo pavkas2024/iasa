@@ -1,18 +1,25 @@
+
 import React from "react";
 import { Journal } from "@/types/journals";
 
-import styles from './JournalsModalContent.module.css';
+import styles from "./JournalsModalContent.module.css";
 
 type Props = {
   journal: Journal;
   locale: "uk" | "en";
 };
 
-const JournalsModalContent: React.FC<Props> = ({ journal, locale }) => {
+const JournalsModalContent: React.FC<Props> = ({
+  journal,
+  locale,
+}) => {
   if (!journal) return null;
 
   const title = journal.translates[locale]?.title ?? "—";
   const description = journal.translates[locale]?.description ?? "";
+
+  const websiteLabel =
+    locale === "uk" ? "Сайт журналу" : "Journal Website";
 
   return (
     <div className={styles.container}>
@@ -28,13 +35,21 @@ const JournalsModalContent: React.FC<Props> = ({ journal, locale }) => {
 
       {journal.link && (
         <p className={styles.link}>
-          <a href={journal.link} target="_blank" rel="noopener noreferrer">
-          {journal.link}
+          <a
+            href={journal.link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {websiteLabel}
           </a>
         </p>
       )}
 
-      {description && <p className={styles.description}>{description}</p>}
+      {description && (
+        <p className={styles.description}>
+          {description}
+        </p>
+      )}
     </div>
   );
 };
