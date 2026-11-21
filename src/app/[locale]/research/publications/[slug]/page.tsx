@@ -41,9 +41,13 @@ function getYouTubeId(url: string): string | null {
   try {
     const parsed = new URL(url);
     const host = parsed.hostname.toLowerCase();
+
     let videoId: string | null = null;
 
-    if (host === "youtu.be" || host === "www.youtu.be") {
+    if (
+      host === "youtu.be" ||
+      host === "www.youtu.be"
+    ) {
       videoId = parsed.pathname.split("/")[1];
     } else if (
       host === "youtube.com" ||
@@ -96,6 +100,16 @@ export default async function PublicationDetailPage({
     ? getYouTubeId(publication.videoUrl)
     : null;
 
+  const externalLink = publication.doi
+    ? /^https?:\/\//i.test(publication.doi)
+      ? publication.doi
+      : `https://doi.org/${publication.doi}`
+    : null;
+
+  const isExternalUrl = publication.doi
+    ? /^https?:\/\//i.test(publication.doi)
+    : false;
+
   return (
     <main
       style={{
@@ -105,71 +119,87 @@ export default async function PublicationDetailPage({
       }}
     >
       <article>
+
+        {/* 1. ГОЛОВНЕ ЗОБРАЖЕННЯ */}
+
+        {publication.photo && (
+          <div
+            style={{
+              marginBottom: "32px",
+              textAlign: "center",
+            }}
+          >
+            <img
+              src={publication.photo}
+              alt={t.title}
+              style={{
+                display: "block",
+                width: "100%",
+                maxHeight: "500px",
+                objectFit: "contain",
+                borderRadius: "12px",
+              }}
+            />
+          </div>
+        )}
+
+        {/* 2. НАЗВА СТАТТІ */}
+
         <h1
           style={{
             fontSize: "clamp(1.7rem, 4vw, 2.5rem)",
             lineHeight: 1.3,
-            marginBottom: "20px",
+            marginBottom: "24px",
+            color: "var(--text)",
           }}
         >
           {t.title}
         </h1>
 
+        {/* АВТОРИ */}
+
         {t.authors && (
-          <p style={{ marginBottom: "12px" }}>
+          <p
+            style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.6,
+              marginBottom: "12px",
+              color: "var(--dark-gray)",
+            }}
+          >
             {t.authors}
           </p>
         )}
 
+        {/* РІК */}
+
         {publication.year && (
-          <p style={{ marginBottom: "24px" }}>
+          <p
+            style={{
+              fontSize: "0.95rem",
+              marginBottom: "32px",
+              color: "var(--dark-gray)",
+            }}
+          >
             {publication.year}
           </p>
         )}
 
-        {publication.photo && (
-          <img
-            src={publication.photo}
-            alt={t.title}
-            style={{
-              width: "100%",
-              maxHeight: "500px",
-              objectFit: "contain",
-              borderRadius: "12px",
-              marginBottom: "32px",
-            }}
-          />
-        )}
-
-        {t.description && (
-          <p
-            style={{
-              fontSize: "1.1rem",
-              lineHeight: 1.8,
-              marginBottom: "28px",
-              whiteSpace: "pre-line",
-            }}
-          >
-            {t.description}
-          </p>
-        )}
-
-        {t.fullText && (
-          <div
-            style={{
-              fontSize: "1.05rem",
-              lineHeight: 1.9,
-              whiteSpace: "pre-line",
-              marginBottom: "40px",
-            }}
-          >
-            {t.fullText}
-          </div>
-        )}
+        {/* 3. YOUTUBE-ВІДЕО */}
 
         {videoId && (
-          <section style={{ marginTop: "40px" }}>
-            <h2 style={{ marginBottom: "20px" }}>
+          <section
+            style={{
+              marginBottom: "16px",
+            }}
+          >
+            <h2
+              style={{
+                fontSize: "1.4rem",
+                marginBottom: "20px",
+                color: "var(--text)",
+              }}
+            >
               {locale === "uk"
                 ? "Відеоматеріал"
                 : "Video"}
@@ -177,9 +207,10 @@ export default async function PublicationDetailPage({
 
             <div
               style={{
-                position: "relative",
                 width: "100%",
                 aspectRatio: "16 / 9",
+                overflow: "hidden",
+                borderRadius: "12px",
               }}
             >
               <iframe
@@ -194,36 +225,81 @@ export default async function PublicationDetailPage({
                 allowFullScreen
                 referrerPolicy="strict-origin-when-cross-origin"
                 style={{
+                  display: "block",
                   width: "100%",
                   height: "100%",
                   border: "none",
-                  borderRadius: "12px",
                 }}
               />
             </div>
           </section>
         )}
 
-        
-        {publication.doi && (
-        <p style={{ marginTop: "32px" }}>
-            {/^https?:\/\//i.test(publication.doi)
-            ? (locale === "uk" ? "Посилання: " : "Link: ")
-            : "DOI: "}
+         {/* 5. DOI АБО ЗОВНІШНЄ ПОСИЛАННЯ */}
+
+         {externalLink && (
+          <p
+            style={{
+                marginTop: "0px",
+                marginBottom: "48px",
+                fontSize: "0.95rem",
+                lineHeight: 1.6,
+                overflowWrap: "anywhere",
+            }}
+          >
+            {isExternalUrl
+              ? locale === "uk"
+                ? "Посилання: "
+                : "Link: "
+              : "DOI: "}
 
             <a
-            href={
-                /^https?:\/\//i.test(publication.doi)
-                ? publication.doi
-                : `https://doi.org/${publication.doi}`
-            }
-            target="_blank"
-            rel="noopener noreferrer"
+              href={externalLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "var(--main)",
+              }}
             >
-            {publication.doi}
+              {publication.doi}
             </a>
-        </p>
+          </p>
         )}
+
+        {/* 4. ТЕКСТ СТАТТІ */}
+
+        {t.description && (
+          <div
+            style={{
+              fontSize: "1.1rem",
+              lineHeight: 1.85,
+              marginBottom: "32px",
+              whiteSpace: "pre-line",
+              color: "var(--text)",
+              overflowWrap: "anywhere",
+            }}
+          >
+            {t.description}
+          </div>
+        )}
+
+        {t.fullText && (
+          <div
+            style={{
+              fontSize: "1.05rem",
+              lineHeight: 1.9,
+              marginBottom: "40px",
+              whiteSpace: "pre-line",
+              color: "var(--text)",
+              overflowWrap: "anywhere",
+            }}
+          >
+            {t.fullText}
+          </div>
+        )}
+
+       
+
       </article>
     </main>
   );

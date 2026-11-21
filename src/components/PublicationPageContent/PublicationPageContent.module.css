@@ -117,3 +117,204 @@
   .title { font-size: 1.2rem; }
   .authors, .journalLine { font-size: 1rem; }
 }
+
+
+
+/* =========================================
+   НАУКОВО-ПОПУЛЯРНІ ПУБЛІКАЦІЇ
+========================================= */
+
+.popularItem {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+  padding: 24px;
+}
+
+/* Обкладинка відео або фотографія */
+
+.popularImageWrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.popularImageLink {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 10px;
+  background-color: #e5e7eb;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.popularImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.popularImageLink:hover .popularImage {
+  transform: scale(1.04);
+}
+
+/* Значок Play */
+
+.playIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.75);
+  color: #ffffff;
+
+  font-size: 24px;
+  line-height: 1;
+  pointer-events: none;
+
+  transition: background-color 0.3s ease;
+}
+
+.popularImageLink:hover .playIcon {
+  background-color: #cc0000;
+}
+
+/* Текстова частина */
+
+.popularContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+
+/* Позначка типу публікації */
+
+.popularBadge {
+  display: inline-block;
+  padding: 5px 12px;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--main);
+
+  background: rgba(4, 68, 109, 0.08);
+  border-radius: 6px;
+}
+
+/* Назва */
+
+.popularTitle {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+.popularTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.popularTitle a:hover {
+  color: var(--main);
+  text-decoration: underline;
+}
+
+/* Короткий опис */
+
+.popularDescription {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--dark-gray);
+  overflow-wrap: anywhere;
+}
+
+/* Посилання на повну статтю */
+
+.readMore {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  margin-top: 4px;
+  padding: 9px 16px;
+
+  background-color: var(--main);
+  color: #ffffff;
+
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.readMore:hover {
+  background-color: var(--hover-blue);
+}
+
+/* =========================================
+   АДАПТИВНІСТЬ
+========================================= */
+
+/* Планшети */
+
+@media (max-width: 767px) {
+  .popularItem {
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .popularTitle {
+    font-size: 1.1rem;
+  }
+}
+
+/* Мобільні телефони */
+
+@media (max-width: 600px) {
+  .popularItem {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .popularImageWrap {
+    width: 100%;
+  }
+
+  .popularTitle {
+    font-size: 1.1rem;
+  }
+
+  .popularDescription {
+    font-size: 0.9rem;
+  }
+
+  .playIcon {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+  }
+}

@@ -1,9 +1,12 @@
-'use client'
+
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, A11y } from 'swiper/modules';
+
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -19,47 +22,6 @@ import PublicationModalContent from '../PublicationModalContent/PublicationModal
 
 type Lang = 'uk' | 'en';
 
-
-function getYouTubeThumbnail(
-  videoUrl?: string,
-): string | null {
-  if (!videoUrl) return null;
-
-  try {
-    const url = new URL(videoUrl);
-    const host = url.hostname.toLowerCase();
-
-    let videoId: string | undefined;
-
-    if (host === 'youtu.be' || host === 'www.youtu.be') {
-      videoId = url.pathname.split('/')[1];
-    } else if (
-      host === 'youtube.com' ||
-      host === 'www.youtube.com' ||
-      host === 'm.youtube.com'
-    ) {
-      if (url.pathname === '/watch') {
-        videoId = url.searchParams.get('v') ?? undefined;
-      } else if (
-        url.pathname.startsWith('/shorts/') ||
-        url.pathname.startsWith('/embed/') ||
-        url.pathname.startsWith('/live/')
-      ) {
-        videoId = url.pathname.split('/')[2];
-      }
-    }
-
-    if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
-      return null;
-    }
-
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
-  } catch {
-    return null;
-  }
-}
-
-
 interface Props {
   publications: Publication[];
   lang?: Lang;
@@ -67,16 +29,73 @@ interface Props {
 
 const translations = { en, uk };
 
-export default function PublicationSlider({ publications, lang = 'uk' }: Props) {
-  const [selectedPublication, setSelectedPublication] = useState<Publication | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+// Отримуємо ID YouTube-відео
+function getYouTubeId(videoUrl?: string): string | null {
+  if (!videoUrl) return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const host = url.hostname.toLowerCase();
+
+    let id: string | null | undefined = null;
+
+    if (host === 'youtu.be' || host === 'www.youtu.be') {
+      id = url.pathname.split('/')[1];
+    } else if (
+      host === 'youtube.com' ||
+      host === 'www.youtube.com' ||
+      host === 'm.youtube.com' ||
+      host === 'youtube-nocookie.com' ||
+      host === 'www.youtube-nocookie.com'
+    ) {
+      if (url.pathname === '/watch') {
+        id = url.searchParams.get('v');
+      } else if (/^\/(embed|shorts|live)\//.test(url.pathname)) {
+        id = url.pathname.split('/')[2];
+      }
+    }
+
+    return id && /^[a-zA-Z0-9_-]{11}$/.test(id)
+      ? id
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+// Обкладинка YouTube
+function getYouTubeThumbnail(videoUrl?: string): string | null {
+  const id = getYouTubeId(videoUrl);
+
+  return id
+    ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+    : null;
+}
+
+export default function PublicationSlider({
+  publications,
+  lang = 'uk',
+}: Props) {
+  const [selectedPublication, setSelectedPublication] =
+    useState<Publication | null>(null);
+
+  const [activeVideoId, setActiveVideoId] =
+    useState<string | null>(null);
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
     checkMobile();
+
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkMobile);
+    };
   }, []);
 
   const sortedPublications = publications
@@ -87,18 +106,23 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
 
   const openModal = (pub: Publication) => {
     setSelectedPublication(pub);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedPublication(null);
+  };
+
+  const closeVideoModal = () => {
+    setActiveVideoId(null);
   };
 
   return (
     <section className={styles.container}>
       <ContainerWrap>
-        <h2 className={styles.sectionTitle}>{t.submenu.publications}</h2>
+        <h2 className={styles.sectionTitle}>
+          {t.submenu.publications}
+        </h2>
+
         <div className={styles.wrapper}>
           <Swiper
             key={isMobile ? 'vertical' : 'horizontal'}
@@ -125,85 +149,172 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
             }}
           >
             {sortedPublications.map((pub) => {
-              const t = pub.translates[lang];
+              const item = pub.translates[lang];
+
+              if (!item) return null;
+
+              const videoId = getYouTubeId(pub.videoUrl);
+
               const imgSrc =
                 getYouTubeThumbnail(pub.videoUrl) ||
                 pub.photo ||
                 '/placeholderPublication.webp';
 
+              const publicationUrl = pub.slug
+                ? `/${lang}/research/publications/${pub.slug}`
+                : null;
+
+              const isExternalUrl = pub.doi
+                ? /^https?:\/\//i.test(pub.doi)
+                : false;
+
+              const externalLink = pub.doi
+                ? isExternalUrl
+                  ? pub.doi
+                  : `https://doi.org/${pub.doi}`
+                : null;
+
               return (
-                <SwiperSlide key={pub._id} className={styles.slide}>
+                <SwiperSlide
+                  key={pub._id}
+                  className={styles.slide}
+                >
                   <article
                     className={styles.card}
-                    onClick={() => openModal(pub)}
-                    role="button"
-                    tabIndex={0}
+                    style={{ position: 'relative' }}
                   >
-                    
-                  <div className={styles.imageWrap}>
-                    {pub.videoUrl && pub.slug ? (
+                    {/* Основний перехід із картки */}
+
+                    {publicationUrl ? (
                       <Link
-                        href={`/${lang}/research/publications/${pub.slug}`}
-                        className={styles.videoLink}
-                        onClick={(e) => e.stopPropagation()}
+                        href={publicationUrl}
                         aria-label={
                           lang === 'uk'
-                            ? `Переглянути відео: ${t.title}`
-                            : `Watch video: ${t.title}`
+                            ? `Відкрити статтю: ${item.title}`
+                            : `Open article: ${item.title}`
                         }
-                      >
-                        <img
-                          src={imgSrc}
-                          alt={t.title}
-                          className={styles.image}
-                          loading="lazy"
-                        />
-                        <span className={styles.playIcon} aria-hidden="true">
-                          ▶
-                        </span>
-                      </Link>
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          zIndex: 1,
+                          borderRadius: 'inherit',
+                        }}
+                      />
                     ) : (
-                      <>
-                        <img
-                          src={imgSrc}
-                          alt={t.title}
-                          className={styles.image}
-                          loading="lazy"
-                        />
-                        {pub.videoUrl && (
-                          <span className={styles.playIcon} aria-hidden="true">
+                      <button
+                        type="button"
+                        onClick={() => openModal(pub)}
+                        aria-label={
+                          lang === 'uk'
+                            ? `Детальніше про публікацію: ${item.title}`
+                            : `More about publication: ${item.title}`
+                        }
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          zIndex: 1,
+                          width: '100%',
+                          background: 'transparent',
+                          border: 'none',
+                          cursor: 'pointer',
+                        }}
+                      />
+                    )}
+
+                    {/* Обкладинка або відео */}
+
+                    <div
+                      className={styles.imageWrap}
+                      style={{ position: 'relative' }}
+                    >
+                      {videoId ? (
+                        <button
+                          type="button"
+                          onClick={() => setActiveVideoId(videoId)}
+                          aria-label={
+                            lang === 'uk'
+                              ? `Переглянути відео: ${item.title}`
+                              : `Watch video: ${item.title}`
+                          }
+                          style={{
+                            position: 'relative',
+                            zIndex: 2,
+                            display: 'block',
+                            width: '100%',
+                            padding: 0,
+                            border: 'none',
+                            background: 'transparent',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <img
+                            src={imgSrc}
+                            alt={item.title}
+                            className={styles.image}
+                            loading="lazy"
+                          />
+
+                          <span
+                            className={styles.playIcon}
+                            aria-hidden="true"
+                          >
                             ▶
                           </span>
-                        )}
-                      </>
-                    )}
-                  </div>
+                        </button>
+                      ) : (
+                        <img
+                          src={imgSrc}
+                          alt={item.title}
+                          className={styles.image}
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+
+                    {/* Дані публікації */}
 
                     <div className={styles.body}>
-                      <h3 className={styles.title}>{t.title}</h3>
-                      <p className={styles.authors}>{t.authors}</p>
-                      {t.journal && <p className={styles.meta}>{t.journal}</p>}
+                      <h3 className={styles.title}>
+                        {item.title}
+                      </h3>
+
+                      {item.authors && (
+                        <p className={styles.authors}>
+                          {item.authors}
+                        </p>
+                      )}
+
+                      {item.journal && (
+                        <p className={styles.meta}>
+                          {item.journal}
+                        </p>
+                      )}
+
                       <div className={styles.footer}>
-                        {pub.year && <span className={styles.year}>{pub.year}</span>}
-                        
-                        {pub.doi && (
+                        {pub.year && (
+                          <span className={styles.year}>
+                            {pub.year}
+                          </span>
+                        )}
+
+                        {externalLink && (
                           <a
-                            href={
-                              /^https?:\/\//i.test(pub.doi)
-                                ? pub.doi
-                                : `https://doi.org/${pub.doi}`
-                            }
+                            href={externalLink}
                             target="_blank"
                             rel="noopener noreferrer"
                             className={styles.doiBtn}
-                            onClick={(e) => e.stopPropagation()}
+                            style={{
+                              position: 'relative',
+                              zIndex: 2,
+                            }}
                           >
-                            {/^https?:\/\//i.test(pub.doi)
-                              ? (lang === 'uk' ? 'Посилання' : 'Link')
+                            {isExternalUrl
+                              ? lang === 'uk'
+                                ? 'Посилання'
+                                : 'Link'
                               : 'DOI'}
                           </a>
                         )}
-
                       </div>
                     </div>
                   </article>
@@ -213,11 +324,62 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
           </Swiper>
         </div>
 
-        {selectedPublication && (
-          <Modal isOpen={isModalOpen} onClose={closeModal}>
-            <PublicationModalContent publication={selectedPublication} lang={lang} />
-          </Modal>
-        )}
+        {/* Модальне вікно звичайної публікації */}
+
+        <Modal
+          isOpen={selectedPublication !== null}
+          onClose={closeModal}
+        >
+          {selectedPublication && (
+            <PublicationModalContent
+              publication={selectedPublication}
+              lang={lang}
+            />
+          )}
+        </Modal>
+
+        {/* Модальне вікно YouTube */}
+
+        <Modal
+          isOpen={activeVideoId !== null}
+          onClose={closeVideoModal}
+        >
+          {activeVideoId && (
+            <div
+              style={{
+                width: '100%',
+                padding: '12px',
+              }}
+            >
+              <div
+                style={{
+                  width: '100%',
+                  aspectRatio: '16 / 9',
+                  overflow: 'hidden',
+                  borderRadius: '10px',
+                }}
+              >
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${activeVideoId}`}
+                  title={
+                    lang === 'uk'
+                      ? 'Відео до публікації'
+                      : 'Publication video'
+                  }
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  style={{
+                    display: 'block',
+                    width: '100%',
+                    height: '100%',
+                    border: 'none',
+                  }}
+                />
+              </div>
+            </div>
+          )}
+        </Modal>
       </ContainerWrap>
     </section>
   );
