@@ -75,6 +75,35 @@ function getYouTubeId(url: string): string | null {
   }
 }
 
+
+async function getYouTubeViews(
+    videoId: string,
+  ): Promise<number | null> {
+    try {
+      const response = await fetch(
+        `${API_URL}/youtube/views/${videoId}`,
+        {
+          next: { revalidate: 43200 },
+        },
+      );
+  
+      if (!response.ok) {
+        return null;
+      }
+  
+      const data = await response.json();
+  
+      return typeof data.views === 'number'
+        ? data.views
+        : null;
+    } catch (error) {
+      console.error('YouTube views fetch error:', error);
+      return null;
+    }
+  }
+
+  
+
 export default async function PublicationDetailPage({
   params,
 }: Props) {
@@ -99,6 +128,10 @@ export default async function PublicationDetailPage({
   const videoId = publication.videoUrl
     ? getYouTubeId(publication.videoUrl)
     : null;
+
+    const videoViews = videoId
+        ? await getYouTubeViews(videoId)
+        : null;
 
   const externalLink = publication.doi
     ? /^https?:\/\//i.test(publication.doi)
@@ -232,6 +265,30 @@ export default async function PublicationDetailPage({
                 }}
               />
             </div>
+
+
+            {videoViews !== null && (
+                <p
+                    style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    marginTop: '12px',
+                    marginBottom: 0,
+                    fontSize: '0.95rem',
+                    color: 'var(--dark-gray)',
+                    }}
+                >
+                    <span aria-hidden="true">👁</span>
+                    {videoViews.toLocaleString(
+                    locale === 'uk' ? 'uk-UA' : 'en-US'
+                    )}
+                    {' '}
+                    {locale === 'uk' ? 'переглядів' : 'views'}
+                    {' · YouTube'}
+                </p>
+            )}
+
           </section>
         )}
 

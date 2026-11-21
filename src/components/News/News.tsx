@@ -28,52 +28,62 @@ type Props = {
 
 type DisplayNewsItem = NewsItem & {
   articleSlug?: string;
+  videoId?: string | null;
 };
 
-// Обкладинка YouTube-відео
-function getYouTubeThumbnail(
-  videoUrl?: string,
-): string | null {
+function getYouTubeId(videoUrl?: string): string | null {
   if (!videoUrl) return null;
 
   try {
     const url = new URL(videoUrl);
     const host = url.hostname.toLowerCase();
 
-    let videoId: string | null | undefined;
+    let id: string | null | undefined = null;
 
     if (
       host === 'youtu.be' ||
       host === 'www.youtu.be'
     ) {
-      videoId = url.pathname.split('/')[1];
+      id = url.pathname.split('/')[1];
     } else if (
       host === 'youtube.com' ||
       host === 'www.youtube.com' ||
-      host === 'm.youtube.com'
+      host === 'm.youtube.com' ||
+      host === 'youtube-nocookie.com' ||
+      host === 'www.youtube-nocookie.com'
     ) {
       if (url.pathname === '/watch') {
-        videoId = url.searchParams.get('v');
+        id = url.searchParams.get('v');
       } else if (
-        url.pathname.startsWith('/shorts/') ||
-        url.pathname.startsWith('/embed/') ||
-        url.pathname.startsWith('/live/')
+        /^\/(embed|shorts|live)\//.test(url.pathname)
       ) {
-        videoId = url.pathname.split('/')[2];
+        id = url.pathname.split('/')[2];
       }
     }
 
-    if (
-      !videoId ||
-      !/^[a-zA-Z0-9_-]{11}$/.test(videoId)
-    ) {
-      return null;
-    }
-
-    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+    return id && /^[a-zA-Z0-9_-]{11}$/.test(id)
+      ? id
+      : null;
   } catch {
     return null;
   }
+}
+
+function getYouTubeThumbnail(
+  videoUrl?: string,
+): string | null {
+  const id = getYouTubeId(videoUrl);
+
+  return id
+    ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+    : null;
+}
+
+function normalizeTitle(title?: string): string {
+  return (title || '')
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim();
 }
 
 const News: React.FC<Props> = ({
@@ -84,32 +94,31 @@ const News: React.FC<Props> = ({
   const [selectedNews, setSelectedNews] =
     useState<DisplayNewsItem | null>(null);
 
-  const [isModalOpen, setIsModalOpen] =
-    useState(false);
+  const [activeVideoId, setActiveVideoId] =
+    useState<string | null>(null);
 
-  const [currentPage, setCurrentPage] =
-    useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 8;
   const t = lang === 'uk' ? uk : en;
 
-  // Перетворюємо публікації, позначені showInNews,
-  // на картки новин без дублювання в MongoDB.
-  const publicationNews: DisplayNewsItem[] = publications
-    .filter((pub) => pub.showInNews === true && !!pub.slug)
-    .map((pub) => ({
+  // Публікації для відображення в новинах
+  const newsPublications = publications.filter(
+    (pub) => pub.showInNews === true && !!pub.slug
+  );
+
+  const publicationNews: DisplayNewsItem[] =
+    newsPublications.map((pub) => ({
       _id: `publication-${pub._id}`,
 
       translates: {
         uk: {
           title: pub.translates.uk.title,
-          description:
-            pub.translates.uk.description || '',
+          description: pub.translates.uk.description || '',
         },
         en: {
           title: pub.translates.en.title,
-          description:
-            pub.translates.en.description || '',
+          description: pub.translates.en.description || '',
         },
       },
 
@@ -123,38 +132,99 @@ const News: React.FC<Props> = ({
         `${pub.year}-01-01`,
 
       articleSlug: pub.slug,
+      videoId: getYouTubeId(pub.videoUrl),
     }));
 
-  // Об'єднуємо звичайні новини та анонси статей.
+  // Заголовки публікацій, що вже відображаються в новинах
+  const publicationTitles = new Set(
+    newsPublications
+      .flatMap((pub) => [
+        normalizeTitle(pub.translates.uk.title),
+        normalizeTitle(pub.translates.en.title),
+      ])
+      .filter(Boolean)
+  );
+
+  // Прибираємо дублікати старих новин
+  const regularNews: DisplayNewsItem[] = news.filter((item) => {
+    const ukTitle = normalizeTitle(
+      item.translates?.uk?.title
+    );
+
+    const enTitle = normalizeTitle(
+      item.translates?.en?.title
+    );
+
+    return (
+      !publicationTitles.has(ukTitle) &&
+      !publicationTitles.has(enTitle)
+    );
+  });
+
+  // Об'єднуємо звичайні новини та публікації.
+  // Якщо є стара новина з тією самою назвою,
+  // використовуємо її дату.
+
   const allNews: DisplayNewsItem[] = [
-    ...news,
-    ...publicationNews,
+    ...regularNews,
+    ...publicationNews.map((pub) => {
+      const originalNews = news.find((item) => {
+        const oldUkTitle = normalizeTitle(
+          item.translates?.uk?.title
+        );
+
+        const oldEnTitle = normalizeTitle(
+          item.translates?.en?.title
+        );
+
+        const newUkTitle = normalizeTitle(
+          pub.translates?.uk?.title
+        );
+
+        const newEnTitle = normalizeTitle(
+          pub.translates?.en?.title
+        );
+
+        return (
+          (oldUkTitle !== '' && oldUkTitle === newUkTitle) ||
+          (oldEnTitle !== '' && oldEnTitle === newEnTitle)
+        );
+      });
+
+      return {
+        ...pub,
+        date: originalNews?.date || pub.date,
+      };
+    }),
   ];
 
+  // Сортування новин
   const sortedNews = allNews
     .slice()
     .sort(
       (a, b) =>
-        parseDate(b.date) - parseDate(a.date),
+        parseDate(b.date) - parseDate(a.date)
     );
 
   const totalPages = Math.ceil(
-    sortedNews.length / itemsPerPage,
+    sortedNews.length / itemsPerPage
   );
 
   const paginatedNews = sortedNews.slice(
     (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage,
+    currentPage * itemsPerPage
   );
 
   const openModal = (newsItem: DisplayNewsItem) => {
     setSelectedNews(newsItem);
-    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
     setSelectedNews(null);
+  };
+
+  const closeVideoModal = () => {
+    setActiveVideoId(null);
   };
 
   return (
@@ -165,24 +235,131 @@ const News: React.FC<Props> = ({
         </h2>
 
         <div className={styles.list}>
-          {paginatedNews.map((pub) => {
-            const tn = pub.translates[lang];
+          {paginatedNews.map((item) => {
+            const tn = item.translates?.[lang];
+
+            if (!tn) return null;
+
+            const articleUrl = item.articleSlug
+              ? `/${lang}/research/publications/${item.articleSlug}`
+              : null;
 
             return (
               <div
-                key={pub._id}
+                key={item._id}
                 className={styles.newsCard}
+                style={{ position: 'relative' }}
               >
-                {pub.photo && (
-                  <div className={styles.photoWrap}>
-                    <img
-                      src={pub.photo}
-                      alt={tn.title}
-                      className={styles.image}
-                      loading="lazy"
-                    />
+                {/* Перехід із картки */}
+
+                {articleUrl ? (
+                  <Link
+                    href={articleUrl}
+                    aria-label={
+                      lang === 'uk'
+                        ? `Читати статтю: ${tn.title}`
+                        : `Read article: ${tn.title}`
+                    }
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      zIndex: 1,
+                      borderRadius: 'inherit',
+                    }}
+                  />
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => openModal(item)}
+                    aria-label={
+                      lang === 'uk'
+                        ? `Детальніше: ${tn.title}`
+                        : `Read more: ${tn.title}`
+                    }
+                    style={{
+                      position: 'absolute',
+                      inset: 0,
+                      zIndex: 1,
+                      width: '100%',
+                      background: 'transparent',
+                      border: 'none',
+                      cursor: 'pointer',
+                    }}
+                  />
+                )}
+
+                {/* Зображення або відео */}
+
+                {item.photo && (
+                  <div
+                    className={styles.photoWrap}
+                    style={{ position: 'relative' }}
+                  >
+                    {item.videoId ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setActiveVideoId(item.videoId!)
+                        }
+                        aria-label={
+                          lang === 'uk'
+                            ? `Переглянути відео: ${tn.title}`
+                            : `Watch video: ${tn.title}`
+                        }
+                        style={{
+                          position: 'relative',
+                          zIndex: 2,
+                          display: 'block',
+                          width: '100%',
+                          padding: 0,
+                          border: 'none',
+                          background: 'transparent',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        <img
+                          src={item.photo}
+                          alt={tn.title}
+                          className={styles.image}
+                          loading="lazy"
+                          style={{ display: 'block' }}
+                        />
+
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            position: 'absolute',
+                            top: '50%',
+                            left: '50%',
+                            transform:
+                              'translate(-50%, -50%)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '56px',
+                            height: '56px',
+                            borderRadius: '50%',
+                            background: 'rgba(0,0,0,0.75)',
+                            color: '#fff',
+                            fontSize: '24px',
+                            pointerEvents: 'none',
+                          }}
+                        >
+                          ▶
+                        </span>
+                      </button>
+                    ) : (
+                      <img
+                        src={item.photo}
+                        alt={tn.title}
+                        className={styles.image}
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 )}
+
+                {/* Назва і дата */}
 
                 <div className={styles.details}>
                   <h2 className={styles.title}>
@@ -190,16 +367,20 @@ const News: React.FC<Props> = ({
                   </h2>
 
                   <div className={styles.detailsBottom}>
-                    {pub.date && (
+                    {item.date && (
                       <span className={styles.date}>
-                        {pub.date}
+                        {item.date}
                       </span>
                     )}
 
-                    {pub.articleSlug ? (
+                    {articleUrl ? (
                       <Link
-                        href={`/${lang}/research/publications/${pub.articleSlug}`}
+                        href={articleUrl}
                         className={styles.moreButton}
+                        style={{
+                          position: 'relative',
+                          zIndex: 2,
+                        }}
                       >
                         {t.buttons.more}
                       </Link>
@@ -207,7 +388,11 @@ const News: React.FC<Props> = ({
                       <button
                         type="button"
                         className={styles.moreButton}
-                        onClick={() => openModal(pub)}
+                        onClick={() => openModal(item)}
+                        style={{
+                          position: 'relative',
+                          zIndex: 2,
+                        }}
                       >
                         {t.buttons.more}
                       </button>
@@ -228,15 +413,60 @@ const News: React.FC<Props> = ({
         )}
       </ContainerWrap>
 
+      {/* Модальне вікно звичайної новини */}
+
       <Modal
+        isOpen={selectedNews !== null}
         onClose={closeModal}
-        isOpen={isModalOpen}
       >
         {selectedNews && (
           <NewsModalContent
             newsItem={selectedNews}
             lang={lang}
           />
+        )}
+      </Modal>
+
+      {/* Модальне вікно YouTube */}
+
+      <Modal
+        isOpen={activeVideoId !== null}
+        onClose={closeVideoModal}
+      >
+        {activeVideoId && (
+          <div
+            style={{
+              width: '100%',
+              padding: '12px',
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                aspectRatio: '16 / 9',
+                overflow: 'hidden',
+                borderRadius: '10px',
+              }}
+            >
+              <iframe
+                src={`https://www.youtube-nocookie.com/embed/${activeVideoId}`}
+                title={
+                  lang === 'uk'
+                    ? 'Відео до публікації'
+                    : 'Publication video'
+                }
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  height: '100%',
+                  border: 'none',
+                }}
+              />
+            </div>
+          </div>
         )}
       </Modal>
     </section>
