@@ -236,3 +236,36 @@
 .videoLink:hover .playIcon {
   background-color: #cc0000;
 }
+
+
+
+/* Виправлення висоти карток слайдера */
+
+.card {
+  box-sizing: border-box;
+}
+
+.body {
+  height: auto;
+  min-height: 0;
+  flex: 1;
+  width: 100%;
+}
+
+.footer {
+  margin-top: auto;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+/* Планшети та комп'ютери */
+
+@media (min-width: 768px) {
+  .card {
+    height: 560px;
+  }
+
+  .slide {
+    height: auto;
+  }
+}
