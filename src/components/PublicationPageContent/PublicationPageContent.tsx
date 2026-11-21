@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import { Publication } from '@/types/publications';
@@ -18,7 +18,10 @@ interface Props {
   heading: string;
 }
 
-// Отримуємо ID відео з YouTube
+const API_URL =
+  'https://institutebackend-production.up.railway.app';
+
+// Отримуємо ID відео YouTube
 function getYouTubeId(videoUrl?: string): string | null {
   if (!videoUrl) return null;
 
@@ -26,13 +29,13 @@ function getYouTubeId(videoUrl?: string): string | null {
     const url = new URL(videoUrl);
     const host = url.hostname.toLowerCase();
 
-    let videoId: string | null | undefined = null;
+    let id: string | null | undefined = null;
 
     if (
       host === 'youtu.be' ||
       host === 'www.youtu.be'
     ) {
-      videoId = url.pathname.split('/')[1];
+      id = url.pathname.split('/')[1];
     } else if (
       host === 'youtube.com' ||
       host === 'www.youtube.com' ||
@@ -41,48 +44,46 @@ function getYouTubeId(videoUrl?: string): string | null {
       host === 'www.youtube-nocookie.com'
     ) {
       if (url.pathname === '/watch') {
-        videoId = url.searchParams.get('v');
+        id = url.searchParams.get('v');
       } else if (
-        url.pathname.startsWith('/shorts/') ||
-        url.pathname.startsWith('/embed/') ||
-        url.pathname.startsWith('/live/')
+        /^\/(embed|shorts|live)\//.test(url.pathname)
       ) {
-        videoId = url.pathname.split('/')[2];
+        id = url.pathname.split('/')[2];
       }
     }
 
-    return videoId && /^[a-zA-Z0-9_-]{11}$/.test(videoId)
-      ? videoId
+    return id && /^[a-zA-Z0-9_-]{11}$/.test(id)
+      ? id
       : null;
   } catch {
     return null;
   }
 }
 
-// Отримуємо обкладинку YouTube
+// Обкладинка YouTube
 function getYouTubeThumbnail(
   videoUrl?: string,
 ): string | null {
-  const videoId = getYouTubeId(videoUrl);
+  const id = getYouTubeId(videoUrl);
 
-  if (!videoId) return null;
-
-  return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  return id
+    ? `https://img.youtube.com/vi/${id}/hqdefault.jpg`
+    : null;
 }
 
-// Формуємо короткий анонс
+// Скорочений опис статті
 function getShortDescription(description?: string): string {
   if (!description) return '';
 
-  const firstParagraph = description
+  const paragraph = description
     .split(/\n\s*\n/)[0]
     .trim();
 
-  if (firstParagraph.length <= 240) {
-    return firstParagraph;
+  if (paragraph.length <= 240) {
+    return paragraph;
   }
 
-  return `${firstParagraph.slice(0, 240).trimEnd()}…`;
+  return `${paragraph.slice(0, 240).trimEnd()}…`;
 }
 
 export default function PublicationPageContent({
@@ -97,28 +98,82 @@ export default function PublicationPageContent({
   const [activeVideoId, setActiveVideoId] =
     useState<string | null>(null);
 
+  const [videoViews, setVideoViews] = useState<
+    Record<string, number>
+  >({});
+
+  const sortedPublications = useMemo(
+    () =>
+      (publications || [])
+        .slice()
+        .sort((a, b) => Number(b.year) - Number(a.year)),
+    [publications],
+  );
+
+  const totalPages = Math.ceil(
+    sortedPublications.length / itemsPerPage,
+  );
+
+  const currentPublications = sortedPublications.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  // ID відео на поточній сторінці
+  const videoIdsKey = currentPublications
+    .map((pub) => getYouTubeId(pub.videoUrl))
+    .filter((id): id is string => id !== null)
+    .filter((id, index, array) => array.indexOf(id) === index)
+    .join(',');
+
+  // Отримання переглядів із NestJS
+  useEffect(() => {
+    if (!videoIdsKey) return;
+
+    const controller = new AbortController();
+
+    const loadViews = async () => {
+      const ids = videoIdsKey.split(',');
+
+      await Promise.all(
+        ids.map(async (videoId) => {
+          try {
+            const response = await fetch(
+              `${API_URL}/youtube/views/${videoId}`,
+              { signal: controller.signal },
+            );
+
+            if (!response.ok) return;
+
+            const data: { views?: number } =
+              await response.json();
+
+            if (
+              typeof data.views === 'number' &&
+              Number.isFinite(data.views) &&
+              !controller.signal.aborted
+            ) {
+              setVideoViews((previous) => ({
+                ...previous,
+                [videoId]: data.views as number,
+              }));
+            }
+          } catch {
+            // Якщо YouTube API недоступний,
+            // публікації залишаються видимими.
+          }
+        }),
+      );
+    };
+
+    void loadViews();
+
+    return () => controller.abort();
+  }, [videoIdsKey]);
+
   if (!publications || publications.length === 0) {
     return null;
   }
-
-  const sortedPublications = publications
-    .slice()
-    .sort((a, b) => Number(b.year) - Number(a.year));
-
-  const totalPages = Math.ceil(
-    sortedPublications.length / itemsPerPage
-  );
-
-  const startIndex = (currentPage - 1) * itemsPerPage;
-
-  const currentPublications = sortedPublications.slice(
-    startIndex,
-    startIndex + itemsPerPage
-  );
-
-  const closeVideoModal = () => {
-    setActiveVideoId(null);
-  };
 
   return (
     <section className={styles.section}>
@@ -134,11 +189,8 @@ export default function PublicationPageContent({
 
           const videoId = getYouTubeId(pub.videoUrl);
 
-          const videoThumbnail =
-            getYouTubeThumbnail(pub.videoUrl);
-
           const imgSrc =
-            videoThumbnail ||
+            getYouTubeThumbnail(pub.videoUrl) ||
             pub.photo ||
             '/placeholderPublication.webp';
 
@@ -146,26 +198,24 @@ export default function PublicationPageContent({
             ? `/${locale}/research/publications/${pub.slug}`
             : null;
 
-          const isExternalUrl = pub.doi
-            ? /^https?:\/\//i.test(pub.doi)
-            : false;
+          const views = videoId
+            ? videoViews[videoId]
+            : undefined;
 
           const externalLink = pub.doi
-            ? isExternalUrl
+            ? /^https?:\/\//i.test(pub.doi)
               ? pub.doi
               : `https://doi.org/${pub.doi}`
             : null;
 
-          // =========================================
           // НАУКОВО-ПОПУЛЯРНА ПУБЛІКАЦІЯ
-          // =========================================
-
           if (isPopular) {
             return (
               <li
                 key={pub._id}
                 className={`${styles.item} ${styles.popularItem}`}
               >
+                {/* Ліва частина: відео і перегляди */}
                 <div className={styles.popularImageWrap}>
                   {videoId ? (
                     <button
@@ -215,8 +265,34 @@ export default function PublicationPageContent({
                       />
                     </div>
                   )}
+
+                  {/* Перегляди під відео */}
+                  {views !== undefined && (
+                    <p
+                      style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        margin: '10px 0 0',
+                        fontSize: '0.9rem',
+                        color: 'var(--dark-gray)',
+                      }}
+                    >
+                      <span aria-hidden="true">👁</span>
+
+                      <span>
+                        {views.toLocaleString(
+                          locale === 'uk' ? 'uk-UA' : 'en-US',
+                        )}{' '}
+                        {locale === 'uk'
+                          ? 'переглядів'
+                          : 'views'}
+                      </span>
+                    </p>
+                  )}
                 </div>
 
+                {/* Права частина: стаття */}
                 <div className={styles.popularContent}>
                   <span className={styles.popularBadge}>
                     {locale === 'uk'
@@ -268,10 +344,7 @@ export default function PublicationPageContent({
             );
           }
 
-          // =========================================
           // ЗВИЧАЙНА НАУКОВА ПУБЛІКАЦІЯ
-          // =========================================
-
           return (
             <li key={pub._id} className={styles.item}>
               {publicationUrl ? (
@@ -358,6 +431,23 @@ export default function PublicationPageContent({
                 </div>
               )}
 
+              {/* Перегляди звичайних публікацій із відео */}
+              {views !== undefined && (
+                <p
+                  style={{
+                    margin: '4px 0',
+                    fontSize: '0.9rem',
+                    color: 'var(--dark-gray)',
+                  }}
+                >
+                  👁{' '}
+                  {views.toLocaleString(
+                    locale === 'uk' ? 'uk-UA' : 'en-US',
+                  )}{' '}
+                  {locale === 'uk' ? 'переглядів' : 'views'}
+                </p>
+              )}
+
               {videoId && (
                 <button
                   type="button"
@@ -389,10 +479,9 @@ export default function PublicationPageContent({
       )}
 
       {/* Модальне вікно YouTube */}
-
       <Modal
         isOpen={activeVideoId !== null}
-        onClose={closeVideoModal}
+        onClose={() => setActiveVideoId(null)}
       >
         {activeVideoId && (
           <div

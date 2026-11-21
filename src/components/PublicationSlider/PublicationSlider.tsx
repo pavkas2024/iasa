@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -29,6 +29,9 @@ interface Props {
 
 const translations = { en, uk };
 
+const API_URL =
+  'https://institutebackend-production.up.railway.app';
+
 // Отримуємо ID YouTube-відео
 function getYouTubeId(videoUrl?: string): string | null {
   if (!videoUrl) return null;
@@ -39,7 +42,10 @@ function getYouTubeId(videoUrl?: string): string | null {
 
     let id: string | null | undefined = null;
 
-    if (host === 'youtu.be' || host === 'www.youtu.be') {
+    if (
+      host === 'youtu.be' ||
+      host === 'www.youtu.be'
+    ) {
       id = url.pathname.split('/')[1];
     } else if (
       host === 'youtube.com' ||
@@ -50,7 +56,9 @@ function getYouTubeId(videoUrl?: string): string | null {
     ) {
       if (url.pathname === '/watch') {
         id = url.searchParams.get('v');
-      } else if (/^\/(embed|shorts|live)\//.test(url.pathname)) {
+      } else if (
+        /^\/(embed|shorts|live)\//.test(url.pathname)
+      ) {
         id = url.pathname.split('/')[2];
       }
     }
@@ -63,8 +71,10 @@ function getYouTubeId(videoUrl?: string): string | null {
   }
 }
 
-// Обкладинка YouTube
-function getYouTubeThumbnail(videoUrl?: string): string | null {
+// Обкладинка відео
+function getYouTubeThumbnail(
+  videoUrl?: string,
+): string | null {
   const id = getYouTubeId(videoUrl);
 
   return id
@@ -82,6 +92,10 @@ export default function PublicationSlider({
   const [activeVideoId, setActiveVideoId] =
     useState<string | null>(null);
 
+  const [videoViews, setVideoViews] = useState<
+    Record<string, number>
+  >({});
+
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -98,9 +112,74 @@ export default function PublicationSlider({
     };
   }, []);
 
-  const sortedPublications = publications
-    .slice()
-    .sort((a, b) => Number(b.year) - Number(a.year));
+  const sortedPublications = useMemo(
+    () =>
+      publications
+        .slice()
+        .sort((a, b) => Number(b.year) - Number(a.year)),
+    [publications],
+  );
+
+  const videoIds = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          publications
+            .map((pub) => getYouTubeId(pub.videoUrl))
+            .filter((id): id is string => id !== null),
+        ),
+      ),
+    [publications],
+  );
+
+  const videoIdsKey = videoIds.join(',');
+
+  // Отримуємо перегляди через наш бекенд.
+  // Запитуємо кожне відео лише один раз.
+  useEffect(() => {
+    if (!videoIdsKey) return;
+
+    const controller = new AbortController();
+
+    const loadViews = async () => {
+      const ids = videoIdsKey.split(',');
+
+      await Promise.all(
+        ids.map(async (videoId) => {
+          try {
+            const response = await fetch(
+              `${API_URL}/youtube/views/${videoId}`,
+              { signal: controller.signal },
+            );
+
+            if (!response.ok) return;
+
+            const data: { views?: number } =
+              await response.json();
+
+            if (
+              typeof data.views === 'number' &&
+              Number.isFinite(data.views)
+            ) {
+              if (controller.signal.aborted) return;
+
+              setVideoViews((previous) => ({
+                ...previous,
+                [videoId]: data.views as number,
+              }));
+            }
+          } catch {
+            // Якщо API недоступний,
+            // слайдер продовжує працювати.
+          }
+        }),
+      );
+    };
+
+    void loadViews();
+
+    return () => controller.abort();
+  }, [videoIdsKey]);
 
   const t = translations[lang];
 
@@ -174,6 +253,10 @@ export default function PublicationSlider({
                   : `https://doi.org/${pub.doi}`
                 : null;
 
+              const views = videoId
+                ? videoViews[videoId]
+                : undefined;
+
               return (
                 <SwiperSlide
                   key={pub._id}
@@ -183,7 +266,7 @@ export default function PublicationSlider({
                     className={styles.card}
                     style={{ position: 'relative' }}
                   >
-                    {/* Основний перехід із картки */}
+                    {/* Перехід на сторінку статті */}
 
                     {publicationUrl ? (
                       <Link
@@ -221,7 +304,7 @@ export default function PublicationSlider({
                       />
                     )}
 
-                    {/* Обкладинка або відео */}
+                    {/* Обкладинка з відео */}
 
                     <div
                       className={styles.imageWrap}
@@ -271,7 +354,7 @@ export default function PublicationSlider({
                       )}
                     </div>
 
-                    {/* Дані публікації */}
+                    {/* Інформація про публікацію */}
 
                     <div className={styles.body}>
                       <h3 className={styles.title}>
@@ -287,6 +370,35 @@ export default function PublicationSlider({
                       {item.journal && (
                         <p className={styles.meta}>
                           {item.journal}
+                        </p>
+                      )}
+
+                      {/* Перегляди YouTube */}
+
+                      {views !== undefined && (
+                        <p
+                          style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            margin: '8px 0',
+                            fontSize: '0.85rem',
+                            color: 'var(--dark-gray)',
+                          }}
+                        >
+                          <span aria-hidden="true">👁</span>
+
+                          <span>
+                            {views.toLocaleString(
+                              lang === 'uk'
+                                ? 'uk-UA'
+                                : 'en-US',
+                            )}
+                            {' '}
+                            {lang === 'uk'
+                              ? 'переглядів'
+                              : 'views'}
+                          </span>
                         </p>
                       )}
 
