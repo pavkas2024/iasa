@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination, A11y } from 'swiper/modules';
 import 'swiper/css';
@@ -17,6 +18,47 @@ import ContainerWrap from '../Wrap/Wrap';
 import PublicationModalContent from '../PublicationModalContent/PublicationModalContent';
 
 type Lang = 'uk' | 'en';
+
+
+function getYouTubeThumbnail(
+  videoUrl?: string,
+): string | null {
+  if (!videoUrl) return null;
+
+  try {
+    const url = new URL(videoUrl);
+    const host = url.hostname.toLowerCase();
+
+    let videoId: string | undefined;
+
+    if (host === 'youtu.be' || host === 'www.youtu.be') {
+      videoId = url.pathname.split('/')[1];
+    } else if (
+      host === 'youtube.com' ||
+      host === 'www.youtube.com' ||
+      host === 'm.youtube.com'
+    ) {
+      if (url.pathname === '/watch') {
+        videoId = url.searchParams.get('v') ?? undefined;
+      } else if (
+        url.pathname.startsWith('/shorts/') ||
+        url.pathname.startsWith('/embed/') ||
+        url.pathname.startsWith('/live/')
+      ) {
+        videoId = url.pathname.split('/')[2];
+      }
+    }
+
+    if (!videoId || !/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+      return null;
+    }
+
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  } catch {
+    return null;
+  }
+}
+
 
 interface Props {
   publications: Publication[];
@@ -84,7 +126,10 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
           >
             {sortedPublications.map((pub) => {
               const t = pub.translates[lang];
-              const imgSrc = pub.photo || '/placeholderPublication.webp';
+              const imgSrc =
+                getYouTubeThumbnail(pub.videoUrl) ||
+                pub.photo ||
+                '/placeholderPublication.webp';
 
               return (
                 <SwiperSlide key={pub._id} className={styles.slide}>
@@ -94,9 +139,46 @@ export default function PublicationSlider({ publications, lang = 'uk' }: Props) 
                     role="button"
                     tabIndex={0}
                   >
-                    <div className={styles.imageWrap}>
-                      <img src={imgSrc} alt={t.title} className={styles.image} loading="lazy" />
-                    </div>
+                    
+                  <div className={styles.imageWrap}>
+                    {pub.videoUrl && pub.slug ? (
+                      <Link
+                        href={`/${lang}/research/publications/${pub.slug}`}
+                        className={styles.videoLink}
+                        onClick={(e) => e.stopPropagation()}
+                        aria-label={
+                          lang === 'uk'
+                            ? `Переглянути відео: ${t.title}`
+                            : `Watch video: ${t.title}`
+                        }
+                      >
+                        <img
+                          src={imgSrc}
+                          alt={t.title}
+                          className={styles.image}
+                          loading="lazy"
+                        />
+                        <span className={styles.playIcon} aria-hidden="true">
+                          ▶
+                        </span>
+                      </Link>
+                    ) : (
+                      <>
+                        <img
+                          src={imgSrc}
+                          alt={t.title}
+                          className={styles.image}
+                          loading="lazy"
+                        />
+                        {pub.videoUrl && (
+                          <span className={styles.playIcon} aria-hidden="true">
+                            ▶
+                          </span>
+                        )}
+                      </>
+                    )}
+                  </div>
+
                     <div className={styles.body}>
                       <h3 className={styles.title}>{t.title}</h3>
                       <p className={styles.authors}>{t.authors}</p>

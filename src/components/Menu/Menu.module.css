@@ -26,6 +26,7 @@
   width: 30px;
   height: 22px;
   cursor: pointer;
+  -webkit-user-select: none;
   user-select: none;
 }
 

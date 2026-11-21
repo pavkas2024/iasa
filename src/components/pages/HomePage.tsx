@@ -41,7 +41,11 @@ const HomePage: React.FC<Props> = ({ locale, data }) => {
       />
 
 
-    <News news={data.news} lang={locale}/>
+    <News
+      news={data.news}
+      publications={data.publications}
+      lang={locale}
+    />
     <PublicationSlider publications={data.publications} lang={locale} />
     
  

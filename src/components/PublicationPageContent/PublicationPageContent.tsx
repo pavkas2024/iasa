@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from "react";
+import Link from "next/link";
 import { Publication } from "@/types/publications";
 import Pagination from "../Pagination/Paginatiom";
 import styles from './PublicationPageContent.module.css'
@@ -40,7 +41,17 @@ export default function DepartmentPageContent({ publications, locale, heading }:
           const t = dept.translates[locale];
           return (
             <li key={dept._id} className={styles.item} style={{ whiteSpace: "pre-line" }}>
-              <p className={styles.title}>{t.title}</p>
+              {dept.slug ? (
+                <Link
+                  href={`/${locale}/research/publications/${dept.slug}`}
+                  className={styles.title}
+                >
+                  {t.title}
+                </Link>
+              ) : (
+                <p className={styles.title}>{t.title}</p>
+              )}
+
               {t.authors && <div className={styles.authors}>{t.authors}</div>}
               <div className={styles.journalLine}>
                 {t.journal && <span className={styles.journalName}>{t.journal}</span>}

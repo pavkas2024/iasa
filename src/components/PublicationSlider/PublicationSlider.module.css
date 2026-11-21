@@ -191,3 +191,48 @@
     font-size: 18px;
   }
 }
+
+
+
+/* Обкладинка відео */
+.imageWrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Посилання на сторінку публікації */
+.videoLink {
+  position: relative;
+  display: block;
+  width: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Значок відтворення відео */
+.playIcon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 56px;
+  height: 56px;
+
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.75);
+  color: white;
+
+  font-size: 24px;
+  line-height: 1;
+  pointer-events: none;
+  transition: background-color 0.2s ease;
+}
+
+.videoLink:hover .playIcon {
+  background-color: #cc0000;
+}
