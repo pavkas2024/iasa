@@ -87,6 +87,27 @@
       "submit": "Submit",
       "more": "More",
       "open": "Open link"
+    },
+    "ckkno": {
+      "eyebrow": "Shared Research Equipment Center",
+      "heading": "AI-SYNAPTIC CORE",
+      "subtitle": "Autonomous Intelligence at the Core",
+      "documents": "Center Documents and Resources",
+      "order": "Establishment Order",
+      "regulations": "Center Regulations",
+      "procedure": "Operating Procedures",
+      "development": "Development Plan",
+      "equipment": "Scientific Equipment",
+      "about": "About the Center",
+      "description": "The AI-SYNAPTIC CORE Shared Research Equipment Center provides shared access to scientific equipment and computing resources, supporting interdisciplinary research and scientific collaboration.",
+      "directions": "Main Research Areas",
+      "biosystems": "Biosystems",
+      "cognitive": "Cognitive Science",
+      "gis": "Geographic Information Systems",
+      "twins": "Digital Twins",
+      "feedback": "Contact the Center",
+      "feedbackDescription": "For information about the access to scientific equipment, and opportunities for collaboration, please use the form below.",
+      "comingSoon": "Document will be available soon"
     }
   }
   

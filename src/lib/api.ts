@@ -13,6 +13,7 @@ import { Collaboration } from '@/types/collaborations';
 import { Intproject } from '@/types/intprojects';
 import { Natproject } from '@/types/natprojects';
 import { Seminar } from '@/types/seminars';
+import type { CkknoInfo } from "@/types/ckkno";
 import { SsaiInfo, SsaiSessionsResponse } from '@/types/ssai';
 
 import {HomeData, InstituteData, IntActivityData,  ResearchData, ContactsData} from '@/types/api';
@@ -114,3 +115,23 @@ export const getSsaiSessions = async (
     `/ssai/sessions?completed=${completed}&page=${page}&limit=${limit}`
   );
 };
+
+export async function getCkknoInfo(): Promise<CkknoInfo | null> {
+  try {
+    const response = await fetch(
+      "https://institutebackend-production.up.railway.app/ckkno/info",
+      {
+        next: { revalidate: 60 },
+      }
+    );
+
+    if (!response.ok) {
+      return null;
+    }
+
+    return (await response.json()) as CkknoInfo;
+  } catch (error) {
+    console.error("Error fetching CKKNO info:", error);
+    return null;
+  }
+}
