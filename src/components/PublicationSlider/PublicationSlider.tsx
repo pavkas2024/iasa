@@ -27,6 +27,11 @@ interface Props {
   lang?: Lang;
 }
 
+type YouTubeStats = {
+  views: number;
+  likes: number | null;
+};
+
 const translations = { en, uk };
 
 const API_URL =
@@ -71,7 +76,7 @@ function getYouTubeId(videoUrl?: string): string | null {
   }
 }
 
-// Обкладинка відео
+// Обкладинка YouTube
 function getYouTubeThumbnail(
   videoUrl?: string,
 ): string | null {
@@ -92,8 +97,8 @@ export default function PublicationSlider({
   const [activeVideoId, setActiveVideoId] =
     useState<string | null>(null);
 
-  const [videoViews, setVideoViews] = useState<
-    Record<string, number>
+  const [videoStats, setVideoStats] = useState<
+    Record<string, YouTubeStats>
   >({});
 
   const [isMobile, setIsMobile] = useState(false);
@@ -120,54 +125,66 @@ export default function PublicationSlider({
     [publications],
   );
 
-  const videoIds = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          publications
-            .map((pub) => getYouTubeId(pub.videoUrl))
-            .filter((id): id is string => id !== null),
-        ),
-      ),
-    [publications],
-  );
+  // Унікальні ID відео, для яких потрібна статистика
+  const videoIdsKey = useMemo(() => {
+    const ids = publications
+      .map((pub) => getYouTubeId(pub.videoUrl))
+      .filter((id): id is string => id !== null);
 
-  const videoIdsKey = videoIds.join(',');
+    return Array.from(new Set(ids)).join(',');
+  }, [publications]);
 
-  // Отримуємо перегляди через наш бекенд.
-  // Запитуємо кожне відео лише один раз.
+  // Отримуємо перегляди та лайки одним запитом
+  // для кожного відео
   useEffect(() => {
     if (!videoIdsKey) return;
 
     const controller = new AbortController();
 
-    const loadViews = async () => {
+    const loadStats = async () => {
       const ids = videoIdsKey.split(',');
 
       await Promise.all(
         ids.map(async (videoId) => {
           try {
             const response = await fetch(
-              `${API_URL}/youtube/views/${videoId}`,
-              { signal: controller.signal },
+              `${API_URL}/youtube/stats/${videoId}`,
+              {
+                signal: controller.signal,
+              },
             );
 
             if (!response.ok) return;
 
-            const data: { views?: number } =
-              await response.json();
+            const data: {
+              views?: number;
+              likes?: number | null;
+            } = await response.json();
 
             if (
-              typeof data.views === 'number' &&
-              Number.isFinite(data.views)
+              typeof data.views !== 'number' ||
+              !Number.isSafeInteger(data.views) ||
+              data.views < 0
             ) {
-              if (controller.signal.aborted) return;
-
-              setVideoViews((previous) => ({
-                ...previous,
-                [videoId]: data.views as number,
-              }));
+              return;
             }
+
+            const stats: YouTubeStats = {
+              views: data.views,
+              likes:
+                typeof data.likes === 'number' &&
+                Number.isSafeInteger(data.likes) &&
+                data.likes >= 0
+                  ? data.likes
+                  : null,
+            };
+
+            if (controller.signal.aborted) return;
+
+            setVideoStats((previous) => ({
+              ...previous,
+              [videoId]: stats,
+            }));
           } catch {
             // Якщо API недоступний,
             // слайдер продовжує працювати.
@@ -176,7 +193,7 @@ export default function PublicationSlider({
       );
     };
 
-    void loadViews();
+    void loadStats();
 
     return () => controller.abort();
   }, [videoIdsKey]);
@@ -194,6 +211,9 @@ export default function PublicationSlider({
   const closeVideoModal = () => {
     setActiveVideoId(null);
   };
+
+  const numberLocale =
+    lang === 'uk' ? 'uk-UA' : 'en-US';
 
   return (
     <section className={styles.container}>
@@ -253,8 +273,8 @@ export default function PublicationSlider({
                   : `https://doi.org/${pub.doi}`
                 : null;
 
-              const views = videoId
-                ? videoViews[videoId]
+              const stats = videoId
+                ? videoStats[videoId]
                 : undefined;
 
               return (
@@ -266,7 +286,7 @@ export default function PublicationSlider({
                     className={styles.card}
                     style={{ position: 'relative' }}
                   >
-                    {/* Перехід на сторінку статті */}
+                    {/* Основний перехід */}
 
                     {publicationUrl ? (
                       <Link
@@ -304,16 +324,15 @@ export default function PublicationSlider({
                       />
                     )}
 
-                    {/* Обкладинка з відео */}
+                    {/* Обкладинка відео */}
 
-                    <div
-                      className={styles.imageWrap}
-                      style={{ position: 'relative' }}
-                    >
+                    <div className={styles.imageWrap}>
                       {videoId ? (
                         <button
                           type="button"
-                          onClick={() => setActiveVideoId(videoId)}
+                          onClick={() =>
+                            setActiveVideoId(videoId)
+                          }
                           aria-label={
                             lang === 'uk'
                               ? `Переглянути відео: ${item.title}`
@@ -354,7 +373,7 @@ export default function PublicationSlider({
                       )}
                     </div>
 
-                    {/* Інформація про публікацію */}
+                    {/* Назва, автори та статистика */}
 
                     <div className={styles.body}>
                       <h3 className={styles.title}>
@@ -373,34 +392,46 @@ export default function PublicationSlider({
                         </p>
                       )}
 
-                      {/* Перегляди YouTube */}
+                      {/* Перегляди та лайки YouTube */}
 
-                      {views !== undefined && (
-                        <p
+                      {stats && (
+                        <div
                           style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '6px',
+                            flexWrap: 'wrap',
+                            columnGap: '14px',
+                            rowGap: '6px',
                             margin: '8px 0',
                             fontSize: '0.85rem',
                             color: 'var(--dark-gray)',
                           }}
                         >
-                          <span aria-hidden="true">👁</span>
-
                           <span>
-                            {views.toLocaleString(
-                              lang === 'uk'
-                                ? 'uk-UA'
-                                : 'en-US',
-                            )}
-                            {' '}
+                            👁{' '}
+                            {stats.views.toLocaleString(
+                              numberLocale,
+                            )}{' '}
                             {lang === 'uk'
                               ? 'переглядів'
                               : 'views'}
                           </span>
-                        </p>
+
+                          {stats.likes !== null && (
+                            <span>
+                              👍{' '}
+                              {stats.likes.toLocaleString(
+                                numberLocale,
+                              )}{' '}
+                              {lang === 'uk'
+                                ? 'лайків'
+                                : 'likes'}
+                            </span>
+                          )}
+                        </div>
                       )}
+
+                      {/* Рік та зовнішнє посилання */}
 
                       <div className={styles.footer}>
                         {pub.year && (

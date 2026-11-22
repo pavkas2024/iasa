@@ -31,10 +31,15 @@ type DisplayNewsItem = NewsItem & {
   videoId?: string | null;
 };
 
+type YouTubeStats = {
+  views: number;
+  likes: number | null;
+};
+
 const API_URL =
   'https://institutebackend-production.up.railway.app';
 
-// Отримуємо ID YouTube-відео
+// Отримання ID YouTube
 function getYouTubeId(videoUrl?: string): string | null {
   if (!videoUrl) return null;
 
@@ -73,7 +78,7 @@ function getYouTubeId(videoUrl?: string): string | null {
   }
 }
 
-// Отримуємо обкладинку YouTube
+// Обкладинка відео
 function getYouTubeThumbnail(
   videoUrl?: string,
 ): string | null {
@@ -84,7 +89,7 @@ function getYouTubeThumbnail(
     : null;
 }
 
-// Нормалізуємо заголовки
+// Нормалізація назв для пошуку дублікатів
 function normalizeTitle(title?: string): string {
   return (title || '')
     .toLowerCase()
@@ -105,20 +110,18 @@ const News: React.FC<Props> = ({
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Перегляди YouTube
-  const [videoViews, setVideoViews] = useState<
-    Record<string, number>
+  const [videoStats, setVideoStats] = useState<
+    Record<string, YouTubeStats>
   >({});
 
   const itemsPerPage = 8;
   const t = lang === 'uk' ? uk : en;
 
-  // Публікації, які відображаються в новинах
+  // Публікації, які мають відображатися в новинах
   const newsPublications = publications.filter(
     (pub) => pub.showInNews === true && !!pub.slug
   );
 
-  // Формуємо новини з публікацій
   const publicationNews: DisplayNewsItem[] =
     newsPublications.map((pub) => ({
       _id: `publication-${pub._id}`,
@@ -147,7 +150,7 @@ const News: React.FC<Props> = ({
       videoId: getYouTubeId(pub.videoUrl),
     }));
 
-  // Заголовки публікацій для пошуку дублікатів
+  // Назви публікацій для усунення дублікатів
   const publicationTitles = new Set(
     newsPublications
       .flatMap((pub) => [
@@ -157,7 +160,7 @@ const News: React.FC<Props> = ({
       .filter(Boolean)
   );
 
-  // Прибираємо дублікати старих новин
+  // Звичайні новини без дублікатів
   const regularNews: DisplayNewsItem[] = news.filter(
     (item) => {
       const ukTitle = normalizeTitle(
@@ -176,8 +179,8 @@ const News: React.FC<Props> = ({
   );
 
   // Об'єднуємо новини та публікації.
-  // Якщо існує стара новина з такою самою назвою,
-  // зберігаємо її дату.
+  // Якщо публікація замінює стару новину,
+  // зберігаємо дату старої новини.
   const allNews: DisplayNewsItem[] = [
     ...regularNews,
     ...publicationNews.map((pub) => {
@@ -213,7 +216,7 @@ const News: React.FC<Props> = ({
     }),
   ];
 
-  // Сортування новин за датою
+  // Сортування за датою
   const sortedNews = allNews
     .slice()
     .sort(
@@ -230,7 +233,7 @@ const News: React.FC<Props> = ({
     currentPage * itemsPerPage
   );
 
-  // Збираємо ID YouTube-відео для поточної сторінки
+  // Унікальні ID відео на сторінці новин
   const videoIdsKey = useMemo(() => {
     const ids = publications
       .filter(
@@ -244,20 +247,20 @@ const News: React.FC<Props> = ({
     return Array.from(new Set(ids)).join(',');
   }, [publications]);
 
-  // Отримуємо кількість переглядів із бекенду
+  // Отримуємо перегляди та лайки
   useEffect(() => {
     if (!videoIdsKey) return;
 
     const controller = new AbortController();
 
-    const loadViews = async () => {
+    const loadStats = async () => {
       const ids = videoIdsKey.split(',');
 
       await Promise.all(
         ids.map(async (videoId) => {
           try {
             const response = await fetch(
-              `${API_URL}/youtube/views/${videoId}`,
+              `${API_URL}/youtube/stats/${videoId}`,
               {
                 signal: controller.signal,
               }
@@ -265,29 +268,44 @@ const News: React.FC<Props> = ({
 
             if (!response.ok) return;
 
-            const data: { views?: number } =
-              await response.json();
+            const data: {
+              views?: number;
+              likes?: number | null;
+            } = await response.json();
 
             if (
-              typeof data.views === 'number' &&
-              Number.isFinite(data.views)
+              typeof data.views !== 'number' ||
+              !Number.isSafeInteger(data.views) ||
+              data.views < 0
             ) {
-              if (controller.signal.aborted) return;
-
-              setVideoViews((previous) => ({
-                ...previous,
-                [videoId]: data.views as number,
-              }));
+              return;
             }
+
+            const stats: YouTubeStats = {
+              views: data.views,
+              likes:
+                typeof data.likes === 'number' &&
+                Number.isSafeInteger(data.likes) &&
+                data.likes >= 0
+                  ? data.likes
+                  : null,
+            };
+
+            if (controller.signal.aborted) return;
+
+            setVideoStats((previous) => ({
+              ...previous,
+              [videoId]: stats,
+            }));
           } catch {
             // Якщо API недоступний,
-            // новини продовжують працювати.
+            // новини залишаються видимими.
           }
         })
       );
     };
 
-    void loadViews();
+    void loadStats();
 
     return () => controller.abort();
   }, [videoIdsKey]);
@@ -303,6 +321,9 @@ const News: React.FC<Props> = ({
   const closeVideoModal = () => {
     setActiveVideoId(null);
   };
+
+  const numberLocale =
+    lang === 'uk' ? 'uk-UA' : 'en-US';
 
   return (
     <section className={styles.container}>
@@ -321,8 +342,8 @@ const News: React.FC<Props> = ({
               ? `/${lang}/research/publications/${item.articleSlug}`
               : null;
 
-            const views = item.videoId
-              ? videoViews[item.videoId]
+            const stats = item.videoId
+              ? videoStats[item.videoId]
               : undefined;
 
             return (
@@ -331,7 +352,7 @@ const News: React.FC<Props> = ({
                 className={styles.newsCard}
                 style={{ position: 'relative' }}
               >
-                {/* Основний перехід із картки */}
+                {/* Перехід із картки */}
 
                 {articleUrl ? (
                   <Link
@@ -369,7 +390,7 @@ const News: React.FC<Props> = ({
                   />
                 )}
 
-                {/* Зображення або YouTube-відео */}
+                {/* Фото або YouTube-відео */}
 
                 {item.photo && (
                   <div
@@ -441,40 +462,50 @@ const News: React.FC<Props> = ({
                   </div>
                 )}
 
-                {/* Назва, перегляди та дата */}
+                {/* Назва, статистика та дата */}
 
                 <div className={styles.details}>
                   <h2 className={styles.title}>
                     {tn.title}
                   </h2>
 
-                  {/* Кількість переглядів YouTube */}
+                  {/* Перегляди та лайки YouTube */}
 
-                  {views !== undefined && (
-                    <p
+                  {stats && (
+                    <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px',
+                        flexWrap: 'wrap',
+                        columnGap: '18px',
+                        rowGap: '6px',
                         margin: '10px 0',
                         fontSize: '0.9rem',
                         color: 'var(--dark-gray)',
                       }}
                     >
-                      <span aria-hidden="true">👁</span>
-
                       <span>
-                        {views.toLocaleString(
-                          lang === 'uk'
-                            ? 'uk-UA'
-                            : 'en-US'
-                        )}
-                        {' '}
+                        👁{' '}
+                        {stats.views.toLocaleString(
+                          numberLocale,
+                        )}{' '}
                         {lang === 'uk'
                           ? 'переглядів'
                           : 'views'}
                       </span>
-                    </p>
+
+                      {stats.likes !== null && (
+                        <span>
+                          👍{' '}
+                          {stats.likes.toLocaleString(
+                            numberLocale,
+                          )}{' '}
+                          {lang === 'uk'
+                            ? 'лайків'
+                            : 'likes'}
+                        </span>
+                      )}
+                    </div>
                   )}
 
                   <div className={styles.detailsBottom}>

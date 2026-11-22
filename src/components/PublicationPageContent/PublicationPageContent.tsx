@@ -18,10 +18,15 @@ interface Props {
   heading: string;
 }
 
+type YouTubeStats = {
+  views: number;
+  likes: number | null;
+};
+
 const API_URL =
   'https://institutebackend-production.up.railway.app';
 
-// Отримуємо ID відео YouTube
+// Отримуємо ID YouTube-відео
 function getYouTubeId(videoUrl?: string): string | null {
   if (!videoUrl) return null;
 
@@ -60,7 +65,7 @@ function getYouTubeId(videoUrl?: string): string | null {
   }
 }
 
-// Обкладинка YouTube
+// Отримуємо обкладинку YouTube
 function getYouTubeThumbnail(
   videoUrl?: string,
 ): string | null {
@@ -98,8 +103,8 @@ export default function PublicationPageContent({
   const [activeVideoId, setActiveVideoId] =
     useState<string | null>(null);
 
-  const [videoViews, setVideoViews] = useState<
-    Record<string, number>
+  const [videoStats, setVideoStats] = useState<
+    Record<string, YouTubeStats>
   >({});
 
   const sortedPublications = useMemo(
@@ -119,54 +124,72 @@ export default function PublicationPageContent({
     currentPage * itemsPerPage,
   );
 
-  // ID відео на поточній сторінці
+  // Збираємо ID відео на поточній сторінці
   const videoIdsKey = currentPublications
     .map((pub) => getYouTubeId(pub.videoUrl))
     .filter((id): id is string => id !== null)
     .filter((id, index, array) => array.indexOf(id) === index)
     .join(',');
 
-  // Отримання переглядів із NestJS
+  // Отримуємо перегляди та лайки через NestJS
   useEffect(() => {
     if (!videoIdsKey) return;
 
     const controller = new AbortController();
 
-    const loadViews = async () => {
+    const loadStats = async () => {
       const ids = videoIdsKey.split(',');
 
       await Promise.all(
         ids.map(async (videoId) => {
           try {
             const response = await fetch(
-              `${API_URL}/youtube/views/${videoId}`,
-              { signal: controller.signal },
+              `${API_URL}/youtube/stats/${videoId}`,
+              {
+                signal: controller.signal,
+              },
             );
 
             if (!response.ok) return;
 
-            const data: { views?: number } =
-              await response.json();
+            const data: {
+              views?: number;
+              likes?: number | null;
+            } = await response.json();
 
             if (
-              typeof data.views === 'number' &&
-              Number.isFinite(data.views) &&
-              !controller.signal.aborted
+              typeof data.views !== 'number' ||
+              !Number.isSafeInteger(data.views) ||
+              data.views < 0
             ) {
-              setVideoViews((previous) => ({
-                ...previous,
-                [videoId]: data.views as number,
-              }));
+              return;
             }
+
+            const stats: YouTubeStats = {
+              views: data.views,
+              likes:
+                typeof data.likes === 'number' &&
+                Number.isSafeInteger(data.likes) &&
+                data.likes >= 0
+                  ? data.likes
+                  : null,
+            };
+
+            if (controller.signal.aborted) return;
+
+            setVideoStats((previous) => ({
+              ...previous,
+              [videoId]: stats,
+            }));
           } catch {
-            // Якщо YouTube API недоступний,
+            // Якщо API тимчасово недоступний,
             // публікації залишаються видимими.
           }
         }),
       );
     };
 
-    void loadViews();
+    void loadStats();
 
     return () => controller.abort();
   }, [videoIdsKey]);
@@ -174,6 +197,9 @@ export default function PublicationPageContent({
   if (!publications || publications.length === 0) {
     return null;
   }
+
+  const numberLocale =
+    locale === 'uk' ? 'uk-UA' : 'en-US';
 
   return (
     <section className={styles.section}>
@@ -198,8 +224,8 @@ export default function PublicationPageContent({
             ? `/${locale}/research/publications/${pub.slug}`
             : null;
 
-          const views = videoId
-            ? videoViews[videoId]
+          const stats = videoId
+            ? videoStats[videoId]
             : undefined;
 
           const externalLink = pub.doi
@@ -215,7 +241,8 @@ export default function PublicationPageContent({
                 key={pub._id}
                 className={`${styles.item} ${styles.popularItem}`}
               >
-                {/* Ліва частина: відео і перегляди */}
+                {/* Ліва частина: відео та статистика */}
+
                 <div className={styles.popularImageWrap}>
                   {videoId ? (
                     <button
@@ -266,33 +293,48 @@ export default function PublicationPageContent({
                     </div>
                   )}
 
-                  {/* Перегляди під відео */}
-                  {views !== undefined && (
-                    <p
+                  {/* Перегляди та лайки під обкладинкою */}
+
+                  {stats && (
+                    <div
                       style={{
                         display: 'flex',
                         alignItems: 'center',
-                        gap: '6px',
-                        margin: '10px 0 0',
-                        fontSize: '0.9rem',
+                        flexWrap: 'wrap',
+                        columnGap: '14px',
+                        rowGap: '6px',
+                        marginTop: '10px',
+                        fontSize: '0.85rem',
                         color: 'var(--dark-gray)',
                       }}
                     >
-                      <span aria-hidden="true">👁</span>
-
                       <span>
-                        {views.toLocaleString(
-                          locale === 'uk' ? 'uk-UA' : 'en-US',
+                        👁{' '}
+                        {stats.views.toLocaleString(
+                          numberLocale,
                         )}{' '}
                         {locale === 'uk'
                           ? 'переглядів'
                           : 'views'}
                       </span>
-                    </p>
+
+                      {stats.likes !== null && (
+                        <span>
+                          👍{' '}
+                          {stats.likes.toLocaleString(
+                            numberLocale,
+                          )}{' '}
+                          {locale === 'uk'
+                            ? 'лайків'
+                            : 'likes'}
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
 
                 {/* Права частина: стаття */}
+
                 <div className={styles.popularContent}>
                   <span className={styles.popularBadge}>
                     {locale === 'uk'
@@ -345,6 +387,7 @@ export default function PublicationPageContent({
           }
 
           // ЗВИЧАЙНА НАУКОВА ПУБЛІКАЦІЯ
+
           return (
             <li key={pub._id} className={styles.item}>
               {publicationUrl ? (
@@ -431,21 +474,42 @@ export default function PublicationPageContent({
                 </div>
               )}
 
-              {/* Перегляди звичайних публікацій із відео */}
-              {views !== undefined && (
-                <p
+              {/* Статистика звичайних публікацій із відео */}
+
+              {stats && (
+                <div
                   style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    flexWrap: 'wrap',
+                    gap: '14px',
                     margin: '4px 0',
                     fontSize: '0.9rem',
                     color: 'var(--dark-gray)',
                   }}
                 >
-                  👁{' '}
-                  {views.toLocaleString(
-                    locale === 'uk' ? 'uk-UA' : 'en-US',
-                  )}{' '}
-                  {locale === 'uk' ? 'переглядів' : 'views'}
-                </p>
+                  <span>
+                    👁{' '}
+                    {stats.views.toLocaleString(
+                      numberLocale,
+                    )}{' '}
+                    {locale === 'uk'
+                      ? 'переглядів'
+                      : 'views'}
+                  </span>
+
+                  {stats.likes !== null && (
+                    <span>
+                      👍{' '}
+                      {stats.likes.toLocaleString(
+                        numberLocale,
+                      )}{' '}
+                      {locale === 'uk'
+                        ? 'лайків'
+                        : 'likes'}
+                    </span>
+                  )}
+                </div>
               )}
 
               {videoId && (
@@ -479,6 +543,7 @@ export default function PublicationPageContent({
       )}
 
       {/* Модальне вікно YouTube */}
+
       <Modal
         isOpen={activeVideoId !== null}
         onClose={() => setActiveVideoId(null)}
