@@ -89,7 +89,7 @@ async function getYouTubeStats(
     const response = await fetch(
       `${API_URL}/youtube/stats/${videoId}`,
       {
-        next: { revalidate: 43200 },
+        next: { revalidate: 900 },
       },
     );
 
