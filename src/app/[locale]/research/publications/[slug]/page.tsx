@@ -318,15 +318,15 @@ export default async function PublicationDetailPage({
 
                 {videoStats.likes !== null && (
                   <span>
-                    <span aria-hidden="true">👍</span>
+                    <span aria-hidden="true"> </span>
                     {" "}
                     {videoStats.likes.toLocaleString(
                       numberLocale,
                     )}
                     {" "}
                     {locale === "uk"
-                      ? "лайків"
-                      : "likes"}
+                      ? 'реакцій'
+                      : 'reactions'}
                   </span>
                 )}
               </div>

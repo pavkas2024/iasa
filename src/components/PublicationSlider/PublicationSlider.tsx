@@ -419,13 +419,13 @@ export default function PublicationSlider({
 
                           {stats.likes !== null && (
                             <span>
-                              👍{' '}
+                              {' '}
                               {stats.likes.toLocaleString(
                                 numberLocale,
                               )}{' '}
                               {lang === 'uk'
-                                ? 'лайків'
-                                : 'likes'}
+                                ? 'реакцій'
+                                : 'reactions'}
                             </span>
                           )}
                         </div>

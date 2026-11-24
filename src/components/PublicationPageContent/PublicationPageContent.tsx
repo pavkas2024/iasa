@@ -500,13 +500,13 @@ export default function PublicationPageContent({
 
                   {stats.likes !== null && (
                     <span>
-                      👍{' '}
+                      {' '}
                       {stats.likes.toLocaleString(
                         numberLocale,
                       )}{' '}
                       {locale === 'uk'
-                        ? 'лайків'
-                        : 'likes'}
+                        ? 'реакцій'
+                        : 'reactions'}
                     </span>
                   )}
                 </div>
